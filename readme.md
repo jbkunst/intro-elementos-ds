@@ -3,6 +3,7 @@
 ## Programa
 
 1. Hola!
+   - Lo que sabemos hasta ahora
    - Lo que aprenderemos
    - Lo que podemos llegar a realizar
    - Nuestra dinámica
