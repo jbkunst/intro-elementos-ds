@@ -2,6 +2,11 @@
 
 ## Programa
 
+1. Hola!
+   - Lo que aprenderemos
+   - Lo que podemos llegar a realizar
+   - Nuestra dinámica
+  
 1. Introducción a la programación con R.
    - Ambiente de programación Rstudio.
    - Proyectos y scripts.
