@@ -1,6 +1,8 @@
 ---
 title: "Introducción a los elementos del DS"
-output: github_document
+output:
+  github_document:
+    toc: true
 editor_options: 
   chunk_output_type: console
 ---
@@ -59,10 +61,24 @@ knitr::opts_chunk$set(echo = FALSE)
     -   Desarrollo aplicaciones web con shiny.
 
 
-## Slides/Clases
+## Slides
 
-```{r}
-dir("slides") |> 
-  stringr::str_detect(".html")
+```{r, results='asis'}
+slides <- dir("slides") |> 
+  stringr::str_subset(".html")
+
+slides_url <- file.path("https://jbkunst.github.io", "usach-ingemat-intro-elementos-ds-202201", slides)
+
+slides_nms <- slides |> 
+  stringr::str_remove("^[0-9]+") |> 
+  stringr::str_remove("\\.html$") |> 
+  stringr::str_replace_all("\\-", " ") |> 
+  stringr::str_trim() |> 
+  stringr::str_to_title()
+
+# n <-  "R Rstudio Copy Paste"
+# u <- "https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/01-R-Rstudio-copy-paste.html"
+
+purrr::walk2(slides_nms, slides_url, ~ {cat(stringr::str_glue("1. [{ n }]({ u })", n = .x, u = .y)); cat("\n")})
 ```
 

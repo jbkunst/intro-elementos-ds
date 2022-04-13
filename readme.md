@@ -1,6 +1,9 @@
 Introducción a los elementos del DS
 ================
 
+-   [Programa](#programa)
+-   [Slides](#slides)
+
 ## Programa
 
 1.  Hola!
@@ -58,4 +61,9 @@ Introducción a los elementos del DS
     -   Reportería automática con Rmarkdown y HTMLWidgets.
     -   Desarrollo aplicaciones web con shiny.
 
-## Slides/Clases
+## Slides
+
+1.  [R Rstudio Copy
+    Paste](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/01-R-Rstudio-copy-paste.html)
+2.  [Formato
+    Test](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/99-formato-test.html)
