@@ -64,6 +64,6 @@ Introducción a los elementos del DS
 ## Slides
 
 1.  [R Rstudio Copy
-    Paste](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/01-R-Rstudio-copy-paste.html)
+    Paste](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/01-R-Rstudio-copy-paste.html)
 2.  [Formato
-    Test](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/99-formato-test.html)
+    Test](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/99-formato-test.html)

@@ -67,7 +67,7 @@ knitr::opts_chunk$set(echo = FALSE)
 slides <- dir("slides") |> 
   stringr::str_subset(".html")
 
-slides_url <- file.path("https://jbkunst.github.io", "usach-ingemat-intro-elementos-ds-202201", slides)
+slides_url <- file.path("https://jbkunst.github.io", "usach-ingemat-intro-elementos-ds-202201", "slides", slides)
 
 slides_nms <- slides |> 
   stringr::str_remove("^[0-9]+") |> 
