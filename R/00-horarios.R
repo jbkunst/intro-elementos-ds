@@ -1,12 +1,11 @@
 library(tidyverse)
 
-library(showtext)
+# texto comentado
+# library(showtext)
+# showtext_auto()
+# font_add_google("IBM Plex Sans")
 
-showtext_auto()
-
-font_add_google("IBM Plex Sans")
-
-data <- read_csv("data/202201 - Intro DS.csv")
+data <- read_csv("https://raw.githubusercontent.com/jbkunst/usach-ingemat-intro-elementos-ds-202201/main/data/202201%20-%20Intro%20DS.csv")
 
 glimpse(data)
 
@@ -23,7 +22,6 @@ fns_detectoras <- map(dias, function(d){
   set_names(dias)
 
 
-
 dres <- data |> 
   select(starts_with("Seleccione")) |> 
   gather(modulo, dias) |> 
@@ -37,6 +35,7 @@ dres <- data |>
   summarise(votos = sum(indicador)) |> 
   ungroup()
 
+
 ggplot(dres, aes(dia, fct_rev(modulo))) +
   geom_tile(aes(fill = votos)) +
   geom_text(aes(label = votos), color = "white") + 
@@ -48,8 +47,5 @@ ggplot(dres, aes(dia, fct_rev(modulo))) +
   scale_x_discrete(position = "top") +
   labs(x = NULL, y = NULL) + 
   theme_minimal() +
-  theme(
-    legend.position = "bottom",
-    legend.key.width = unit(2, "cm"))
-  )
+  theme(legend.position = "bottom", legend.key.width = unit(2, "cm"))
   

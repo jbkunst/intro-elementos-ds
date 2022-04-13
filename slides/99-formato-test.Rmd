@@ -1,42 +1,37 @@
 ---
-title: "Presentation Ninja"
-subtitle: "&#x2694;&#xFE0F; xaringan +<br/>&#x1F60E; xaringanthemer"  
-author: 
-  - "Yihui Xie"
-  - "Garrick Aden-Buie"
+title: "{ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2  d|2s|2{202201}[26°c[10°c]"
+pagetitle: "Intro DS - 99-formato-test"
+subtitle: "99-formato-test"
+author: "<br>Joshua Kunst<br>@jbkunst"
 date: '`r Sys.Date()`'
 output:
   xaringan::moon_reader:
-    css: xaringan-themer.css
+    self_contained: no
+    css: ["css/xaringan-themer.css", "css/title-slide.css"]
+    lib_dir: libs    
     nature:
+      titleSlideClass: ["left", "middle"]
       slideNumberFormat: "%current%"
       highlightStyle: github
       highlightLines: true
       ratio: 16:9
       countIncrementalSlides: true
+editor_options: 
+  chunk_output_type: console
 ---
 
+
 ```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(
-  fig.width=9, fig.height=3.5, fig.retina=3,
-  out.width = "100%",
-  cache = FALSE,
-  echo = TRUE,
-  message = FALSE, 
-  warning = FALSE,
-  hiline = TRUE
-)
+source("R/00-xaringan-knitr-setup.R")
 ```
 
-```{r xaringan-themer, include=FALSE, warning=FALSE}
-library(xaringanthemer)
-style_duo_accent(
-  primary_color = "#1381B0",
-  secondary_color = "#FF961C",
-  inverse_header_color = "#FFFFFF"
-)
+## Metadata
+
+```{r}
+dplyr::glimpse(rmarkdown::metadata)
 ```
+
+---
 
 ## Typography
 
@@ -55,6 +50,56 @@ Himenaeos suspendisse leo varius mus risus sagittis aliquet venenatis duis nec.
 - Consectetur aliquet mauris blandit
 
 - Ipsum dis nec porttitor urna sed
+
+---
+
+## Paquete `ggplot2`
+
+```{r, echo=FALSE}
+library(gapminder)
+library(ggplot2)
+
+# ggplot(gapminder |> dplyr::filter(year >= 1992)) +
+ggplot(gapminder |> dplyr::filter(year  == max(year))) +  
+  aes(x = gdpPercap, y = lifeExp, size = pop, color = continent) +
+  geom_point() +
+  scale_color_pres_d() +
+  scale_x_log10(labels = scales::comma) +
+  scale_size(guide = "none") + 
+  facet_wrap(~year) +
+  labs(
+    title = "Un Título",
+    subtitle = "Texto un poco más largo",
+    x = "Variable eje x",
+    y = "Valor variable horizontal",
+    caption = "Esto será el origen de datos o algo similar?"
+    )
+```
+
+
+
+---
+
+class: highlight-last-item
+
+## Hola! <br/> Soy Joshua
+
+--
+
+
+- Soy estadístico.
+
+--
+
+- Me gusta programar (en R!).
+
+--
+
+- Escribo código para comer. Y como para escribir código.
+
+--
+
+- Mi __misión__ es motivarlos en los que veremos hoy!
 
 ---
 name: colors
@@ -297,14 +342,14 @@ layout: true
 
 ---
 
-```{r plot-example, eval=requireNamespace("ggplot2", quietly=TRUE)}
+```{r eval=requireNamespace("ggplot2", quietly=TRUE)}
 library(ggplot2)
 (g <- ggplot(mpg) + aes(hwy, cty, color = class) + geom_point())
 ```
 
 ---
 
-```{r plot-example-themed, eval=requireNamespace("showtext", quietly=TRUE) && requireNamespace("ggplot2", quietly=TRUE)}
+```{r eval=requireNamespace("showtext", quietly=TRUE) && requireNamespace("ggplot2", quietly=TRUE)}
 g + xaringanthemer::theme_xaringan(text_font_size = 16, title_font_size = 18) +
   ggtitle("A Plot About Cars")
 ```

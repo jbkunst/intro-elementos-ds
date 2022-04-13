@@ -1,0 +1,74 @@
+---
+title: "{ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2  d|2s|2{202201}[26°c[10°c]"
+pagetitle: "01-Bienvenida-R-Rstudio-copy-paste"
+subtitle: "01 Bienvenida R Rstudio Copy Paste"
+author: "<br>Joshua Kunst<br>@jbkunst"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    self_contained: no
+    css: ["css/xaringan-themer.css", "css/title-slide.css"]
+    lib_dir: libs    
+    nature:
+      titleSlideClass: ["left", "middle"]
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+
+source(here::here("R/00-xaringan-knitr-setup.R"))
+```
+
+## Antes de empezar
+
+- Repositorio del curso https://github.com/jbkunst/usach-ingemat-intro-elementos-ds-202201 
+encontraremos el programa, clases, datos.
+
+- La bibliografía principal será _R para ciencia de datos_ https://es.r4ds.hadley.nz/, 
+nos servirá como guía en nuestro programa.
+
+---
+
+## R y Rstudio 
+
+R es el lenguaje de programación que utilizaremos (como C++, python) y RStudio es un IDE para
+R (como PyCharm para python por ejemplo).
+
+Para utilizar R se puede hacer, en un principio, de dos maneras:
+
+1. Instalar R y RStuiod en tu PC.
+2. Utilizar desde la nube con https://rstudio.cloud/.
+
+Más detalles en las diferencias en https://github.com/rivaquiroga/taller-r-doctorado-educacion-2022/blob/master/preparacion-instalacion.md
+
+Para conocer un poco más de RStudio https://github.com/rivaquiroga/RLadies-Santiago/blob/master/primeros_pasos_en_R.md.
+
+Cada uno de los links son de autoría de [Riva Quiroga](https://rivaquiroga.cl/).
+
+---
+
+## Copy & Paste 
+
+
+**Definicion/Jerga** Un _script_ es un archivo de texto que posee instrucciones de un
+lenguage de programación.
+
+Copie y pegue el script ubicado en https://raw.githubusercontent.com/jbkunst/usach-ingemat-intro-elementos-ds-202201/main/R/00-horarios.R 
+en la consola de Rstudio.
+
+1. Corra el código línea por línea.
+1. Revise el código e intente leer/intuir/entender/suponer cada una de las instrucciones que 
+se realizan.
+1. Indique que funciones son las más faciles de conocer su actuar.
+1. Ahora las más difíciles.
+1. Modifique alguno de los argumentos para obtener un resultado levemente diferente (color, textos, etc.)
+
+
+

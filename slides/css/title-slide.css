@@ -1,0 +1,31 @@
+@import url('https://fonts.cdnfonts.com/css/datalegreya');
+
+.title-slide {
+  background-image: url(../images/title-slide-bg.png);
+  background-size: cover;
+}
+
+.title-slide > h1 {
+  font-family: 'Datalegreya', sans-serif;
+  font-weight: 400;
+  font-size: 6em;
+}
+
+.title-slide > h1,
+.title-slide > h2 {
+  padding: 0px;
+  margin: 0px;
+}
+
+
+/* para que funciones la slide debe ir class: highlight-last-item */
+.highlight-last-item > ul > li, 
+.highlight-last-item > ol > li {
+  opacity: 0.5;
+}
+.highlight-last-item > ul > li:last-of-type,
+.highlight-last-item > ol > li:last-of-type {
+  opacity: 1;
+}
+
+*/

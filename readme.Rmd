@@ -1,5 +1,13 @@
-Introducción a los elementos del DS
-================
+---
+title: "Introducción a los elementos del DS"
+output: github_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
 ## Programa
 
@@ -19,33 +27,25 @@ Introducción a los elementos del DS
 
 3.  Análisis Exploratorio de datos.
 
-    -   Visualización de datos con ggplot2: Mapeos estéticos, separación
-        en facetas, geometrías. HTMLWidgets.
-    -   Transformación de datos: filtrar, ordenar, seleccionar,
-        transformaciones, resúmenes agrupados y transformaciones
-        agrupadas.
+    -   Visualización de datos con ggplot2: Mapeos estéticos, separación en facetas, geometrías. HTMLWidgets.
+    -   Transformación de datos: filtrar, ordenar, seleccionar, transformaciones, resúmenes agrupados y transformaciones agrupadas.
 
 4.  Manipulación de datos.
 
-    -   Importación y orígenes de información: texto plano, API, bases
-        de datos, Web scraping.
+    -   Importación y orígenes de información: texto plano, API, bases de datos, Web scraping.
     -   Datos ordenados: pivotar, separar y unir, valores faltantes.
-    -   Datos relacionales: uniones (joins) de transformación y
-        filtrado.
-    -   Manejo de strings y expresiones regulares. Manipulación de
-        factores y fechas.
+    -   Datos relacionales: uniones (joins) de transformación y filtrado.
+    -   Manejo de strings y expresiones regulares. Manipulación de factores y fechas.
 
 5.  Elementos de la programación.
 
-    -   Estructura de código. Pipes, pasos intermedios, sobrescribir,
-        composición funciones. 
+    -   Estructura de código. Pipes, pasos intermedios, sobrescribir, composición funciones. 
     -   Funciones, argumentos, condicionales, estilo de código.
     -   Iteraciones. Bucles for, funcionales, map.
 
 6.  Modelamiento.
 
-    -   Conceptos básicos: predicción, error, sesgo, métricas de
-        evaluación.
+    -   Conceptos básicos: predicción, error, sesgo, métricas de evaluación.
     -   Modelos de Regresión: Lineal y Logística.
     -   Árboles de decisión.
     -   Random Forests. Ideas tras Bagging y Boosting.
@@ -58,4 +58,11 @@ Introducción a los elementos del DS
     -   Reportería automática con Rmarkdown y HTMLWidgets.
     -   Desarrollo aplicaciones web con shiny.
 
+
 ## Slides/Clases
+
+```{r}
+dir("slides") |> 
+  stringr::str_detect(".html")
+```
+
