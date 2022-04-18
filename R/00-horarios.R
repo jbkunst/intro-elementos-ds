@@ -1,10 +1,5 @@
 library(tidyverse)
 
-# texto comentado
-# library(showtext)
-# showtext_auto()
-# font_add_google("IBM Plex Sans")
-
 data <- read_csv("https://raw.githubusercontent.com/jbkunst/usach-ingemat-intro-elementos-ds-202201/main/data/202201%20-%20Intro%20DS.csv")
 
 glimpse(data)
