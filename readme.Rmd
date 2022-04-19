@@ -64,17 +64,24 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Slides
 
 ```{r, results='asis'}
-slides <- dir("slides") |> 
-  stringr::str_subset(".html")
+slides_files <- dir("slides", full.names = TRUE)  |> 
+  stringr::str_subset(".html") |> 
+  stringr::str_subset("99", negate = TRUE)
 
-slides_url <- file.path("https://jbkunst.github.io", "usach-ingemat-intro-elementos-ds-202201", "slides", slides)
+slides_url <- file.path(
+  "https://jbkunst.github.io",
+  "usach-ingemat-intro-elementos-ds-202201",
+  slides_files
+  )
 
-slides_nms <- slides |> 
+slides_nms <- slides_files |> 
+  stringr::str_replace("html$", "Rmd") |> 
+  purrr::map(rmarkdown::yaml_front_matter) |> 
+  purrr::map(purrr::pluck, "subtitle") |> 
   stringr::str_remove("^[0-9]+") |> 
-  stringr::str_remove("\\.html$") |> 
+  # stringr::str_remove("\\.html$") |> 
   stringr::str_replace_all("\\-", " ") |> 
-  stringr::str_trim() |> 
-  stringr::str_to_title()
+  stringr::str_trim()
 
 # n <-  "R Rstudio Copy Paste"
 # u <- "https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/01-R-Rstudio-copy-paste.html"
