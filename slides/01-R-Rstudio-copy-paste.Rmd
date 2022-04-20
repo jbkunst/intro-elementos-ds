@@ -7,7 +7,7 @@ date: '`r Sys.Date()`'
 output:
   xaringan::moon_reader:
     self_contained: no
-    css: ["css/xaringan-themer.css", "css/title-slide.css"]
+    css: ["css/xaringan-themer.css", "css/styles.css"]
     lib_dir: libs    
     nature:
       titleSlideClass: ["left", "middle"]
@@ -59,8 +59,7 @@ Cada uno de los links son de autoría de [Riva Quiroga](https://rivaquiroga.cl/)
 **Definicion/Jerga** Un _script_ es un archivo de texto que posee instrucciones de un
 lenguage de programación.
 
-Copie y pegue el script ubicado en https://raw.githubusercontent.com/jbkunst/usach-ingemat-intro-elementos-ds-202201/main/R/00-horarios.R 
-en la consola de Rstudio.
+Copie y pegue el script ubicado en [acá](https://raw.githubusercontent.com/jbkunst/usach-ingemat-intro-elementos-ds-202201/main/R/00-horarios.R) en el repositorio. Luego en la consola de Rstudio.
 
 1. Corra el código línea por línea.
 1. Revise el código e intente leer/intuir/entender/suponer cada una de las instrucciones que 

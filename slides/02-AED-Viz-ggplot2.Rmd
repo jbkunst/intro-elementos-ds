@@ -7,7 +7,7 @@ date: '`r Sys.Date()`'
 output:
   xaringan::moon_reader:
     self_contained: no
-    css: ["css/xaringan-themer.css", "css/title-slide.css"]
+    css: ["css/xaringan-themer.css", "css/styles.css"]
     lib_dir: libs    
     nature:
       titleSlideClass: ["left", "middle"]
@@ -148,6 +148,13 @@ ggplot(
     color = "Tipo tracción"
     )
 ```
+
+---
+
+## Ejercicio
+
+1. 
+
 
 ---
 

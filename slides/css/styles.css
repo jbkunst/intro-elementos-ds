@@ -29,3 +29,15 @@
   opacity: 1;
 }
 
+/* espacio para los ul y los  */
+p {
+  line-height: 1.6;
+}
+
+li {
+  margin-bottom: 20px;
+}
+
+li:last-child {
+ margin-bottom: 0px;
+}
