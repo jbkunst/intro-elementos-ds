@@ -22,20 +22,157 @@ editor_options:
 
 
 ```{r setup, include=FALSE}
-
 source(here::here("R/00-xaringan-knitr-setup.R"))
+
+library(flipbookr)
 ```
 
 ## Análisis Exploratorio de Datos
 
+El **Análisis Exploratorio de Datos** se refiere a un ciclo iterativo en el que:
+
+- Generas preguntas acerca de tus datos.
+- Buscas respuestas visualizando, transformando y modelando tus datos.
+- Usas lo que has aprendido para refinar tus preguntas y/o generar nuevas interrogantes.
+
+Lo anterior es un _copy & paste_ desde [R4DS](https://es.r4ds.hadley.nz/an%C3%A1lisis-exploratorio-de-datos-eda.html#an%C3%A1lisis-exploratorio-de-datos-eda).
+
+
+```{r out.width="60%", fig.align='center', echo=FALSE}
+knitr::include_graphics("images/data-science-explore.svg")
+```
 
 
 ---
 
 ## Visualización
 
+Definiremos la visualización, en el contexto de análisis de datos, como una manera
+de representar/codificar información, y por tanto una herramienta para analizar
+datos.
+
+```{r out.width="60%", fig.align='center', echo=FALSE}
+knitr::include_graphics("images/data-viz.jpg")
+```
+
 ---
 
 ## `ggplot2`
 
+```{r out.width="50%", fig.align='center', echo=FALSE}
+knitr::include_graphics("images/viz-mapping-vars.png")
+```
+
+De forma general:
+
+```
+ggplot(data = <DATOS>) +
+  <GEOM_FUNCIÓN>(mapping = aes(<MAPEOS>))
+```
+
+---
+
+## `ggplot2`
+
+```{r out.width="50%", fig.align='center', echo=FALSE}
+knitr::include_graphics("images/viz-mapping-vars.png")
+```
+
+De forma particular:
+
+```
+ggplot(data = datos) +
+  geom_point(mapping = aes(x = foo, y = bar, size = zaz))
+```
+
+---
+
+## Hagamos un _copy & paste_
+
+```{r out.width="70%", fig.align='center'}
+library(datos)
+library(ggplot2)
+
+ggplot(data = millas) +
+  geom_point(mapping = aes(x = cilindrada, y = autopista))
+```
+
+---
+
+## Hagamos un _copy & paste_ (v2)
+
+```{r out.width="70%", fig.align='center'}
+library(datos)
+library(ggplot2)
+
+ggplot(millas) +
+  geom_point(aes(cilindrada, autopista))
+```
+
+---
+
+## Revisemos los datos
+
+```{r out.width="70%", fig.align='center'}
+library(dplyr)
+
+glimpse(millas)
+```
+
+---
+
+```{r, include=FALSE}
+ggplot2::theme_set(
+  ggplot2::theme_gray(base_size = 7) +
+  theme(legend.position = "bottom")
+)
+```
+
+`r flipbookr::chunk_reveal("millas2", break_type = "auto", title = "## Paso a paso", widths = c(1, 1), chunk_options = "fig.height = 2.7, fig.width = 3")`
+
+```{r millas2, include = FALSE}
+ggplot(
+  millas, 
+  aes(cilindrada, autopista)
+  ) +
+  geom_point(aes(color = traccion)) +
+  geom_smooth() +
+  scale_color_viridis_d(option = "magma") +
+  facet_wrap(vars(anio)) +
+  labs(
+    title = "Un hermoso título",
+    subtitle = "Un bellos y extenso subtítulo",
+    caption = "Un texto que nadie mira",
+    x = "Cilindrada vehículo cc",
+    y = "Rendimiento en autopista km/lts",
+    color = "Tipo tracción"
+    )
+```
+
+---
+
+## Mas información sobre visualización
+
+- [Visualización de datos](https://es.r4ds.hadley.nz/visualizaci%C3%B3n-de-datos.html#introducci%C3%B3n-1) en R4DS.
+
+- A _simple_ intro to `ggplot2`. [Post](https://www.rforecology.com/post/a-simple-introduction-to-ggplot2/).
+
+- Visualización desde el análisis de datos. [Slides](https://jkunst.com/slides/202107-visualizacion-desde-el-analsis-de-datos/index.html).
+
+
+
+---
+
+## Dinámicas de clase
+
+### Online
+  - Objetivo principal: Mostrar contenidos, ejemplos y fuentes de información. Programar en conjunto (pair programming).
+  - Horario: Miércoles 18.45-20.10 
+  - Lugar: Via google meet https://meet.google.com/upx-rxan-vwt
+
+
+### Presencial
+  - Objetivo principal: Realizar ejercicios, responder dudas y repasar contenidos previos.
+  - Horario: Jueves 17:10-18:40.
+  - Lugar: Laboratorio 208. 
 

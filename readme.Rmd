@@ -89,3 +89,17 @@ slides_nms <- slides_files |>
 purrr::walk2(slides_nms, slides_url, ~ {cat(stringr::str_glue("1. [{ n }]({ u })", n = .x, u = .y)); cat("\n")})
 ```
 
+
+## Dinámicas de clase
+
+### Online
+  - Objetivo principal: Mostrar contenidos, ejemplos y fuentes de información. Programar en conjunto (pair programming).
+  - Horario: Miércoles 18.45-20.10 
+  - Lugar: Via google meet https://meet.google.com/upx-rxan-vwt
+
+
+### Presencial
+  - Objetivo principal: Realizar ejercicios, responder dudas y repasar contenidos previos.
+  - Horario: Jueves 17:10-18:40.
+  - Lugar: Laboratorio 208. 
+

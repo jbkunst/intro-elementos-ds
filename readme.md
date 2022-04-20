@@ -3,6 +3,9 @@ Introducción a los elementos del DS
 
 -   [Programa](#programa)
 -   [Slides](#slides)
+-   [Dinámicas de clase](#dinámicas-de-clase)
+    -   [Online](#online)
+    -   [Presencial](#presencial)
 
 ## Programa
 
@@ -67,3 +70,19 @@ Introducción a los elementos del DS
     Paste](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/01-R-Rstudio-copy-paste.html)
 2.  [AED Viz
     ggplot2](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/02-AED-Viz-ggplot2.html)
+
+## Dinámicas de clase
+
+### Online
+
+-   Objetivo principal: Mostrar contenidos, ejemplos y fuentes de
+    información. Programar en conjunto (pair programming).
+-   Horario: Miércoles 18.45-20.10
+-   Lugar: Via google meet <https://meet.google.com/upx-rxan-vwt>
+
+### Presencial
+
+-   Objetivo principal: Realizar ejercicios, responder dudas y repasar
+    contenidos previos.
+-   Horario: Jueves 17:10-18:40.
+-   Lugar: Laboratorio 208.

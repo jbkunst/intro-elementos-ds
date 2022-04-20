@@ -2,6 +2,7 @@
 PARS <- list(
   color_main       =  "#47475C",
   color_background = "#FFFAFA", # snow white
+  color_light_gray = "#D3D3D3", # pale gray
   
   # https://www.quora.com/What-is-the-best-font-color-for-text-on-a-grey-background-screen
   # Dark Charcoal
@@ -11,6 +12,8 @@ PARS <- list(
   font_main        = "IBM Plex Sans",
   font_code        = "Fira Mono"
 )
+
+# scales::show_col(PARS$color_main)
 
 try(meta <- rmarkdown::metadata)
 
@@ -69,6 +72,10 @@ xaringanthemer::style_mono_accent(
   # base_font_size = "24px", # default is 20px
   # header_h1_font_size = "2.0rem", # "2.75rem",
   # header_h3_font_size = "1.5rem", # "2.75rem",
+  
+  link_decoration = stringr::str_glue("{PARS$color_light_gray} wavy underline"),
+    
+    
   
   outfile = here::here("slides/css/xaringan-themer.css")
 )
