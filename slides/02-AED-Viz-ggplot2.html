@@ -4,7 +4,7 @@
     <title>02-AED-Viz-ggplot2</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Joshua Kunst @jbkunst" />
-    <meta name="date" content="2022-04-20" />
+    <meta name="date" content="2022-04-21" />
     <script src="libs/header-attrs-2.13/header-attrs.js"></script>
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
@@ -16,7 +16,7 @@ class: left, middle, title-slide
 # {ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2 d|2s|2{202201}[26°c[10°c]
 ## 02 AED Viz ggplot2
 ### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
-### 2022-04-20
+### 2022-04-21
 
 ---
 
@@ -297,16 +297,153 @@ ggplot(
 
 ---
 
-## Ejercicio
-
-En un script de R:
+## Ejercicio: en un script de R:
 
 1. Cargue los paquetes `datos`, `ggplot2` y `dplyr`.
 1. Ejecute `glimpse(vuelos)`.
-1. Cuantos filas/columnas tienen los datos?
-1. Cuantos datos son numéricos?
+1. Objtenga una _muestra_ de 10.000 registros para responder las preguntas utilizando la funcion `sample_n`. 
+1. ¿Cuántos filas/columnas tienen los datos?
+1. ¿Cuántos datos son numéricos?
 1. Explore la relación entre `distancia` y `tiempo_vuelo`.
-1. Que otras preguntas tienes?
+1. ¿Qué otras preguntas tienes? ¿Como podríamos obtener QUE vuelo es el más largos?
+1. Reutiliza el código del ejemplo paso a paso para utilizar la función `facet_wrap` 
+con estos datos.
+
+---
+
+
+
+count: false
+ 
+## Sirve obtener una **muestra**?
+.panel1-vuelos_sample-5[
+
+```r
+vuelos2 &lt;- sample_n(vuelos, 5000)
+
+ggplot(vuelos2, aes(distancia, tiempo_vuelo)) +
+  geom_point(alpha = 0.05, color = "gray60") +
+  geom_smooth(se = FALSE, color = "darkred") +
+  scale_x_continuous(labels = scales::comma) +
+  scale_y_continuous(limits = c(0, 650))
+```
+]
+ 
+.panel2-vuelos_sample-5[
+&lt;img src="images/02-aed-viz-ggplot2/knitr-img-vuelos_sample_5_01_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## Sirve obtener una **muestra**?
+.panel1-vuelos_sample-5[
+
+```r
+vuelos2 &lt;- sample_n(vuelos, 5000)
+
+ggplot(vuelos2, aes(distancia, tiempo_vuelo)) +
+  geom_point(alpha = 0.05, color = "gray60") +
+  geom_smooth(se = FALSE, color = "darkred") +
+  scale_x_continuous(labels = scales::comma) +
+  scale_y_continuous(limits = c(0, 650))
+```
+]
+ 
+.panel2-vuelos_sample-5[
+&lt;img src="images/02-aed-viz-ggplot2/knitr-img-vuelos_sample_5_02_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## Sirve obtener una **muestra**?
+.panel1-vuelos_sample-5[
+
+```r
+vuelos2 &lt;- sample_n(vuelos, 5000)
+
+ggplot(vuelos2, aes(distancia, tiempo_vuelo)) +
+  geom_point(alpha = 0.05, color = "gray60") +
+  geom_smooth(se = FALSE, color = "darkred") +
+  scale_x_continuous(labels = scales::comma) +
+  scale_y_continuous(limits = c(0, 650))
+```
+]
+ 
+.panel2-vuelos_sample-5[
+&lt;img src="images/02-aed-viz-ggplot2/knitr-img-vuelos_sample_5_03_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## Sirve obtener una **muestra**?
+.panel1-vuelos_sample-5[
+
+```r
+vuelos2 &lt;- sample_n(vuelos, 5000)
+
+ggplot(vuelos2, aes(distancia, tiempo_vuelo)) +
+  geom_point(alpha = 0.05, color = "gray60") +
+  geom_smooth(se = FALSE, color = "darkred") +
+  scale_x_continuous(labels = scales::comma) +
+  scale_y_continuous(limits = c(0, 650))
+```
+]
+ 
+.panel2-vuelos_sample-5[
+&lt;img src="images/02-aed-viz-ggplot2/knitr-img-vuelos_sample_5_04_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## Sirve obtener una **muestra**?
+.panel1-vuelos_sample-5[
+
+```r
+vuelos2 &lt;- sample_n(vuelos, 5000)
+
+ggplot(vuelos2, aes(distancia, tiempo_vuelo)) +
+  geom_point(alpha = 0.05, color = "gray60") +
+  geom_smooth(se = FALSE, color = "darkred") +
+  scale_x_continuous(labels = scales::comma) +
+  scale_y_continuous(limits = c(0, 650))
+```
+]
+ 
+.panel2-vuelos_sample-5[
+&lt;img src="images/02-aed-viz-ggplot2/knitr-img-vuelos_sample_5_05_output-1.svg" width="100%" /&gt;
+]
+
+&lt;style&gt;
+.panel1-vuelos_sample-5 {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-vuelos_sample-5 {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-vuelos_sample-5 {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
 
 
 
@@ -321,7 +458,7 @@ En un script de R:
 
 - Visualización desde el análisis de datos. [Slides](https://jkunst.com/slides/202107-visualizacion-desde-el-analsis-de-datos/index.html).
 
-
+- Más _flipbooks_ con el paquete [`flipbookr`](https://evamaerey.github.io/flipbooks/about).
 
 ---
 

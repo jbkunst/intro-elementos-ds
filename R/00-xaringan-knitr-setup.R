@@ -1,6 +1,7 @@
 # parameters --------------------------------------------------------------
 PARS <- list(
-  color_main       =  "#47475C",
+  color_main       =  "#ab6a47",
+  # color_main       =  "#47475C",
   color_background = "#FFFAFA", # snow white
   color_light_gray = "#D3D3D3", # pale gray
   
@@ -75,7 +76,9 @@ xaringanthemer::style_mono_accent(
   
   link_decoration = stringr::str_glue("{PARS$color_light_gray} wavy underline"),
     
-    
+  # title_slide_background_image = "hans_bbc.png",
+  # extra_css = list(),
+  # extra_fonts = list(),
   
   outfile = here::here("slides/css/xaringan-themer.css")
 )
