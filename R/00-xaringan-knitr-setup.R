@@ -19,11 +19,14 @@ PARS <- list(
 try(meta <- rmarkdown::metadata)
 
 if(exists("meta")){
-  # meta <- list(subtitle = "99 formato test")
+  # meta <- list(subtitle = "99 formato test <code><small>dplyr tidyr</small></code>")
 
   fig_path <- meta$subtitle |>
     stringr::str_to_lower() |>
-    stringr::str_replace_all("\\s+", "-")
+    stringr::str_replace_all("\\s+", "-") |> 
+    # https://stackoverflow.com/a/34344957/829971
+    rvest::read_html() |> 
+    rvest::html_text()
 
   fig_path <- file.path("images", fig_path, "knitr-img-")
 

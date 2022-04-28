@@ -69,7 +69,9 @@ Introducción a los elementos del DS
 1.  [Bienvenida R Rstudio Copy
     Paste](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/01-R-Rstudio-copy-paste.html)
 2.  [AED Viz
-    ggplot2](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/02-AED-Viz-ggplot2.html)
+    <code><small>ggplot2</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/02-AED-Viz-ggplot2.html)
+3.  [Transformación de datos <code><small>dplyr
+    tidyr</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/03-AED-Transformacion-de-datos-dplyr-tidyr.html)
 
 ## Dinámicas de clase
 

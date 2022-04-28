@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>03-AED-Transformación-de-datos-dplyr-tidyr</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Joshua Kunst @jbkunst" />
+    <meta name="date" content="2022-04-28" />
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: left, middle, title-slide
+
+# {ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2 d|2s|2{202201}[26°c[10°c]
+## 03 Transformación de datos <code><small>dplyr tidyr</small></code>
+### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
+### 2022-04-28
+
+---
+
+
+
+
+
+## Transformación de datos
+
+&gt; La visualización es una herramienta importante para la generación de conocimiento; sin embargo, es raro que obtengas los datos exactamente en la forma en que los necesitas. A menudo tendrás que crear algunas variables nuevas o resúmenes, o tal vez solo quieras cambiar el nombre de las variables o reordenar las observaciones para facilitar el trabajo con los datos.
+
+Lo anterior es un _copy &amp; paste_ desde [R4DS](https://es.r4ds.hadley.nz/transform.html).
+
+---
+
+## `dplyr` Lo básico
+
+En este capítulo, aprenderás las cinco funciones clave de **dplyr** que te permiten resolver la gran mayoría de tus desafíos de manipulación de datos:
+
+* Filtrar o elegir las observaciones por sus valores (`filter()` — del inglés filtrar).
+* Reordenar las filas (`arrange()` — del inglés organizar).
+* Seleccionar las variables por sus nombres (`select()` — del inglés seleccionar).
+* Crear nuevas variables con transformaciones de variables existentes (`mutate()` — del inglés mutar o transformar).
+* Contraer muchos valores en un solo resumen (`summarise()` — del inglés resumir).
+
+Todas estas funciones se pueden usar junto con `group_by()` (del inglés _agrupar por_), que cambia el alcance de cada función para que actúe ya no sobre todo el conjunto de datos sino de grupo en grupo.
+
+---
+
+## `dplyr` Lo básico (2)
+
+Todos los verbos funcionan de manera similar:
+
+1. El primer argumento es un *data frame*.
+
+2. Los argumentos posteriores describen qué hacer con el *data frame* usando los nombres de las variables (sin comillas).
+
+3. El resultado es un nuevo *data frame*.
+
+En conjunto, estas propiedades hacen que sea fácil encadenar varios pasos simples para lograr un resultado complejo.
+
+Nuevamente, lo anterior es un _copy &amp; paste_ desde [R4DS](https://es.r4ds.hadley.nz/transform.html).
+
+---
+
+background-image: url(images/dplyr/dplyr_filter.jpg)
+background-size: cover
+
+---
+
+## `filter` Seleccionar Filas
+
+&lt;img src="images/dplyr/filter.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## `filter` ejemplo
+
+&lt;img src="images/dplyr/filter_example.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+count: false
+ 
+## &lt;code&gt;filter&lt;/code&gt; Código
+.panel1-filter-auto[
+
+```r
+*storms
+```
+]
+ 
+.panel2-filter-auto[
+
+```
+## # A tibble: 6 x 4
+##   storm    wind pressure date      
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;    
+## 1 Alberto   110     1007 2000-08-03
+## 2 Alex       45     1009 1998-07-27
+## 3 Allison    65     1005 1995-06-03
+## 4 Ana        40     1013 1997-06-30
+## 5 Arlene     50     1010 1999-06-11
+## 6 Arthur     45     1010 1996-06-17
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;filter&lt;/code&gt; Código
+.panel1-filter-auto[
+
+```r
+storms |&gt;
+* filter(storm %in% c("Alberto", "Ana"))
+```
+]
+ 
+.panel2-filter-auto[
+
+```
+## # A tibble: 2 x 4
+##   storm    wind pressure date      
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;    
+## 1 Alberto   110     1007 2000-08-03
+## 2 Ana        40     1013 1997-06-30
+```
+]
+
+&lt;style&gt;
+.panel1-filter-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+## `select` Seleccionar Columnas
+
+&lt;img src="images/dplyr/select.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## `select` ejemplo
+
+&lt;img src="images/dplyr/select_example.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+count: false
+ 
+## &lt;code&gt;select&lt;/code&gt; Código
+.panel1-select-auto[
+
+```r
+*storms
+```
+]
+ 
+.panel2-select-auto[
+
+```
+## # A tibble: 6 x 4
+##   storm    wind pressure date      
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;    
+## 1 Alberto   110     1007 2000-08-03
+## 2 Alex       45     1009 1998-07-27
+## 3 Allison    65     1005 1995-06-03
+## 4 Ana        40     1013 1997-06-30
+## 5 Arlene     50     1010 1999-06-11
+## 6 Arthur     45     1010 1996-06-17
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;select&lt;/code&gt; Código
+.panel1-select-auto[
+
+```r
+storms |&gt;
+* select(storm, pressure)
+```
+]
+ 
+.panel2-select-auto[
+
+```
+## # A tibble: 6 x 2
+##   storm   pressure
+##   &lt;chr&gt;      &lt;dbl&gt;
+## 1 Alberto     1007
+## 2 Alex        1009
+## 3 Allison     1005
+## 4 Ana         1013
+## 5 Arlene      1010
+## 6 Arthur      1010
+```
+]
+
+&lt;style&gt;
+.panel1-select-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-select-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-select-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+## `arrange` Ordenar Filas
+
+&lt;img src="images/dplyr/arrange.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## `arrange` ejemplo
+
+&lt;img src="images/dplyr/arrange_example.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+count: false
+ 
+## &lt;code&gt;arrange&lt;/code&gt; Código
+.panel1-arrange-auto[
+
+```r
+*storms
+```
+]
+ 
+.panel2-arrange-auto[
+
+```
+## # A tibble: 6 x 4
+##   storm    wind pressure date      
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;    
+## 1 Alberto   110     1007 2000-08-03
+## 2 Alex       45     1009 1998-07-27
+## 3 Allison    65     1005 1995-06-03
+## 4 Ana        40     1013 1997-06-30
+## 5 Arlene     50     1010 1999-06-11
+## 6 Arthur     45     1010 1996-06-17
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;arrange&lt;/code&gt; Código
+.panel1-arrange-auto[
+
+```r
+storms |&gt;
+* arrange(wind)
+```
+]
+ 
+.panel2-arrange-auto[
+
+```
+## # A tibble: 6 x 4
+##   storm    wind pressure date      
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;    
+## 1 Ana        40     1013 1997-06-30
+## 2 Alex       45     1009 1998-07-27
+## 3 Arthur     45     1010 1996-06-17
+## 4 Arlene     50     1010 1999-06-11
+## 5 Allison    65     1005 1995-06-03
+## 6 Alberto   110     1007 2000-08-03
+```
+]
+
+&lt;style&gt;
+.panel1-arrange-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-arrange-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-arrange-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+background-image: url(images/dplyr/dplyr_mutate.png)
+background-size: contain
+
+---
+
+## `mutate` Crear (o transformar) Columnas
+
+&lt;img src="images/dplyr/mutate.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## `mutate` ejemplo
+
+&lt;img src="images/dplyr/mutate_example.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+count: false
+ 
+## &lt;code&gt;mutate&lt;/code&gt; Código
+.panel1-mutate-auto[
+
+```r
+*storms
+```
+]
+ 
+.panel2-mutate-auto[
+
+```
+## # A tibble: 6 x 4
+##   storm    wind pressure date      
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;    
+## 1 Alberto   110     1007 2000-08-03
+## 2 Alex       45     1009 1998-07-27
+## 3 Allison    65     1005 1995-06-03
+## 4 Ana        40     1013 1997-06-30
+## 5 Arlene     50     1010 1999-06-11
+## 6 Arthur     45     1010 1996-06-17
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;mutate&lt;/code&gt; Código
+.panel1-mutate-auto[
+
+```r
+storms %&gt;%
+* mutate(
+*   ratio = pressure/wind,
+*   minverse = 1/ratio
+*   )
+```
+]
+ 
+.panel2-mutate-auto[
+
+```
+## # A tibble: 6 x 6
+##   storm    wind pressure date       ratio minverse
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Alberto   110     1007 2000-08-03  9.15   0.109 
+## 2 Alex       45     1009 1998-07-27 22.4    0.0446
+## 3 Allison    65     1005 1995-06-03 15.5    0.0647
+## 4 Ana        40     1013 1997-06-30 25.3    0.0395
+## 5 Arlene     50     1010 1999-06-11 20.2    0.0495
+## 6 Arthur     45     1010 1996-06-17 22.4    0.0446
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;mutate&lt;/code&gt; Código
+.panel1-mutate-auto[
+
+```r
+storms %&gt;%
+  mutate(
+    ratio = pressure/wind,
+    minverse = 1/ratio
+    ) |&gt;
+* mutate(wind = log(wind))
+```
+]
+ 
+.panel2-mutate-auto[
+
+```
+## # A tibble: 6 x 6
+##   storm    wind pressure date       ratio minverse
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Alberto  4.70     1007 2000-08-03  9.15   0.109 
+## 2 Alex     3.81     1009 1998-07-27 22.4    0.0446
+## 3 Allison  4.17     1005 1995-06-03 15.5    0.0647
+## 4 Ana      3.69     1013 1997-06-30 25.3    0.0395
+## 5 Arlene   3.91     1010 1999-06-11 20.2    0.0495
+## 6 Arthur   3.81     1010 1996-06-17 22.4    0.0446
+```
+]
+
+&lt;style&gt;
+.panel1-mutate-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-mutate-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-mutate-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+## `summarise` Resumir Columnas
+
+&lt;img src="images/dplyr/summarise.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## `summarise` ejemplo
+
+&lt;img src="images/dplyr/summarise_example.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+count: false
+ 
+## &lt;code&gt;summarise&lt;/code&gt; Código
+.panel1-summarise-auto[
+
+```r
+*pollution
+```
+]
+ 
+.panel2-summarise-auto[
+
+```
+## # A tibble: 6 x 3
+##   city     size  amount
+##   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
+## 1 New York large     23
+## 2 New York small     14
+## 3 London   large     22
+## 4 London   small     16
+## 5 Beijing  large    121
+## 6 Beijing  small     56
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;summarise&lt;/code&gt; Código
+.panel1-summarise-auto[
+
+```r
+pollution |&gt;
+* summarise(median = median(amount))
+```
+]
+ 
+.panel2-summarise-auto[
+
+```
+## # A tibble: 1 x 1
+##   median
+##    &lt;dbl&gt;
+## 1   22.5
+```
+]
+
+&lt;style&gt;
+.panel1-summarise-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-summarise-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-summarise-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+
+## `group_by |&gt; summarise` Resumir Columnas por Grupos
+
+&lt;img src="images/dplyr/group_by_summarize.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## `group_by |&gt; summarise` ejemplo
+
+&lt;img src="images/dplyr/group_by_summarize_example.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+count: false
+ 
+## &lt;code&gt;group_by |&gt; summarise&lt;/code&gt; Código
+.panel1-group_by-auto[
+
+```r
+*pollution
+```
+]
+ 
+.panel2-group_by-auto[
+
+```
+## # A tibble: 6 x 3
+##   city     size  amount
+##   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
+## 1 New York large     23
+## 2 New York small     14
+## 3 London   large     22
+## 4 London   small     16
+## 5 Beijing  large    121
+## 6 Beijing  small     56
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;group_by |&gt; summarise&lt;/code&gt; Código
+.panel1-group_by-auto[
+
+```r
+pollution %&gt;%
+* group_by(city)
+```
+]
+ 
+.panel2-group_by-auto[
+
+```
+## # A tibble: 6 x 3
+## # Groups:   city [3]
+##   city     size  amount
+##   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
+## 1 New York large     23
+## 2 New York small     14
+## 3 London   large     22
+## 4 London   small     16
+## 5 Beijing  large    121
+## 6 Beijing  small     56
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;group_by |&gt; summarise&lt;/code&gt; Código
+.panel1-group_by-auto[
+
+```r
+pollution %&gt;%
+  group_by(city) |&gt;
+* summarise(
+*   promedio = median(amount),
+*   suma = sum(amount),
+*   n = n()
+* )
+```
+]
+ 
+.panel2-group_by-auto[
+
+```
+## # A tibble: 3 x 4
+##   city     promedio  suma     n
+##   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+## 1 Beijing      88.5   177     2
+## 2 London       19      38     2
+## 3 New York     18.5    37     2
+```
+]
+
+&lt;style&gt;
+.panel1-group_by-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-group_by-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-group_by-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+
+## Ejercicio: en un script de R:
+
+1. Cargue el paquete `tidyverse`.
+1. Cree un data frame con columnas `x` e `y`, cada una de las columnas
+sea 1000 números aleatorios entre -1 y 1 (recuerde la función `runif`).
+1. Genere un gráfico de puntos visualizando como se relacionan las variables `x` e `y`.
+1. Con la función `mutate` cree una variable  `r` que sea igual a `x^2 + y^2`, es decir `\(x^2 + y^2\)`.
+1. Utilize la función `if_else` con el fin de generar una cuarta variable que si `r` es mayor que 1 entonces asigne el valor "A", en caso contrario "B". Llame esta variable como `r2`.
+1. Ahora vuelva generar el gráfico de 3. pero coloreando el punto de acuerdo a la variable construída en 5.
+1.  Utilice el _combo_ `group_by(r2) |&gt; count()` para contar cuantos son "A" y "B", y generar la columna `p = n/sum(n)`. 
+
+
+
+---
+
+## Mas información sobre transformación de datos
+
+- [Transformación de datos](https://es.r4ds.hadley.nz/transform.html) en R4DS.
+
+- [Tidy data tutor](https://tidydatatutor.com/vis.html), visualizar _pipelines_ de 
+transformación de datos.
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
