@@ -186,7 +186,7 @@ ggplot(vuelos2, aes(distancia, tiempo_vuelo)) +
 
 ---
 
-## Mas información sobre visualización
+## Más información sobre visualización
 
 - [Visualización de datos](https://es.r4ds.hadley.nz/visualizaci%C3%B3n-de-datos.html#introducci%C3%B3n-1) en R4DS.
 

@@ -169,13 +169,13 @@ knitr::include_graphics("images/dplyr/mutate_example.png")
 
 ---
 
-`r flipbookr::chunk_reveal("mutate", title = "## <code>mutate</code> Código", widths = c(1, 1))`
+`r flipbookr::chunk_reveal("mutate", title = "## <code>mutate</code> Código", widths = c(1, 2))`
 
 ```{r mutate, include = FALSE}
 storms |> 
   mutate(
     ratio = pressure/wind,
-    minverse = 1/ratio
+    inverse = 1/ratio
     ) |> 
   mutate(wind = log(wind))
 ```
@@ -230,11 +230,27 @@ knitr::include_graphics("images/dplyr/group_by_summarize_example.png")
 pollution %>%
   group_by(city) |>
   summarise(
-    promedio = median(amount),
-    suma = sum(amount),
+    mean = mean(amount),
+    sum = sum(amount),
     n = n()
   )
 ```
+
+
+---
+
+`r flipbookr::chunk_reveal("group_by_spanish", title = "## <code>group_by |> summarise</code> Código <small>(spanish version)</small>", widths = c(1, 1))`
+
+```{r group_by_spanish, include = FALSE}
+pollution %>%
+  group_by(city) |>
+  summarise(
+    promedio = mean(amount),
+    suma = sum(amount),
+    conteo = n()
+  )
+```
+
 
 ---
 
@@ -247,14 +263,14 @@ sea 1000 números aleatorios entre -1 y 1 (recuerde la función `runif`).
 1. Genere un gráfico de puntos visualizando como se relacionan las variables `x` e `y`.
 1. Con la función `mutate` cree una variable  `r` que sea igual a `x^2 + y^2`, es decir $x^2 + y^2$.
 1. Utilize la función `if_else` con el fin de generar una cuarta variable que si `r` es mayor que 1 entonces asigne el valor "A", en caso contrario "B". Llame esta variable como `r2`.
-1. Ahora vuelva generar el gráfico de 3. pero coloreando el punto de acuerdo a la variable construída en 5.
-1.  Utilice el _combo_ `group_by(r2) |> count()` para contar cuantos son "A" y "B", y generar la columna `p = n/sum(n)`. 
+1. Ahora vuelva generar el gráfico de 3. pero coloreando el punto de acuerdo a la variable `r2`.
+1.  Utilice el _combo_ `group_by(r2) |> summarise(...)` para contar cuantos son "A" y "B", y generar la columna `p = n/sum(n)`. 
 
 
 
 ---
 
-## Mas información sobre transformación de datos
+## Más información sobre transformación de datos
 
 - [Transformación de datos](https://es.r4ds.hadley.nz/transform.html) en R4DS.
 

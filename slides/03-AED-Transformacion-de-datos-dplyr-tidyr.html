@@ -406,7 +406,7 @@ count: false
 storms |&gt;
 * mutate(
 *   ratio = pressure/wind,
-*   minverse = 1/ratio
+*   inverse = 1/ratio
 *   )
 ```
 ]
@@ -415,14 +415,14 @@ storms |&gt;
 
 ```
 ## # A tibble: 6 x 6
-##   storm    wind pressure date       ratio minverse
-##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 Alberto   110     1007 2000-08-03  9.15   0.109 
-## 2 Alex       45     1009 1998-07-27 22.4    0.0446
-## 3 Allison    65     1005 1995-06-03 15.5    0.0647
-## 4 Ana        40     1013 1997-06-30 25.3    0.0395
-## 5 Arlene     50     1010 1999-06-11 20.2    0.0495
-## 6 Arthur     45     1010 1996-06-17 22.4    0.0446
+##   storm    wind pressure date       ratio inverse
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Alberto   110     1007 2000-08-03  9.15  0.109 
+## 2 Alex       45     1009 1998-07-27 22.4   0.0446
+## 3 Allison    65     1005 1995-06-03 15.5   0.0647
+## 4 Ana        40     1013 1997-06-30 25.3   0.0395
+## 5 Arlene     50     1010 1999-06-11 20.2   0.0495
+## 6 Arthur     45     1010 1996-06-17 22.4   0.0446
 ```
 ]
 
@@ -436,7 +436,7 @@ count: false
 storms |&gt;
   mutate(
     ratio = pressure/wind,
-    minverse = 1/ratio
+    inverse = 1/ratio
     ) |&gt;
 * mutate(wind = log(wind))
 ```
@@ -446,21 +446,21 @@ storms |&gt;
 
 ```
 ## # A tibble: 6 x 6
-##   storm    wind pressure date       ratio minverse
-##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 Alberto  4.70     1007 2000-08-03  9.15   0.109 
-## 2 Alex     3.81     1009 1998-07-27 22.4    0.0446
-## 3 Allison  4.17     1005 1995-06-03 15.5    0.0647
-## 4 Ana      3.69     1013 1997-06-30 25.3    0.0395
-## 5 Arlene   3.91     1010 1999-06-11 20.2    0.0495
-## 6 Arthur   3.81     1010 1996-06-17 22.4    0.0446
+##   storm    wind pressure date       ratio inverse
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Alberto  4.70     1007 2000-08-03  9.15  0.109 
+## 2 Alex     3.81     1009 1998-07-27 22.4   0.0446
+## 3 Allison  4.17     1005 1995-06-03 15.5   0.0647
+## 4 Ana      3.69     1013 1997-06-30 25.3   0.0395
+## 5 Arlene   3.91     1010 1999-06-11 20.2   0.0495
+## 6 Arthur   3.81     1010 1996-06-17 22.4   0.0446
 ```
 ]
 
 &lt;style&gt;
 .panel1-mutate-auto {
   color: black;
-  width: 49%;
+  width: 32.6666666666667%;
   hight: 32%;
   float: left;
   padding-left: 1%;
@@ -468,7 +468,7 @@ storms |&gt;
 }
 .panel2-mutate-auto {
   color: black;
-  width: 49%;
+  width: 65.3333333333333%;
   hight: 32%;
   float: left;
   padding-left: 1%;
@@ -658,8 +658,8 @@ count: false
 pollution %&gt;%
   group_by(city) |&gt;
 * summarise(
-*   promedio = median(amount),
-*   suma = sum(amount),
+*   mean = mean(amount),
+*   sum = sum(amount),
 *   n = n()
 * )
 ```
@@ -669,11 +669,11 @@ pollution %&gt;%
 
 ```
 ## # A tibble: 3 x 4
-##   city     promedio  suma     n
-##   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
-## 1 Beijing      88.5   177     2
-## 2 London       19      38     2
-## 3 New York     18.5    37     2
+##   city      mean   sum     n
+##   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+## 1 Beijing   88.5   177     2
+## 2 London    19      38     2
+## 3 New York  18.5    37     2
 ```
 ]
 
@@ -708,6 +708,123 @@ pollution %&gt;%
 
 
 
+
+---
+
+count: false
+ 
+## &lt;code&gt;group_by |&gt; summarise&lt;/code&gt; Código &lt;small&gt;(spanish version)&lt;/small&gt;
+.panel1-group_by_spanish-auto[
+
+```r
+*pollution
+```
+]
+ 
+.panel2-group_by_spanish-auto[
+
+```
+## # A tibble: 6 x 3
+##   city     size  amount
+##   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
+## 1 New York large     23
+## 2 New York small     14
+## 3 London   large     22
+## 4 London   small     16
+## 5 Beijing  large    121
+## 6 Beijing  small     56
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;group_by |&gt; summarise&lt;/code&gt; Código &lt;small&gt;(spanish version)&lt;/small&gt;
+.panel1-group_by_spanish-auto[
+
+```r
+pollution %&gt;%
+* group_by(city)
+```
+]
+ 
+.panel2-group_by_spanish-auto[
+
+```
+## # A tibble: 6 x 3
+## # Groups:   city [3]
+##   city     size  amount
+##   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
+## 1 New York large     23
+## 2 New York small     14
+## 3 London   large     22
+## 4 London   small     16
+## 5 Beijing  large    121
+## 6 Beijing  small     56
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;group_by |&gt; summarise&lt;/code&gt; Código &lt;small&gt;(spanish version)&lt;/small&gt;
+.panel1-group_by_spanish-auto[
+
+```r
+pollution %&gt;%
+  group_by(city) |&gt;
+* summarise(
+*   promedio = mean(amount),
+*   suma = sum(amount),
+*   conteo = n()
+* )
+```
+]
+ 
+.panel2-group_by_spanish-auto[
+
+```
+## # A tibble: 3 x 4
+##   city     promedio  suma conteo
+##   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;  &lt;int&gt;
+## 1 Beijing      88.5   177      2
+## 2 London       19      38      2
+## 3 New York     18.5    37      2
+```
+]
+
+&lt;style&gt;
+.panel1-group_by_spanish-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-group_by_spanish-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-group_by_spanish-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
 ---
 
 
@@ -719,14 +836,14 @@ sea 1000 números aleatorios entre -1 y 1 (recuerde la función `runif`).
 1. Genere un gráfico de puntos visualizando como se relacionan las variables `x` e `y`.
 1. Con la función `mutate` cree una variable  `r` que sea igual a `x^2 + y^2`, es decir `\(x^2 + y^2\)`.
 1. Utilize la función `if_else` con el fin de generar una cuarta variable que si `r` es mayor que 1 entonces asigne el valor "A", en caso contrario "B". Llame esta variable como `r2`.
-1. Ahora vuelva generar el gráfico de 3. pero coloreando el punto de acuerdo a la variable construída en 5.
-1.  Utilice el _combo_ `group_by(r2) |&gt; count()` para contar cuantos son "A" y "B", y generar la columna `p = n/sum(n)`. 
+1. Ahora vuelva generar el gráfico de 3. pero coloreando el punto de acuerdo a la variable `r2`.
+1.  Utilice el _combo_ `group_by(r2) |&gt; summarise(...)` para contar cuantos son "A" y "B", y generar la columna `p = n/sum(n)`. 
 
 
 
 ---
 
-## Mas información sobre transformación de datos
+## Más información sobre transformación de datos
 
 - [Transformación de datos](https://es.r4ds.hadley.nz/transform.html) en R4DS.
 
