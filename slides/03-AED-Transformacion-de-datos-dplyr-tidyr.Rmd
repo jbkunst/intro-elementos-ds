@@ -172,7 +172,7 @@ knitr::include_graphics("images/dplyr/mutate_example.png")
 `r flipbookr::chunk_reveal("mutate", title = "## <code>mutate</code> Código", widths = c(1, 1))`
 
 ```{r mutate, include = FALSE}
-storms %>%
+storms |> 
   mutate(
     ratio = pressure/wind,
     minverse = 1/ratio

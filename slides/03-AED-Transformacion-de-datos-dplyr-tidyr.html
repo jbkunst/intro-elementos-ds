@@ -403,7 +403,7 @@ count: false
 .panel1-mutate-auto[
 
 ```r
-storms %&gt;%
+storms |&gt;
 * mutate(
 *   ratio = pressure/wind,
 *   minverse = 1/ratio
@@ -433,7 +433,7 @@ count: false
 .panel1-mutate-auto[
 
 ```r
-storms %&gt;%
+storms |&gt;
   mutate(
     ratio = pressure/wind,
     minverse = 1/ratio
