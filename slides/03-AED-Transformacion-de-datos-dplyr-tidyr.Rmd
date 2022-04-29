@@ -83,7 +83,7 @@ knitr::include_graphics("images/dplyr/filter.png")
 
 ## `filter` ejemplo
 
-```{r out.width='70%', fig.align='center', echo=FALSE}
+```{r out.width='80%', fig.align='center', echo=FALSE}
 knitr::include_graphics("images/dplyr/filter_example.png")
 ```
 
@@ -108,7 +108,7 @@ knitr::include_graphics("images/dplyr/select.png")
 
 ## `select` ejemplo
 
-```{r out.width='70%', fig.align='center', echo=FALSE}
+```{r out.width='80%', fig.align='center', echo=FALSE}
 knitr::include_graphics("images/dplyr/select_example.png")
 ```
 
@@ -133,7 +133,7 @@ knitr::include_graphics("images/dplyr/arrange.png")
 
 ## `arrange` ejemplo
 
-```{r out.width='70%', fig.align='center', echo=FALSE}
+```{r out.width='80%', fig.align='center', echo=FALSE}
 knitr::include_graphics("images/dplyr/arrange_example.png")
 ```
 
@@ -163,7 +163,7 @@ knitr::include_graphics("images/dplyr/mutate.png")
 
 ## `mutate` ejemplo
 
-```{r out.width='70%', fig.align='center', echo=FALSE}
+```{r out.width='80%', fig.align='center', echo=FALSE}
 knitr::include_graphics("images/dplyr/mutate_example.png")
 ```
 
@@ -192,7 +192,7 @@ knitr::include_graphics("images/dplyr/summarise.png")
 
 ## `summarise` ejemplo
 
-```{r out.width='70%', fig.align='center', echo=FALSE}
+```{r out.width='80%', fig.align='center', echo=FALSE}
 knitr::include_graphics("images/dplyr/summarise_example.png")
 ```
 
@@ -218,7 +218,7 @@ knitr::include_graphics("images/dplyr/group_by_summarize.png")
 
 ## `group_by |> summarise` ejemplo
 
-```{r out.width='70%', fig.align='center', echo=FALSE}
+```{r out.width='80%', fig.align='center', echo=FALSE}
 knitr::include_graphics("images/dplyr/group_by_summarize_example.png")
 ```
 
@@ -227,7 +227,7 @@ knitr::include_graphics("images/dplyr/group_by_summarize_example.png")
 `r flipbookr::chunk_reveal("group_by", title = "## <code>group_by |> summarise</code> Código", widths = c(1, 1))`
 
 ```{r group_by, include = FALSE}
-pollution %>%
+pollution |> 
   group_by(city) |>
   summarise(
     mean = mean(amount),
@@ -242,7 +242,7 @@ pollution %>%
 `r flipbookr::chunk_reveal("group_by_spanish", title = "## <code>group_by |> summarise</code> Código <small>(spanish version)</small>", widths = c(1, 1))`
 
 ```{r group_by_spanish, include = FALSE}
-pollution %>%
+pollution |> 
   group_by(city) |>
   summarise(
     promedio = mean(amount),
@@ -257,16 +257,71 @@ pollution %>%
 
 ## Ejercicio: en un script de R:
 
-1. Cargue el paquete `tidyverse`.
-1. Cree un data frame con columnas `x` e `y`, cada una de las columnas
+<small>
+
+1. Cargue el paquete `tidyverse`, y cree un data frame con columnas `x` e `y`, cada una de las columnas
 sea 1000 números aleatorios entre -1 y 1 (recuerde la función `runif`).
 1. Genere un gráfico de puntos visualizando como se relacionan las variables `x` e `y`.
 1. Con la función `mutate` cree una variable  `r` que sea igual a `x^2 + y^2`, es decir $x^2 + y^2$.
-1. Utilize la función `if_else` con el fin de generar una cuarta variable que si `r` es mayor que 1 entonces asigne el valor "A", en caso contrario "B". Llame esta variable como `r2`.
+1. Utilize la función `if_else` (y `mutate`) para generar una cuarta variable cuya definición es: si `r` es mayor que 1 entonces vale "A", en caso contrario "B". Llame esta variable como `r2`.
 1. Ahora vuelva generar el gráfico de 3. pero coloreando el punto de acuerdo a la variable `r2`.
-1.  Utilice el _combo_ `group_by(r2) |> summarise(...)` para contar cuantos son "A" y "B", y generar la columna `p = n/sum(n)`. 
+1. Utilice el _combo_ `group_by(r2) |> count()` para contar cuantos son "A" y "B", y luego generar la columna `p = n/sum(n)`. 
+1. Cree la columna `es_b` que indique con un 1 si el valor de `r2` es "B" y 0 si es "A", para luego
+crear la columna `convergencia` al aplicar la función `cummean` a la columna `es_b`.
+1. con ayuda de la función `row_number()` genere la columna `fila` y haga un gráfico de líneas 
+con `x = fila` e `y = 4 * convergencia`.
+</small>
 
 
+---
+
+
+`r flipbookr::chunk_reveal("solucion", title = "## Posible solución", widths = c(1, 1))`
+
+```{r solucion, include = FALSE}
+library(tidyverse)
+
+set.seed(123)
+
+df <- tibble(
+  x = runif(1000, -1, 1),
+  y = runif(1000, -1, 1)
+)
+
+df |> 
+  mutate(r = x^2 + y^2) |> 
+  mutate(r2 = if_else(r > 1, "A", "B")) |> 
+  mutate(es_b = if_else(r2 == "B", 1, 0)) |> 
+  mutate(conv = cummean(es_b)) |> 
+  mutate(fila = row_number()) 
+```
+
+---
+
+
+`r flipbookr::chunk_reveal("solucion2", title = "## Posible solución v2", widths = c(1, 1), chunk_options = "fig.height = 2.7, fig.width = 3")`
+
+```{r solucion2, include = FALSE}
+library(tidyverse)
+
+set.seed(123)
+
+df <- tibble(
+  x = runif(10000, -1, 1),
+  y = runif(10000, -1, 1)
+)
+
+df |> 
+  mutate(
+    r = x^2 + y^2,
+    ri = r < 1,
+    conv = cummean(ri),
+    row = row_number()
+    ) |> 
+  ggplot() +
+  geom_line(aes(row, 4 * conv)) +
+  geom_hline(yintercept = pi, color = "darkred") 
+```
 
 ---
 
