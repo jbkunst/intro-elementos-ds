@@ -3,6 +3,7 @@ Introducción a los elementos del DS
 
 -   [Programa](#programa)
 -   [Slides](#slides)
+-   [Bibliografía](#bibliografía)
 -   [Dinámicas de clase](#dinámicas-de-clase)
     -   [Online](#online)
     -   [Presencial](#presencial)
@@ -26,29 +27,23 @@ Introducción a los elementos del DS
 3.  Análisis Exploratorio de datos.
 
     -   Visualización de datos con ggplot2: Mapeos estéticos, separación
-        en facetas, geometrías. HTMLWidgets.
+        en facetas, geometrías.
     -   Transformación de datos: filtrar, ordenar, seleccionar,
         transformaciones, resúmenes agrupados y transformaciones
         agrupadas.
+    -   Introducción al *Pipe* `|>`.
 
 4.  Manipulación de datos.
 
-    -   Importación y orígenes de información: texto plano, API, bases
-        de datos, Web scraping.
-    -   Datos ordenados: pivotar, separar y unir, valores faltantes.
     -   Datos relacionales: uniones (joins) de transformación y
         filtrado.
+    -   Datos ordenados: pivotar, separar y unir, valores faltantes.
     -   Manejo de strings y expresiones regulares. Manipulación de
         factores y fechas.
+    -   Importación y orígenes de información: texto plano, API, bases
+        de datos, Web scraping.
 
-5.  Elementos de la programación.
-
-    -   Estructura de código. Pipes, pasos intermedios, sobrescribir,
-        composición funciones. 
-    -   Funciones, argumentos, condicionales, estilo de código.
-    -   Iteraciones. Bucles for, funcionales, map.
-
-6.  Modelamiento.
+5.  Modelamiento.
 
     -   Conceptos básicos: predicción, error, sesgo, métricas de
         evaluación.
@@ -58,6 +53,13 @@ Introducción a los elementos del DS
     -   Importancia de variables.
     -   Modelos de Series de Tiempo.
     -   Métodos no supervisados, métodos de clustering.
+
+6.  Elementos de la programación.
+
+    -   Estructura de código. Pipes, pasos intermedios, sobrescribir,
+        composición funciones. 
+    -   Funciones, argumentos, condicionales, estilo de código.
+    -   Iteraciones. Bucles for, funcionales, map.
 
 7.  Comunicación de resultados.
 
@@ -70,8 +72,15 @@ Introducción a los elementos del DS
     Paste](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/01-R-Rstudio-copy-paste.html)
 2.  [AED Viz
     <code><small>ggplot2</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/02-AED-Viz-ggplot2.html)
-3.  [Transformación de datos <code><small>dplyr
-    tidyr</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/03-AED-Transformacion-de-datos-dplyr-tidyr.html)
+3.  [Transformación de datos
+    <code><small>dplyr</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/03-AED-Transformacion-de-datos-dplyr-tidyr.html)
+4.  [Manipulación de datos <code><small>dplyr
+    tidyr</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/04-Manipulacion-de-datos-dplyr-tidyr.html)
+
+## Bibliografía
+
+-   [R para Ciencia de Datos](https://es.r4ds.hadley.nz/).
+-   [R for Data Science](https://r4ds.hadley.nz/).
 
 ## Dinámicas de clase
 

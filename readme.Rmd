@@ -15,50 +15,51 @@ knitr::opts_chunk$set(echo = FALSE)
 
 1.  Hola!
 
-    -   Lo que sabemos hasta ahora
-    -   Lo que aprenderemos
-    -   Lo que podemos llegar a realizar
-    -   Nuestra dinámica
+    - Lo que sabemos hasta ahora
+    - Lo que aprenderemos
+    - Lo que podemos llegar a realizar
+    - Nuestra dinámica
 
-2.  Introducción a la programación con R.
+1.  Introducción a la programación con R.
 
-    -   Ambiente de programación Rstudio.
-    -   Proyectos y scripts.
-    -   Creación, manipulación y asignación de objetos.
-    -   Ejecutando código.
+    - Ambiente de programación Rstudio.
+    - Proyectos y scripts.
+    - Creación, manipulación y asignación de objetos.
+    - Ejecutando código.
 
-3.  Análisis Exploratorio de datos.
+1.  Análisis Exploratorio de datos.
 
-    -   Visualización de datos con ggplot2: Mapeos estéticos, separación en facetas, geometrías. HTMLWidgets.
-    -   Transformación de datos: filtrar, ordenar, seleccionar, transformaciones, resúmenes agrupados y transformaciones agrupadas.
+    - Visualización de datos con ggplot2: Mapeos estéticos, separación en facetas, geometrías.
+    - Transformación de datos: filtrar, ordenar, seleccionar, transformaciones, resúmenes agrupados y transformaciones agrupadas.
+    - Introducción al _Pipe_ `|>`.
 
-4.  Manipulación de datos.
+1.  Manipulación de datos.
 
-    -   Importación y orígenes de información: texto plano, API, bases de datos, Web scraping.
-    -   Datos ordenados: pivotar, separar y unir, valores faltantes.
-    -   Datos relacionales: uniones (joins) de transformación y filtrado.
-    -   Manejo de strings y expresiones regulares. Manipulación de factores y fechas.
+    - Datos relacionales: uniones (joins) de transformación y filtrado.
+    - Datos ordenados: pivotar, separar y unir, valores faltantes.
+    - Manejo de strings y expresiones regulares. Manipulación de factores y fechas.
+    - Importación y orígenes de información: texto plano, API, bases de datos, Web scraping.
 
-5.  Elementos de la programación.
+1.  Modelamiento.
 
-    -   Estructura de código. Pipes, pasos intermedios, sobrescribir, composición funciones. 
-    -   Funciones, argumentos, condicionales, estilo de código.
-    -   Iteraciones. Bucles for, funcionales, map.
+    - Conceptos básicos: predicción, error, sesgo, métricas de evaluación.
+    - Modelos de Regresión: Lineal y Logística.
+    - Árboles de decisión.
+    - Random Forests. Ideas tras Bagging y Boosting.
+    - Importancia de variables.
+    - Modelos de Series de Tiempo.
+    - Métodos no supervisados, métodos de clustering.
+    
+1.  Elementos de la programación.
 
-6.  Modelamiento.
+    - Estructura de código. Pipes, pasos intermedios, sobrescribir, composición funciones. 
+    - Funciones, argumentos, condicionales, estilo de código.
+    - Iteraciones. Bucles for, funcionales, map.    
 
-    -   Conceptos básicos: predicción, error, sesgo, métricas de evaluación.
-    -   Modelos de Regresión: Lineal y Logística.
-    -   Árboles de decisión.
-    -   Random Forests. Ideas tras Bagging y Boosting.
-    -   Importancia de variables.
-    -   Modelos de Series de Tiempo.
-    -   Métodos no supervisados, métodos de clustering.
+1.  Comunicación de resultados.
 
-7.  Comunicación de resultados.
-
-    -   Reportería automática con Rmarkdown y HTMLWidgets.
-    -   Desarrollo aplicaciones web con shiny.
+    - Reportería automática con Rmarkdown y HTMLWidgets.
+    - Desarrollo aplicaciones web con shiny.
 
 
 ## Slides
@@ -89,6 +90,10 @@ slides_nms <- slides_files |>
 purrr::walk2(slides_nms, slides_url, ~ {cat(stringr::str_glue("1. [{ n }]({ u })", n = .x, u = .y)); cat("\n")})
 ```
 
+## Bibliografía
+
+- [R para Ciencia de Datos](https://es.r4ds.hadley.nz/).
+- [R for Data Science](https://r4ds.hadley.nz/).
 
 ## Dinámicas de clase
 

@@ -63,7 +63,7 @@ knitr::include_graphics("images/data-viz.jpg")
 knitr::include_graphics("images/viz-mapping-vars.png")
 ```
 
-De forma general:
+De forma **general**:
 
 ```
 ggplot(data = <DATOS>) +
@@ -78,7 +78,7 @@ ggplot(data = <DATOS>) +
 knitr::include_graphics("images/viz-mapping-vars.png")
 ```
 
-De forma particular:
+De forma **particular**:
 
 ```
 ggplot(data = datos) +

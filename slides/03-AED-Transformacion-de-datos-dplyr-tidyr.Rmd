@@ -1,7 +1,7 @@
 ---
 title: "{ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2  d|2s|2{202201}[26°c[10°c]"
-pagetitle: "03-AED-Transformación-de-datos-dplyr-tidyr"
-subtitle: "03 Transformación de datos <code><small>dplyr tidyr</small></code>"
+pagetitle: "03-AED-Transformación-de-datos-dplyr"
+subtitle: "03 Transformación de datos <code><small>dplyr</small></code>"
 author: "<br>Joshua Kunst<br>@jbkunst"
 date: '`r Sys.Date()`'
 output:
@@ -322,6 +322,73 @@ df |>
   geom_line(aes(row, 4 * conv)) +
   geom_hline(yintercept = pi, color = "darkred") 
 ```
+
+---
+
+`r flipbookr::chunk_reveal("solucion3", title = "## Posible solución v3", widths = c(1, 1), chunk_options = "fig.height = 2.7, fig.width = 3")`
+
+```{r solucion3, include = FALSE}
+library(tidyverse)
+
+set.seed(123)
+
+tibble(
+  x = runif(10000, -1, 1),
+  y = runif(10000, -1, 1)
+) |> 
+  mutate(
+    r = x^2 + y^2,
+    ri = r < 1,
+    conv = cummean(ri),
+    row = row_number()
+  ) |> 
+  ggplot() +
+  geom_line(aes(row, 4 * conv)) +
+  geom_hline(yintercept = pi, color = "darkred") +
+  scale_x_continuous(labels = scales::comma_format()) +
+  scale_y_continuous(
+    sec.axis = sec_axis(trans = ~., breaks = pi, labels = expression(pi))
+  )
+```
+
+---
+  
+## El Pipe (_paip_) `|>`
+  
+Los pipes son una herramienta poderosa para expresar claramente una secuencia de múltiples operaciones. Hasta aquí, has venido usándolos sin saber cómo funcionan o qué alternativas existen. En este capítulo ya es tiempo de explorarlos en más detalle. En él aprenderás qué alternativas existen, cuándo no deberías utilizarlos y algunas herramientas útiles relacionadas.
+
+De forma general veremos que `z |> f()` es equivalente a `f(z)` y en el caso 
+de aplicar parámetros extras tenemos que `z |> g(y)` es `g(x, y)`.
+
+En el próximo ejemplo veremos que el **pipe** (`|>` o `%>%`) ayuda a la 
+legibilidad del código.
+
+Más en el capítulo [Pipes](https://es.r4ds.hadley.nz/pipes.html) en R4DS.
+
+
+---
+
+`r flipbookr::chunk_reveal("pipe", title = "## Ejemplo pipe", widths = c(1, 1))`
+
+```{r pipe, include = FALSE, echo=FALSE}
+x <- 34
+
+tan(cos(sqrt(log(x))))
+
+y <- x
+y <- log(y)
+y <- sqrt(y)
+y <- cos(y)
+y <- tan(y)
+y
+
+x |> 
+  log() |> 
+  sqrt() |> 
+  cos() |> 
+  tan()
+```
+
 
 ---
 

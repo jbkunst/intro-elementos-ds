@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>03-AED-Transformación-de-datos-dplyr-tidyr</title>
+    <title>03-AED-Transformación-de-datos-dplyr</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Joshua Kunst @jbkunst" />
-    <meta name="date" content="2022-04-29" />
+    <meta name="date" content="2022-05-02" />
     <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
@@ -14,9 +14,9 @@
 class: left, middle, title-slide
 
 # {ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2 d|2s|2{202201}[26°c[10°c]
-## 03 Transformación de datos <code><small>dplyr tidyr</small></code>
+## 03 Transformación de datos <code><small>dplyr</small></code>
 ### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
-### 2022-04-29
+### 2022-05-02
 
 ---
 
@@ -1358,7 +1358,7 @@ df |&gt;
 ]
  
 .panel2-solucion2-auto[
-&lt;img src="images/03-transformación-de-datos-dplyr-tidyr/knitr-img-solucion2_auto_06_output-1.svg" width="100%" /&gt;
+&lt;img src="images/03-transformación-de-datos-dplyr/knitr-img-solucion2_auto_06_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -1390,7 +1390,7 @@ df |&gt;
 ]
  
 .panel2-solucion2-auto[
-&lt;img src="images/03-transformación-de-datos-dplyr-tidyr/knitr-img-solucion2_auto_07_output-1.svg" width="100%" /&gt;
+&lt;img src="images/03-transformación-de-datos-dplyr/knitr-img-solucion2_auto_07_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -1423,7 +1423,7 @@ df |&gt;
 ]
  
 .panel2-solucion2-auto[
-&lt;img src="images/03-transformación-de-datos-dplyr-tidyr/knitr-img-solucion2_auto_08_output-1.svg" width="100%" /&gt;
+&lt;img src="images/03-transformación-de-datos-dplyr/knitr-img-solucion2_auto_08_output-1.svg" width="100%" /&gt;
 ]
 
 &lt;style&gt;
@@ -1452,6 +1452,739 @@ df |&gt;
   font-size: 80%
 }
 &lt;/style&gt;
+
+
+
+
+
+---
+
+count: false
+ 
+## Posible solución v3
+.panel1-solucion3-auto[
+
+```r
+*library(tidyverse)
+```
+]
+ 
+.panel2-solucion3-auto[
+
+]
+
+---
+count: false
+ 
+## Posible solución v3
+.panel1-solucion3-auto[
+
+```r
+library(tidyverse)
+
+*set.seed(123)
+```
+]
+ 
+.panel2-solucion3-auto[
+
+]
+
+---
+count: false
+ 
+## Posible solución v3
+.panel1-solucion3-auto[
+
+```r
+library(tidyverse)
+
+set.seed(123)
+
+*tibble(
+* x = runif(10000, -1, 1),
+* y = runif(10000, -1, 1)
+*) 
+```
+]
+ 
+.panel2-solucion3-auto[
+
+```
+## # A tibble: 10,000 x 2
+##          x      y
+##      &lt;dbl&gt;  &lt;dbl&gt;
+##  1 -0.425  -0.379
+##  2  0.577  -0.351
+##  3 -0.182   0.741
+##  4  0.766  -0.343
+##  5  0.881  -0.749
+##  6 -0.909  -0.288
+##  7  0.0562  0.861
+##  8  0.785   0.750
+##  9  0.103   0.640
+## 10 -0.0868 -0.956
+## # ... with 9,990 more rows
+```
+]
+
+---
+count: false
+ 
+## Posible solución v3
+.panel1-solucion3-auto[
+
+```r
+library(tidyverse)
+
+set.seed(123)
+
+tibble(
+  x = runif(10000, -1, 1),
+  y = runif(10000, -1, 1)
+) |&gt;
+* mutate(
+*   r = x^2 + y^2,
+*   ri = r &lt; 1,
+*   conv = cummean(ri),
+*   row = row_number()
+* )
+```
+]
+ 
+.panel2-solucion3-auto[
+
+```
+## # A tibble: 10,000 x 6
+##          x      y     r ri     conv   row
+##      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;int&gt;
+##  1 -0.425  -0.379 0.324 TRUE  1         1
+##  2  0.577  -0.351 0.456 TRUE  1         2
+##  3 -0.182   0.741 0.581 TRUE  1         3
+##  4  0.766  -0.343 0.704 TRUE  1         4
+##  5  0.881  -0.749 1.34  FALSE 0.8       5
+##  6 -0.909  -0.288 0.909 TRUE  0.833     6
+##  7  0.0562  0.861 0.745 TRUE  0.857     7
+##  8  0.785   0.750 1.18  FALSE 0.75      8
+##  9  0.103   0.640 0.421 TRUE  0.778     9
+## 10 -0.0868 -0.956 0.922 TRUE  0.8      10
+## # ... with 9,990 more rows
+```
+]
+
+---
+count: false
+ 
+## Posible solución v3
+.panel1-solucion3-auto[
+
+```r
+library(tidyverse)
+
+set.seed(123)
+
+tibble(
+  x = runif(10000, -1, 1),
+  y = runif(10000, -1, 1)
+) |&gt;
+  mutate(
+    r = x^2 + y^2,
+    ri = r &lt; 1,
+    conv = cummean(ri),
+    row = row_number()
+  ) |&gt;
+* ggplot()
+```
+]
+ 
+.panel2-solucion3-auto[
+&lt;img src="images/03-transformación-de-datos-dplyr/knitr-img-solucion3_auto_05_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## Posible solución v3
+.panel1-solucion3-auto[
+
+```r
+library(tidyverse)
+
+set.seed(123)
+
+tibble(
+  x = runif(10000, -1, 1),
+  y = runif(10000, -1, 1)
+) |&gt;
+  mutate(
+    r = x^2 + y^2,
+    ri = r &lt; 1,
+    conv = cummean(ri),
+    row = row_number()
+  ) |&gt;
+  ggplot() +
+* geom_line(aes(row, 4 * conv))
+```
+]
+ 
+.panel2-solucion3-auto[
+&lt;img src="images/03-transformación-de-datos-dplyr/knitr-img-solucion3_auto_06_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## Posible solución v3
+.panel1-solucion3-auto[
+
+```r
+library(tidyverse)
+
+set.seed(123)
+
+tibble(
+  x = runif(10000, -1, 1),
+  y = runif(10000, -1, 1)
+) |&gt;
+  mutate(
+    r = x^2 + y^2,
+    ri = r &lt; 1,
+    conv = cummean(ri),
+    row = row_number()
+  ) |&gt;
+  ggplot() +
+  geom_line(aes(row, 4 * conv)) +
+* geom_hline(yintercept = pi, color = "darkred")
+```
+]
+ 
+.panel2-solucion3-auto[
+&lt;img src="images/03-transformación-de-datos-dplyr/knitr-img-solucion3_auto_07_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## Posible solución v3
+.panel1-solucion3-auto[
+
+```r
+library(tidyverse)
+
+set.seed(123)
+
+tibble(
+  x = runif(10000, -1, 1),
+  y = runif(10000, -1, 1)
+) |&gt;
+  mutate(
+    r = x^2 + y^2,
+    ri = r &lt; 1,
+    conv = cummean(ri),
+    row = row_number()
+  ) |&gt;
+  ggplot() +
+  geom_line(aes(row, 4 * conv)) +
+  geom_hline(yintercept = pi, color = "darkred") +
+* scale_x_continuous(labels = scales::comma_format())
+```
+]
+ 
+.panel2-solucion3-auto[
+&lt;img src="images/03-transformación-de-datos-dplyr/knitr-img-solucion3_auto_08_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## Posible solución v3
+.panel1-solucion3-auto[
+
+```r
+library(tidyverse)
+
+set.seed(123)
+
+tibble(
+  x = runif(10000, -1, 1),
+  y = runif(10000, -1, 1)
+) |&gt;
+  mutate(
+    r = x^2 + y^2,
+    ri = r &lt; 1,
+    conv = cummean(ri),
+    row = row_number()
+  ) |&gt;
+  ggplot() +
+  geom_line(aes(row, 4 * conv)) +
+  geom_hline(yintercept = pi, color = "darkred") +
+  scale_x_continuous(labels = scales::comma_format()) +
+* scale_y_continuous(
+*   sec.axis = sec_axis(trans = ~., breaks = pi, labels = expression(pi))
+* )
+```
+]
+ 
+.panel2-solucion3-auto[
+&lt;img src="images/03-transformación-de-datos-dplyr/knitr-img-solucion3_auto_09_output-1.svg" width="100%" /&gt;
+]
+
+&lt;style&gt;
+.panel1-solucion3-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-solucion3-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-solucion3-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+  
+## El Pipe (_paip_) `|&gt;`
+  
+Los pipes son una herramienta poderosa para expresar claramente una secuencia de múltiples operaciones. Hasta aquí, has venido usándolos sin saber cómo funcionan o qué alternativas existen. En este capítulo ya es tiempo de explorarlos en más detalle. En él aprenderás qué alternativas existen, cuándo no deberías utilizarlos y algunas herramientas útiles relacionadas.
+
+De forma general veremos que `z |&gt; f()` es equivalente a `f(z)` y en el caso 
+de aplicar parámetros extras tenemos que `z |&gt; g(y)` es `g(x, y)`.
+
+En el próximo ejemplo veremos que el **pipe** (`|&gt;` o `%&gt;%`) ayuda a la 
+legibilidad del código.
+
+Más en el capítulo [Pipes](https://es.r4ds.hadley.nz/pipes.html) en R4DS.
+
+
+---
+
+
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+*x &lt;- 34
+```
+]
+ 
+.panel2-pipe-auto[
+
+]
+
+---
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+x &lt;- 34
+
+*tan(cos(sqrt(log(x))))
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+## [1] -0.311816
+```
+]
+
+---
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+x &lt;- 34
+
+tan(cos(sqrt(log(x))))
+
+*y &lt;- x
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+## [1] -0.311816
+```
+]
+
+---
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+x &lt;- 34
+
+tan(cos(sqrt(log(x))))
+
+y &lt;- x
+*y &lt;- log(y)
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+## [1] -0.311816
+```
+]
+
+---
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+x &lt;- 34
+
+tan(cos(sqrt(log(x))))
+
+y &lt;- x
+y &lt;- log(y)
+*y &lt;- sqrt(y)
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+## [1] -0.311816
+```
+]
+
+---
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+x &lt;- 34
+
+tan(cos(sqrt(log(x))))
+
+y &lt;- x
+y &lt;- log(y)
+y &lt;- sqrt(y)
+*y &lt;- cos(y)
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+## [1] -0.311816
+```
+]
+
+---
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+x &lt;- 34
+
+tan(cos(sqrt(log(x))))
+
+y &lt;- x
+y &lt;- log(y)
+y &lt;- sqrt(y)
+y &lt;- cos(y)
+*y &lt;- tan(y)
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+## [1] -0.311816
+```
+]
+
+---
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+x &lt;- 34
+
+tan(cos(sqrt(log(x))))
+
+y &lt;- x
+y &lt;- log(y)
+y &lt;- sqrt(y)
+y &lt;- cos(y)
+y &lt;- tan(y)
+*y 
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+## [1] -0.311816
+```
+
+```
+## [1] -0.311816
+```
+]
+
+---
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+x &lt;- 34
+
+tan(cos(sqrt(log(x))))
+
+y &lt;- x
+y &lt;- log(y)
+y &lt;- sqrt(y)
+y &lt;- cos(y)
+y &lt;- tan(y)
+y
+
+*x 
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+## [1] -0.311816
+```
+
+```
+## [1] -0.311816
+```
+
+```
+## [1] 34
+```
+]
+
+---
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+x &lt;- 34
+
+tan(cos(sqrt(log(x))))
+
+y &lt;- x
+y &lt;- log(y)
+y &lt;- sqrt(y)
+y &lt;- cos(y)
+y &lt;- tan(y)
+y
+
+x |&gt;
+* log()
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+## [1] -0.311816
+```
+
+```
+## [1] -0.311816
+```
+
+```
+## [1] 3.526361
+```
+]
+
+---
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+x &lt;- 34
+
+tan(cos(sqrt(log(x))))
+
+y &lt;- x
+y &lt;- log(y)
+y &lt;- sqrt(y)
+y &lt;- cos(y)
+y &lt;- tan(y)
+y
+
+x |&gt;
+  log() |&gt;
+* sqrt()
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+## [1] -0.311816
+```
+
+```
+## [1] -0.311816
+```
+
+```
+## [1] 1.877861
+```
+]
+
+---
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+x &lt;- 34
+
+tan(cos(sqrt(log(x))))
+
+y &lt;- x
+y &lt;- log(y)
+y &lt;- sqrt(y)
+y &lt;- cos(y)
+y &lt;- tan(y)
+y
+
+x |&gt;
+  log() |&gt;
+  sqrt() |&gt;
+* cos()
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+## [1] -0.311816
+```
+
+```
+## [1] -0.311816
+```
+
+```
+## [1] -0.3022616
+```
+]
+
+---
+count: false
+ 
+## Ejemplo pipe
+.panel1-pipe-auto[
+
+```r
+x &lt;- 34
+
+tan(cos(sqrt(log(x))))
+
+y &lt;- x
+y &lt;- log(y)
+y &lt;- sqrt(y)
+y &lt;- cos(y)
+y &lt;- tan(y)
+y
+
+x |&gt;
+  log() |&gt;
+  sqrt() |&gt;
+  cos() |&gt;
+* tan()
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+## [1] -0.311816
+```
+
+```
+## [1] -0.311816
+```
+
+```
+## [1] -0.311816
+```
+]
+
+&lt;style&gt;
+.panel1-pipe-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-pipe-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-pipe-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
 
 
 
