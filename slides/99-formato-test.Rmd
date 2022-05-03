@@ -22,7 +22,7 @@ editor_options:
 
 
 ```{r setup, include=FALSE}
-source("R/00-xaringan-knitr-setup.R")
+source(here::here("R/00-xaringan-knitr-setup.R"))
 ```
 
 ## Metadata

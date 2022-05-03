@@ -23,20 +23,17 @@ editor_options:
 
 ```{r setup, include=FALSE}
 source(here::here("R/00-xaringan-knitr-setup.R"))
-
-# library(dplyr)
-# 
-# storms <- readr::read_csv(here::here("data/storms.csv"))
-# pollution <- readr::read_csv(here::here("data/pollution.csv"))
-
-library(datos)
 ```
+
+class: inverse center middle
+
+# Datos ordenados
+
+---
 
 ## Datos ordenados
 
 En este capítulo aprenderás una manera consistente para organizar tus datos en R a la que llamaremos tidy data (datos ordenados). Llevar tus datos a este formato requiere algo de trabajo previo; sin embargo, dicho trabajo tiene retorno positivo en el largo plazo. Una vez que tengas tus datos ordenados y las herramientas para ordenar datos que provee el tidyverse, vas a gastar mucho menos tiempo pasando de una forma de representar datos a otra, lo que te permitirá destinar más tiempo a las preguntas analíticas.
-
-Este capítulo te dará una introducción práctica a los datos ordenados (o tidy data) y a las herramientas que provee el paquete tidyr. Si deseas aprender más acerca de la teoría subyacente, puede que te guste el artículo Tidy Data publicado en la revista Journal of Statistical Software,
 
 Lo anterior viene de [datos ordenados](https://es.r4ds.hadley.nz/datos-ordenados.html) de
 R4DS.
@@ -45,9 +42,11 @@ R4DS.
 
 ## Tabla 1
 
-Puedes representar los mismos datos subyacentes de múltiples formas. El ejemplo a continuación muestra los mismos datos organizados de cuatro maneras distintas. Cada dataset muestra los mismos valores de cuatro variables —pais, anio, poblacion y casos—, pero cada uno organiza los valores de forma distinta.
+Puedes representar los mismos datos subyacentes de múltiples formas. El ejemplo a continuación muestra los mismos datos organizados de cuatro maneras distintas. Cada dataset muestra los mismos valores de cuatro variables —pais, anio, poblacion y casos (de tuberculosis)—, pero cada uno organiza los valores de forma distinta.
 
 ```{r}
+library(datos)
+
 tabla1
 ```
 
@@ -55,6 +54,7 @@ tabla1
 
 ## Tabla 2
 
+Identifiquemos los valores asociados a pais, anio, poblacion y casos.
 
 ```{r}
 tabla2
@@ -64,6 +64,7 @@ tabla2
 
 ## Tabla 3
 
+Identifiquemos los valores asociados a pais, anio, poblacion y casos.
 
 ```{r}
 tabla3
@@ -73,6 +74,7 @@ tabla3
 
 ## Tabla 4a y 4b
 
+Identifiquemos los valores asociados a pais, anio, poblacion y casos.
 
 ```{r}
 tabla4a
@@ -82,9 +84,23 @@ tabla4b
 
 ---
 
-# Tablas!
+# Varias representaciones/misma información
 
-Las anteriores son representaciones de los mismos datos subyacentes, pero no todas son igualmente fáciles de usar. Un tipo de conjunto de datos, el conjunto de datos ordenado, será mucho más fácil de trabajar dentro del tidyverse.
+Las tablas:
+
+- `tabla1`
+- `tabla2`
+- `tabla3`
+- `tabla4a` y `tabla4b`
+
+Son representaciones de los mismos datos subyacentes, pero no todas son igualmente fáciles de usar. Por ejemplo, revisemos nuevamente las tablas y _obtenga la tasa de tuberculosis para cada país/año_.
+
+Un tipo de conjunto de datos, el conjunto de **datos ordenado**, será mucho más fácil de trabajar.
+
+
+---
+
+# Definición Datos ordenados
 
 Existen tres reglas interrelacionadas que hacen que un conjunto de datos sea ordenado:
 
@@ -92,6 +108,154 @@ Existen tres reglas interrelacionadas que hacen que un conjunto de datos sea ord
 - Cada observación debe tener su propia fila.
 - Cada valor debe tener su propia celda.
 
+
+```{r out.width="70%", fig.align='center', echo=FALSE}
+knitr::include_graphics("images/tidy-1.svg")
+```
+
+---
+
+## Pivotar
+
+Como previamente vimos ciertas tablas poseen los siguientes problemas.
+
+1. Una variable se extiende por varias columnas, por ejemplo `tabla4a`.
+1. Una observación está dispersa entre múltiples filas, por ejemplo la `tabla2`.
+
+Para solucionar estos problemas revisaremos dos funciones del paquete **tidyr** (que viene incluído en el paquet **tidyverse**, asi que cargas solamente este último), que son:
+
+- `pivot_longer` que es para pivotar a lo largo.
+- `pivot_wider` para pivotar a lo ancho.
+
+---
+
+## Datos largos
+
+Un problema común es cuando en un dataset los nombres de las columnas no representan nombres de variables, sino que representan los valores de una variable. Tomando el caso de la `tabla4a`: los nombres de las columnas `1999` y `2000` representan los valores de la variable año, los valores en las columnas `1999` y `2000` representan los valores de la variable casos.
+
+Para ordenar un dataset como este necesitamos tres parámetros:
+
+- El conjunto de columnas cuyos nombres son valores y no variables. En este ejemplo son las columnas `1999` y `2000`. Argumento `cols` que se refiere a las columnas a trabajar.
+- El nombre de la variable cuyos valores forman los nombres de las columnas. Argumento `names_to`.
+- El nombre de la variable cuyos valores están repartidos por las celdas. Argumento `values_to`.
+
+Con estos parámetros podemos utilizar la función `pivot_longer()` (pivotar a lo largo).
+
+
+---
+
+`r flipbookr::chunk_reveal("pivot_longer", title = "## Ejemplo <code>pivot_longer</code>", widths = c(1, 1))`
+
+```{r pivot_longer, include = FALSE}
+library(tidyverse)
+library(datos)
+
+tabla4a |> 
+  pivot_longer(
+    cols = c(`1999`, `2000`), 
+    names_to = "anio",
+    values_to = "casos"
+    )
+```
+
+---
+
+## Datos anchos
+
+`pivot_wider()` (pivotar a lo ancho) es lo opuesto de `pivot_longer()`. Se usa cuando una observación aparece en múltiples filas. Por ejemplo, considera la `tabla2`: una observación es un país en un año, pero cada observación aparece en dos filas.
+
+Para ordenar esto, primero analizamos la representación de un modo similar a cómo se haría con pivot_longer(). Esta vez, sin embargo, necesitamos únicamente dos parámetros:
+
+- La columna desde la que obtener los nombres de las variables. En este caso corresponde a tipo, argumento `names_from`.
+- La columna desde la que obtener los valores. En este caso corresponde a cuenta,
+argumento `values_from`.
+
+Una vez resuelto esto, podemos usar `pivot_wider()`, como se muestra en el siguiente ejemplo.
+
+---
+
+`r flipbookr::chunk_reveal("pivot_wider", title = "## Ejemplo <code>pivot_wider</code>", widths = c(1, 1))`
+
+```{r pivot_wider, include = FALSE}
+tabla2 |> 
+  pivot_wider(
+    names_from = tipo, 
+    values_from = cuenta
+    )
+```
+
+---
+
+`r flipbookr::chunk_reveal("pivot_longesr_wider_example", title = "## <code>pivot_longer</code> y <code>pivot_wider</code> no son simétricas", widths = c(1, 1))`
+
+```{r pivot_longesr_wider_example, include = FALSE}
+# no son perfectanente simétricas
+acciones <- tibble(
+  anio = c(2015, 2015, 2016, 2016),
+  semestre = c(1, 2, 1, 2),
+  retorno = c(1.88, 0.59, 0.92, 0.17)
+)
+
+acciones %>%
+  pivot_wider(
+    names_from = anio, 
+    values_from = retorno
+    ) %>% 
+  pivot_longer(
+    cols = `2015`:`2016`,
+    names_to = "anio",
+    values_to = "retorno"
+    )
+```
+
+
+---
+
+## Separar (y Unir)
+
+¿Qué pasa con `tabla3`? Ésta tiene un ~problema~ característica diferente: una columna
+contiene dos valores `casos` y `población`.
+
+Para solucionar este problema, necesitamos la función `separate()` (separar). También aprenderás acerca del complemento de `separate()`: `unite()` (unir), que se usa cuando una única variable se reparte en varias columnas.
+
+---
+
+`r flipbookr::chunk_reveal("separate_unite", title = "## Ejemplo <code>separate unite</code>", widths = c(1, 1))`
+
+```{r separate_unite, include = FALSE}
+tabla3 %>%
+  separate(
+    tasa, 
+    into = c("casos", "poblacion"), 
+    convert = TRUE # convierte al tipo adecuado
+  ) |> 
+  unite(
+    nueva_tasa, 
+    casos, poblacion,
+    sep = " dividido "
+    )
+```
+
+---
+
+# Ejercicios <small>`pivot_wider` / `pivot_longer` / `separate`</small>
+
+1. Para cada una de las tablas, realizar las transformaciones necesarias
+para obtener la tasa de casos de tuberculosis:
+
+  - `tabla1`
+  - `tabla2`
+  - `tabla3`
+  - `tabla4a` y `tabla4b`
+
+1. Para `tabla1` graficar la evolución de la tasa para cada país. ¿Qué
+observa?
+
+---
+
+class: inverse center middle
+
+# Datos relacionales
 
 ---
 
@@ -104,4 +268,4 @@ Las relaciones siempre se definen sobre un par de tablas. Todas las otras relaci
 Lo anterior viene de [datos relacionales](https://es.r4ds.hadley.nz/datos-relacionales.html) de
 R4DS.
 
- 
+

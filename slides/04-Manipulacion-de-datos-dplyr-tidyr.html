@@ -4,7 +4,7 @@
     <title>04-Manipulación-de-datos-tidyr</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Joshua Kunst @jbkunst" />
-    <meta name="date" content="2022-05-02" />
+    <meta name="date" content="2022-05-03" />
     <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
@@ -16,7 +16,7 @@ class: left, middle, title-slide
 # {ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2 d|2s|2{202201}[26°c[10°c]
 ## 04 Manipulación de datos <code><small>dplyr tidyr</small></code>
 ### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
-### 2022-05-02
+### 2022-05-03
 
 ---
 
@@ -24,11 +24,15 @@ class: left, middle, title-slide
 
 
 
+class: inverse center middle
+
+# Datos ordenados
+
+---
+
 ## Datos ordenados
 
 En este capítulo aprenderás una manera consistente para organizar tus datos en R a la que llamaremos tidy data (datos ordenados). Llevar tus datos a este formato requiere algo de trabajo previo; sin embargo, dicho trabajo tiene retorno positivo en el largo plazo. Una vez que tengas tus datos ordenados y las herramientas para ordenar datos que provee el tidyverse, vas a gastar mucho menos tiempo pasando de una forma de representar datos a otra, lo que te permitirá destinar más tiempo a las preguntas analíticas.
-
-Este capítulo te dará una introducción práctica a los datos ordenados (o tidy data) y a las herramientas que provee el paquete tidyr. Si deseas aprender más acerca de la teoría subyacente, puede que te guste el artículo Tidy Data publicado en la revista Journal of Statistical Software,
 
 Lo anterior viene de [datos ordenados](https://es.r4ds.hadley.nz/datos-ordenados.html) de
 R4DS.
@@ -37,10 +41,12 @@ R4DS.
 
 ## Tabla 1
 
-Puedes representar los mismos datos subyacentes de múltiples formas. El ejemplo a continuación muestra los mismos datos organizados de cuatro maneras distintas. Cada dataset muestra los mismos valores de cuatro variables —pais, anio, poblacion y casos—, pero cada uno organiza los valores de forma distinta.
+Puedes representar los mismos datos subyacentes de múltiples formas. El ejemplo a continuación muestra los mismos datos organizados de cuatro maneras distintas. Cada dataset muestra los mismos valores de cuatro variables —pais, anio, poblacion y casos (de tuberculosis)—, pero cada uno organiza los valores de forma distinta.
 
 
 ```r
+library(datos)
+
 tabla1
 ```
 
@@ -60,6 +66,7 @@ tabla1
 
 ## Tabla 2
 
+Identifiquemos los valores asociados a pais, anio, poblacion y casos.
 
 
 ```r
@@ -88,6 +95,7 @@ tabla2
 
 ## Tabla 3
 
+Identifiquemos los valores asociados a pais, anio, poblacion y casos.
 
 
 ```r
@@ -110,6 +118,7 @@ tabla3
 
 ## Tabla 4a y 4b
 
+Identifiquemos los valores asociados a pais, anio, poblacion y casos.
 
 
 ```r
@@ -140,9 +149,23 @@ tabla4b
 
 ---
 
-# Tablas!
+# Varias representaciones/misma información
 
-Las anteriores son representaciones de los mismos datos subyacentes, pero no todas son igualmente fáciles de usar. Un tipo de conjunto de datos, el conjunto de datos ordenado, será mucho más fácil de trabajar dentro del tidyverse.
+Las tablas:
+
+- `tabla1`
+- `tabla2`
+- `tabla3`
+- `tabla4a` y `tabla4b`
+
+Son representaciones de los mismos datos subyacentes, pero no todas son igualmente fáciles de usar. Por ejemplo, revisemos nuevamente las tablas y _obtenga la tasa de tuberculosis para cada país/año_.
+
+Un tipo de conjunto de datos, el conjunto de **datos ordenado**, será mucho más fácil de trabajar.
+
+
+---
+
+# Definición Datos ordenados
 
 Existen tres reglas interrelacionadas que hacen que un conjunto de datos sea ordenado:
 
@@ -150,6 +173,580 @@ Existen tres reglas interrelacionadas que hacen que un conjunto de datos sea ord
 - Cada observación debe tener su propia fila.
 - Cada valor debe tener su propia celda.
 
+
+&lt;img src="images/tidy-1.svg" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Pivotar
+
+Como previamente vimos ciertas tablas poseen los siguientes problemas.
+
+1. Una variable se extiende por varias columnas, por ejemplo `tabla4a`.
+1. Una observación está dispersa entre múltiples filas, por ejemplo la `tabla2`.
+
+Para solucionar estos problemas revisaremos dos funciones del paquete **tidyr** (que viene incluído en el paquet **tidyverse**, asi que cargas solamente este último), que son:
+
+- `pivot_longer` que es para pivotar a lo largo.
+- `pivot_wider` para pivotar a lo ancho.
+
+---
+
+## Datos largos
+
+Un problema común es cuando en un dataset los nombres de las columnas no representan nombres de variables, sino que representan los valores de una variable. Tomando el caso de la `tabla4a`: los nombres de las columnas `1999` y `2000` representan los valores de la variable año, los valores en las columnas `1999` y `2000` representan los valores de la variable casos.
+
+Para ordenar un dataset como este necesitamos tres parámetros:
+
+- El conjunto de columnas cuyos nombres son valores y no variables. En este ejemplo son las columnas `1999` y `2000`. Argumento `cols` que se refiere a las columnas a trabajar.
+- El nombre de la variable cuyos valores forman los nombres de las columnas. Argumento `names_to`.
+- El nombre de la variable cuyos valores están repartidos por las celdas. Argumento `values_to`.
+
+Con estos parámetros podemos utilizar la función `pivot_longer()` (pivotar a lo largo).
+
+
+---
+
+count: false
+ 
+## Ejemplo &lt;code&gt;pivot_longer&lt;/code&gt;
+.panel1-pivot_longer-auto[
+
+```r
+*library(tidyverse)
+```
+]
+ 
+.panel2-pivot_longer-auto[
+
+]
+
+---
+count: false
+ 
+## Ejemplo &lt;code&gt;pivot_longer&lt;/code&gt;
+.panel1-pivot_longer-auto[
+
+```r
+library(tidyverse)
+*library(datos)
+```
+]
+ 
+.panel2-pivot_longer-auto[
+
+]
+
+---
+count: false
+ 
+## Ejemplo &lt;code&gt;pivot_longer&lt;/code&gt;
+.panel1-pivot_longer-auto[
+
+```r
+library(tidyverse)
+library(datos)
+
+*tabla4a
+```
+]
+ 
+.panel2-pivot_longer-auto[
+
+```
+## # A tibble: 3 x 3
+##   pais       `1999` `2000`
+##   &lt;chr&gt;       &lt;int&gt;  &lt;int&gt;
+## 1 Afganistán    745   2666
+## 2 Brasil      37737  80488
+## 3 China      212258 213766
+```
+]
+
+---
+count: false
+ 
+## Ejemplo &lt;code&gt;pivot_longer&lt;/code&gt;
+.panel1-pivot_longer-auto[
+
+```r
+library(tidyverse)
+library(datos)
+
+tabla4a |&gt;
+* pivot_longer(
+*   cols = c(`1999`, `2000`),
+*   names_to = "anio",
+*   values_to = "casos"
+*   )
+```
+]
+ 
+.panel2-pivot_longer-auto[
+
+```
+## # A tibble: 6 x 3
+##   pais       anio   casos
+##   &lt;chr&gt;      &lt;chr&gt;  &lt;int&gt;
+## 1 Afganistán 1999     745
+## 2 Afganistán 2000    2666
+## 3 Brasil     1999   37737
+## 4 Brasil     2000   80488
+## 5 China      1999  212258
+## 6 China      2000  213766
+```
+]
+
+&lt;style&gt;
+.panel1-pivot_longer-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-pivot_longer-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-pivot_longer-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+## Datos anchos
+
+`pivot_wider()` (pivotar a lo ancho) es lo opuesto de `pivot_longer()`. Se usa cuando una observación aparece en múltiples filas. Por ejemplo, considera la `tabla2`: una observación es un país en un año, pero cada observación aparece en dos filas.
+
+Para ordenar esto, primero analizamos la representación de un modo similar a cómo se haría con pivot_longer(). Esta vez, sin embargo, necesitamos únicamente dos parámetros:
+
+- La columna desde la que obtener los nombres de las variables. En este caso corresponde a tipo, argumento `names_from`.
+- La columna desde la que obtener los valores. En este caso corresponde a cuenta,
+argumento `values_from`.
+
+Una vez resuelto esto, podemos usar `pivot_wider()`, como se muestra en el siguiente ejemplo.
+
+---
+
+count: false
+ 
+## Ejemplo &lt;code&gt;pivot_wider&lt;/code&gt;
+.panel1-pivot_wider-auto[
+
+```r
+*tabla2
+```
+]
+ 
+.panel2-pivot_wider-auto[
+
+```
+## # A tibble: 12 x 4
+##    pais        anio tipo          cuenta
+##    &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;          &lt;int&gt;
+##  1 Afganistán  1999 casos            745
+##  2 Afganistán  1999 población   19987071
+##  3 Afganistán  2000 casos           2666
+##  4 Afganistán  2000 población   20595360
+##  5 Brasil      1999 casos          37737
+##  6 Brasil      1999 población  172006362
+##  7 Brasil      2000 casos          80488
+##  8 Brasil      2000 población  174504898
+##  9 China       1999 casos         212258
+## 10 China       1999 población 1272915272
+## 11 China       2000 casos         213766
+## 12 China       2000 población 1280428583
+```
+]
+
+---
+count: false
+ 
+## Ejemplo &lt;code&gt;pivot_wider&lt;/code&gt;
+.panel1-pivot_wider-auto[
+
+```r
+tabla2 |&gt;
+* pivot_wider(
+*   names_from = tipo,
+*   values_from = cuenta
+*   )
+```
+]
+ 
+.panel2-pivot_wider-auto[
+
+```
+## # A tibble: 6 x 4
+##   pais        anio  casos  población
+##   &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
+## 1 Afganistán  1999    745   19987071
+## 2 Afganistán  2000   2666   20595360
+## 3 Brasil      1999  37737  172006362
+## 4 Brasil      2000  80488  174504898
+## 5 China       1999 212258 1272915272
+## 6 China       2000 213766 1280428583
+```
+]
+
+&lt;style&gt;
+.panel1-pivot_wider-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-pivot_wider-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-pivot_wider-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+count: false
+ 
+## &lt;code&gt;pivot_longer&lt;/code&gt; y &lt;code&gt;pivot_wider&lt;/code&gt; no son simétricas
+.panel1-pivot_longesr_wider_example-auto[
+
+```r
+# no son perfectanente simétricas
+*acciones &lt;- tibble(
+* anio = c(2015, 2015, 2016, 2016),
+* semestre = c(1, 2, 1, 2),
+* retorno = c(1.88, 0.59, 0.92, 0.17)
+*) 
+```
+]
+ 
+.panel2-pivot_longesr_wider_example-auto[
+
+]
+
+---
+count: false
+ 
+## &lt;code&gt;pivot_longer&lt;/code&gt; y &lt;code&gt;pivot_wider&lt;/code&gt; no son simétricas
+.panel1-pivot_longesr_wider_example-auto[
+
+```r
+# no son perfectanente simétricas
+acciones &lt;- tibble(
+  anio = c(2015, 2015, 2016, 2016),
+  semestre = c(1, 2, 1, 2),
+  retorno = c(1.88, 0.59, 0.92, 0.17)
+)
+
+*acciones
+```
+]
+ 
+.panel2-pivot_longesr_wider_example-auto[
+
+```
+## # A tibble: 4 x 3
+##    anio semestre retorno
+##   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+## 1  2015        1    1.88
+## 2  2015        2    0.59
+## 3  2016        1    0.92
+## 4  2016        2    0.17
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;pivot_longer&lt;/code&gt; y &lt;code&gt;pivot_wider&lt;/code&gt; no son simétricas
+.panel1-pivot_longesr_wider_example-auto[
+
+```r
+# no son perfectanente simétricas
+acciones &lt;- tibble(
+  anio = c(2015, 2015, 2016, 2016),
+  semestre = c(1, 2, 1, 2),
+  retorno = c(1.88, 0.59, 0.92, 0.17)
+)
+
+acciones %&gt;%
+* pivot_wider(
+*   names_from = anio,
+*   values_from = retorno
+*   )
+```
+]
+ 
+.panel2-pivot_longesr_wider_example-auto[
+
+```
+## # A tibble: 2 x 3
+##   semestre `2015` `2016`
+##      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1        1   1.88   0.92
+## 2        2   0.59   0.17
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;pivot_longer&lt;/code&gt; y &lt;code&gt;pivot_wider&lt;/code&gt; no son simétricas
+.panel1-pivot_longesr_wider_example-auto[
+
+```r
+# no son perfectanente simétricas
+acciones &lt;- tibble(
+  anio = c(2015, 2015, 2016, 2016),
+  semestre = c(1, 2, 1, 2),
+  retorno = c(1.88, 0.59, 0.92, 0.17)
+)
+
+acciones %&gt;%
+  pivot_wider(
+    names_from = anio,
+    values_from = retorno
+    ) %&gt;%
+* pivot_longer(
+*   cols = `2015`:`2016`,
+*   names_to = "anio",
+*   values_to = "retorno"
+*   )
+```
+]
+ 
+.panel2-pivot_longesr_wider_example-auto[
+
+```
+## # A tibble: 4 x 3
+##   semestre anio  retorno
+##      &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
+## 1        1 2015     1.88
+## 2        1 2016     0.92
+## 3        2 2015     0.59
+## 4        2 2016     0.17
+```
+]
+
+&lt;style&gt;
+.panel1-pivot_longesr_wider_example-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-pivot_longesr_wider_example-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-pivot_longesr_wider_example-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+
+## Separar (y Unir)
+
+¿Qué pasa con `tabla3`? Ésta tiene un ~problema~ característica diferente: una columna
+contiene dos valores `casos` y `población`.
+
+Para solucionar este problema, necesitamos la función `separate()` (separar). También aprenderás acerca del complemento de `separate()`: `unite()` (unir), que se usa cuando una única variable se reparte en varias columnas.
+
+---
+
+count: false
+ 
+## Ejemplo &lt;code&gt;separate unite&lt;/code&gt;
+.panel1-separate_unite-auto[
+
+```r
+*tabla3
+```
+]
+ 
+.panel2-separate_unite-auto[
+
+```
+## # A tibble: 6 x 3
+##   pais        anio tasa             
+##   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;            
+## 1 Afganistán  1999 745/19987071     
+## 2 Afganistán  2000 2666/20595360    
+## 3 Brasil      1999 37737/172006362  
+## 4 Brasil      2000 80488/174504898  
+## 5 China       1999 212258/1272915272
+## 6 China       2000 213766/1280428583
+```
+]
+
+---
+count: false
+ 
+## Ejemplo &lt;code&gt;separate unite&lt;/code&gt;
+.panel1-separate_unite-auto[
+
+```r
+tabla3 %&gt;%
+* separate(
+*   tasa,
+*   into = c("casos", "poblacion"),
+*   convert = TRUE  # convierte al tipo adecuado
+* )
+```
+]
+ 
+.panel2-separate_unite-auto[
+
+```
+## # A tibble: 6 x 4
+##   pais        anio  casos  poblacion
+##   &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
+## 1 Afganistán  1999    745   19987071
+## 2 Afganistán  2000   2666   20595360
+## 3 Brasil      1999  37737  172006362
+## 4 Brasil      2000  80488  174504898
+## 5 China       1999 212258 1272915272
+## 6 China       2000 213766 1280428583
+```
+]
+
+---
+count: false
+ 
+## Ejemplo &lt;code&gt;separate unite&lt;/code&gt;
+.panel1-separate_unite-auto[
+
+```r
+tabla3 %&gt;%
+  separate(
+    tasa,
+    into = c("casos", "poblacion"),
+    convert = TRUE  # convierte al tipo adecuado
+  ) |&gt;
+* unite(
+*   nueva_tasa,
+*   casos, poblacion,
+*   sep = " dividido "
+*   )
+```
+]
+ 
+.panel2-separate_unite-auto[
+
+```
+## # A tibble: 6 x 3
+##   pais        anio nueva_tasa                
+##   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;                     
+## 1 Afganistán  1999 745 dividido 19987071     
+## 2 Afganistán  2000 2666 dividido 20595360    
+## 3 Brasil      1999 37737 dividido 172006362  
+## 4 Brasil      2000 80488 dividido 174504898  
+## 5 China       1999 212258 dividido 1272915272
+## 6 China       2000 213766 dividido 1280428583
+```
+]
+
+&lt;style&gt;
+.panel1-separate_unite-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-separate_unite-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-separate_unite-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+# Ejercicios &lt;small&gt;`pivot_wider` / `pivot_longer` / `separate`&lt;/small&gt;
+
+1. Para cada una de las tablas, realizar las transformaciones necesarias
+para obtener la tasa de casos de tuberculosis:
+
+  - `tabla1`
+  - `tabla2`
+  - `tabla3`
+  - `tabla4a` y `tabla4b`
+
+1. Para `tabla1` graficar la evolución de la tasa para cada país. ¿Qué
+observa?
+
+---
+
+class: inverse center middle
+
+# Datos relacionales
 
 ---
 
@@ -162,7 +759,7 @@ Las relaciones siempre se definen sobre un par de tablas. Todas las otras relaci
 Lo anterior viene de [datos relacionales](https://es.r4ds.hadley.nz/datos-relacionales.html) de
 R4DS.
 
- 
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
