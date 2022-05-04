@@ -389,6 +389,22 @@ x |>
   tan()
 ```
 
+---
+
+## Ejercicio en grupo! Un solo grupo!
+
+1. Cargue **tidyverse** y el paquete **datos**.
+
+1. Explore las tablas `vuelos`, `aeropuertos`, y `aerolineas`. Represente en un mapa los distintos vuelos realizados enfatizando los más usuales.
+
+1. **Avanzado**: Utilice los paquete `ggforce` y `edgebundle` para replicar
+lo realizado en el ejericio anterior utizando como _template_ el ejemplo
+mostrado en https://github.com/schochastics/edgebundle.
+
+1. Estudie los datos (como hoy es 4 de mayo) `starwars` del paquete `dplyr`. 
+Haga un gráfico de estatura peso utilizando puntos y graficando un posible 
+modelo con `geom_smooth()`. _Póngale color_, de verdad, utilice el
+paquete `showtext` para tematizar el gráfico.
 
 ---
 

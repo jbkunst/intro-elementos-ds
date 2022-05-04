@@ -4,7 +4,7 @@
     <title>03-AED-Transformación-de-datos-dplyr</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Joshua Kunst @jbkunst" />
-    <meta name="date" content="2022-05-02" />
+    <meta name="date" content="2022-05-04" />
     <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
@@ -13,10 +13,18 @@
     <textarea id="source">
 class: left, middle, title-slide
 
+.title[
 # {ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2 d|2s|2{202201}[26°c[10°c]
+]
+.subtitle[
 ## 03 Transformación de datos <code><small>dplyr</small></code>
+]
+.author[
 ### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
-### 2022-05-02
+]
+.date[
+### 2022-05-04
+]
 
 ---
 
@@ -92,7 +100,7 @@ count: false
 .panel2-filter-auto[
 
 ```
-## # A tibble: 6 x 4
+## # A tibble: 6 × 4
 ##   storm    wind pressure date      
 ##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;    
 ## 1 Alberto   110     1007 2000-08-03
@@ -119,7 +127,7 @@ storms |&gt;
 .panel2-filter-auto[
 
 ```
-## # A tibble: 2 x 4
+## # A tibble: 2 × 4
 ##   storm    wind pressure date      
 ##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;    
 ## 1 Alberto   110     1007 2000-08-03
@@ -185,7 +193,7 @@ count: false
 .panel2-select-auto[
 
 ```
-## # A tibble: 6 x 4
+## # A tibble: 6 × 4
 ##   storm    wind pressure date      
 ##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;    
 ## 1 Alberto   110     1007 2000-08-03
@@ -212,7 +220,7 @@ storms |&gt;
 .panel2-select-auto[
 
 ```
-## # A tibble: 6 x 2
+## # A tibble: 6 × 2
 ##   storm   pressure
 ##   &lt;chr&gt;      &lt;dbl&gt;
 ## 1 Alberto     1007
@@ -282,7 +290,7 @@ count: false
 .panel2-arrange-auto[
 
 ```
-## # A tibble: 6 x 4
+## # A tibble: 6 × 4
 ##   storm    wind pressure date      
 ##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;    
 ## 1 Alberto   110     1007 2000-08-03
@@ -309,7 +317,7 @@ storms |&gt;
 .panel2-arrange-auto[
 
 ```
-## # A tibble: 6 x 4
+## # A tibble: 6 × 4
 ##   storm    wind pressure date      
 ##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;    
 ## 1 Ana        40     1013 1997-06-30
@@ -384,7 +392,7 @@ count: false
 .panel2-mutate-auto[
 
 ```
-## # A tibble: 6 x 4
+## # A tibble: 6 × 4
 ##   storm    wind pressure date      
 ##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;    
 ## 1 Alberto   110     1007 2000-08-03
@@ -414,7 +422,7 @@ storms |&gt;
 .panel2-mutate-auto[
 
 ```
-## # A tibble: 6 x 6
+## # A tibble: 6 × 6
 ##   storm    wind pressure date       ratio inverse
 ##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;   &lt;dbl&gt;
 ## 1 Alberto   110     1007 2000-08-03  9.15  0.109 
@@ -445,7 +453,7 @@ storms |&gt;
 .panel2-mutate-auto[
 
 ```
-## # A tibble: 6 x 6
+## # A tibble: 6 × 6
 ##   storm    wind pressure date       ratio inverse
 ##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;   &lt;dbl&gt;
 ## 1 Alberto  4.70     1007 2000-08-03  9.15  0.109 
@@ -515,7 +523,7 @@ count: false
 .panel2-summarise-auto[
 
 ```
-## # A tibble: 6 x 3
+## # A tibble: 6 × 3
 ##   city     size  amount
 ##   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
 ## 1 New York large     23
@@ -542,7 +550,7 @@ pollution |&gt;
 .panel2-summarise-auto[
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##   median
 ##    &lt;dbl&gt;
 ## 1   22.5
@@ -608,7 +616,7 @@ count: false
 .panel2-group_by-auto[
 
 ```
-## # A tibble: 6 x 3
+## # A tibble: 6 × 3
 ##   city     size  amount
 ##   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
 ## 1 New York large     23
@@ -635,7 +643,7 @@ pollution |&gt;
 .panel2-group_by-auto[
 
 ```
-## # A tibble: 6 x 3
+## # A tibble: 6 × 3
 ## # Groups:   city [3]
 ##   city     size  amount
 ##   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
@@ -668,7 +676,7 @@ pollution |&gt;
 .panel2-group_by-auto[
 
 ```
-## # A tibble: 3 x 4
+## # A tibble: 3 × 4
 ##   city      mean   sum     n
 ##   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
 ## 1 Beijing   88.5   177     2
@@ -724,7 +732,7 @@ count: false
 .panel2-group_by_spanish-auto[
 
 ```
-## # A tibble: 6 x 3
+## # A tibble: 6 × 3
 ##   city     size  amount
 ##   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
 ## 1 New York large     23
@@ -751,7 +759,7 @@ pollution |&gt;
 .panel2-group_by_spanish-auto[
 
 ```
-## # A tibble: 6 x 3
+## # A tibble: 6 × 3
 ## # Groups:   city [3]
 ##   city     size  amount
 ##   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
@@ -784,7 +792,7 @@ pollution |&gt;
 .panel2-group_by_spanish-auto[
 
 ```
-## # A tibble: 3 x 4
+## # A tibble: 3 × 4
 ##   city     promedio  suma conteo
 ##   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;  &lt;int&gt;
 ## 1 Beijing      88.5   177      2
@@ -925,7 +933,7 @@ df &lt;- tibble(
 .panel2-solucion-auto[
 
 ```
-## # A tibble: 1,000 x 2
+## # A tibble: 1,000 × 2
 ##          x       y
 ##      &lt;dbl&gt;   &lt;dbl&gt;
 ##  1 -0.425  -0.453 
@@ -938,7 +946,7 @@ df &lt;- tibble(
 ##  8  0.785  -0.409 
 ##  9  0.103  -0.869 
 ## 10 -0.0868 -0.119 
-## # ... with 990 more rows
+## # … with 990 more rows
 ```
 ]
 
@@ -966,7 +974,7 @@ df |&gt;
 .panel2-solucion-auto[
 
 ```
-## # A tibble: 1,000 x 3
+## # A tibble: 1,000 × 3
 ##          x       y      r
 ##      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
 ##  1 -0.425  -0.453  0.385 
@@ -979,7 +987,7 @@ df |&gt;
 ##  8  0.785  -0.409  0.783 
 ##  9  0.103  -0.869  0.765 
 ## 10 -0.0868 -0.119  0.0217
-## # ... with 990 more rows
+## # … with 990 more rows
 ```
 ]
 
@@ -1008,7 +1016,7 @@ df |&gt;
 .panel2-solucion-auto[
 
 ```
-## # A tibble: 1,000 x 4
+## # A tibble: 1,000 × 4
 ##          x       y      r r2   
 ##      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;
 ##  1 -0.425  -0.453  0.385  B    
@@ -1021,7 +1029,7 @@ df |&gt;
 ##  8  0.785  -0.409  0.783  B    
 ##  9  0.103  -0.869  0.765  B    
 ## 10 -0.0868 -0.119  0.0217 B    
-## # ... with 990 more rows
+## # … with 990 more rows
 ```
 ]
 
@@ -1051,7 +1059,7 @@ df |&gt;
 .panel2-solucion-auto[
 
 ```
-## # A tibble: 1,000 x 5
+## # A tibble: 1,000 × 5
 ##          x       y      r r2     es_b
 ##      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
 ##  1 -0.425  -0.453  0.385  B         1
@@ -1064,7 +1072,7 @@ df |&gt;
 ##  8  0.785  -0.409  0.783  B         1
 ##  9  0.103  -0.869  0.765  B         1
 ## 10 -0.0868 -0.119  0.0217 B         1
-## # ... with 990 more rows
+## # … with 990 more rows
 ```
 ]
 
@@ -1095,7 +1103,7 @@ df |&gt;
 .panel2-solucion-auto[
 
 ```
-## # A tibble: 1,000 x 6
+## # A tibble: 1,000 × 6
 ##          x       y      r r2     es_b  conv
 ##      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
 ##  1 -0.425  -0.453  0.385  B         1 1    
@@ -1108,7 +1116,7 @@ df |&gt;
 ##  8  0.785  -0.409  0.783  B         1 0.75 
 ##  9  0.103  -0.869  0.765  B         1 0.778
 ## 10 -0.0868 -0.119  0.0217 B         1 0.8  
-## # ... with 990 more rows
+## # … with 990 more rows
 ```
 ]
 
@@ -1140,7 +1148,7 @@ df |&gt;
 .panel2-solucion-auto[
 
 ```
-## # A tibble: 1,000 x 7
+## # A tibble: 1,000 × 7
 ##          x       y      r r2     es_b  conv  fila
 ##      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
 ##  1 -0.425  -0.453  0.385  B         1 1         1
@@ -1153,7 +1161,7 @@ df |&gt;
 ##  8  0.785  -0.409  0.783  B         1 0.75      8
 ##  9  0.103  -0.869  0.765  B         1 0.778     9
 ## 10 -0.0868 -0.119  0.0217 B         1 0.8      10
-## # ... with 990 more rows
+## # … with 990 more rows
 ```
 ]
 
@@ -1267,7 +1275,7 @@ df &lt;- tibble(
 .panel2-solucion2-auto[
 
 ```
-## # A tibble: 10,000 x 2
+## # A tibble: 10,000 × 2
 ##          x      y
 ##      &lt;dbl&gt;  &lt;dbl&gt;
 ##  1 -0.425  -0.379
@@ -1280,7 +1288,7 @@ df &lt;- tibble(
 ##  8  0.785   0.750
 ##  9  0.103   0.640
 ## 10 -0.0868 -0.956
-## # ... with 9,990 more rows
+## # … with 9,990 more rows
 ```
 ]
 
@@ -1313,7 +1321,7 @@ df |&gt;
 .panel2-solucion2-auto[
 
 ```
-## # A tibble: 10,000 x 6
+## # A tibble: 10,000 × 6
 ##          x      y     r ri     conv   row
 ##      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;int&gt;
 ##  1 -0.425  -0.379 0.324 TRUE  1         1
@@ -1326,7 +1334,7 @@ df |&gt;
 ##  8  0.785   0.750 1.18  FALSE 0.75      8
 ##  9  0.103   0.640 0.421 TRUE  0.778     9
 ## 10 -0.0868 -0.956 0.922 TRUE  0.8      10
-## # ... with 9,990 more rows
+## # … with 9,990 more rows
 ```
 ]
 
@@ -1511,7 +1519,7 @@ set.seed(123)
 .panel2-solucion3-auto[
 
 ```
-## # A tibble: 10,000 x 2
+## # A tibble: 10,000 × 2
 ##          x      y
 ##      &lt;dbl&gt;  &lt;dbl&gt;
 ##  1 -0.425  -0.379
@@ -1524,7 +1532,7 @@ set.seed(123)
 ##  8  0.785   0.750
 ##  9  0.103   0.640
 ## 10 -0.0868 -0.956
-## # ... with 9,990 more rows
+## # … with 9,990 more rows
 ```
 ]
 
@@ -1555,7 +1563,7 @@ tibble(
 .panel2-solucion3-auto[
 
 ```
-## # A tibble: 10,000 x 6
+## # A tibble: 10,000 × 6
 ##          x      y     r ri     conv   row
 ##      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;int&gt;
 ##  1 -0.425  -0.379 0.324 TRUE  1         1
@@ -1568,7 +1576,7 @@ tibble(
 ##  8  0.785   0.750 1.18  FALSE 0.75      8
 ##  9  0.103   0.640 0.421 TRUE  0.778     9
 ## 10 -0.0868 -0.956 0.922 TRUE  0.8      10
-## # ... with 9,990 more rows
+## # … with 9,990 more rows
 ```
 ]
 
@@ -1776,7 +1784,6 @@ Más en el capítulo [Pipes](https://es.r4ds.hadley.nz/pipes.html) en R4DS.
 
 
 ---
-
 
 count: false
  
@@ -2189,6 +2196,22 @@ x |&gt;
 
 
 
+---
+
+## Ejercicio en grupo! Un solo grupo!
+
+1. Cargue **tidyverse** y el paquete **datos**.
+
+1. Explore las tablas `vuelos`, `aeropuertos`, y `aerolineas`. Represente en un mapa los distintos vuelos realizados enfatizando los más usuales.
+
+1. **Avanzado**: Utilice los paquete `ggforce` y `edgebundle` para replicar
+lo realizado en el ejericio anterior utizando como _template_ el ejemplo
+mostrado en https://github.com/schochastics/edgebundle.
+
+1. Estudie los datos (como hoy es 4 de mayo) `starwars` del paquete `dplyr`. 
+Haga un gráfico de estatura peso utilizando puntos y graficando un posible 
+modelo con `geom_smooth()`. _Póngale color_, de verdad, utilice el
+paquete `showtext` para tematizar el gráfico.
 
 ---
 
@@ -2250,6 +2273,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
