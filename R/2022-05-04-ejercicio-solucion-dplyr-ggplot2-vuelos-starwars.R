@@ -78,8 +78,8 @@ library(scales)
 comma(123123)
 
 ggplot(destinos_comunes_top, aes(destino, n)) +
-  geom_col(fill = "gray60") +
-  geom_text(aes(label = comma(n)), vjust = -1, color = 'gray50', size = 3.5) +
+  geom_col(fill = "#7C7691", width = 0.70) +
+  geom_text(aes(label = comma(n)), vjust = -1, color = 'gray30', size = 3.5) +
   theme_minimal() +
   scale_y_continuous(labels = comma) +
   labs(
@@ -87,17 +87,23 @@ ggplot(destinos_comunes_top, aes(destino, n)) +
     x = "Destino",
     y = "Cantidad de vuelos desde NYC",
     captions = "Datos del año 2003"
-  ) 
+  ) +
+  theme(panel.grid.major.x  = element_blank())
 
 
-# volver a la información geograficos
-# queremos un grafico de burbuja geográfico
+# MAPA
+# volver a la información geográfica.
+# queremos un grafico de burbuja
 # necesitamos:
 # - ubicacion (x, y)
 # - variable para graficar tamanio
-# - (en UN DATA FRAME, para usar geom_point)
+# - todo lo anterior en UN data frame, para usar `geom_point`
 destinos_comunes
-View(aeropuertos)
+
+glimpse(aeropuertos)
+
+aeropuertos |> 
+  select(codigo_aeropuerto, longitud, latitud)
 
 # destinos_comunes
 
@@ -116,6 +122,8 @@ ggplot(destinos_comunes) +
 usa <- map_data("state") |> 
   as_tibble()
 
+glimpse(usa)
+
 ggplot(usa) +
   geom_line(aes(long, lat))
 
@@ -128,6 +136,9 @@ ggplot(usa) +
 ggplot(usa) +
   geom_polygon(aes(long, lat, group = group), color = "darkred", fill = "yellow")
 
+# Polygons are very similar to paths (as drawn by geom_path()) 
+# except that the start and end points are connected and the inside 
+# is coloured by fill
 
 
 ggplot() +
@@ -143,27 +154,10 @@ ggplot() +
     aes(long, lat, group = group),
     color = "transparent",
     fill = "gray90"
-    ) +
-  theme_void()
+    ) 
 
-
-ggplot() +
-  geom_polygon(
-    data = usa,
-    aes(long, lat, group = group),
-    color = "gray95",
-    fill = "gray90"
-  ) +
-  geom_point(
-    data = destinos_comunes,
-    aes(longitud, latitud, size = n),
-    alpha = 0.6, 
-    color = "gray60"
-  ) +
-  scale_size_continuous(trans = "sqrt", range = c(1, 4)) +
-  theme_void()
-
-
+# 1. importante es el orden de las capas
+# 2. agregaremos color a los puntos
 ggplot() +
   geom_polygon(
     data = usa,
@@ -176,10 +170,32 @@ ggplot() +
     aes(longitud, latitud, size = n, color = n),
     alpha = 0.6
   ) +
+  scale_size_continuous(trans = "sqrt", range = c(1, 4))
+
+
+# 1. mejorar paleta de colores
+# 2. agregar una proyeccion de coordenadas
+# 3. remover puntos  como alaska y hawaii
+# 4. Remover grillas agregando un tema nulo
+destinos_comunes_sin_ak_hw <- destinos_comunes |> 
+  filter(longitud > -140)
+
+ggplot() +
+  geom_polygon(
+    data = usa,
+    aes(long, lat, group = group),
+    color = "gray95",
+    fill = "gray90"
+  ) +
+  geom_point(
+    data = destinos_comunes_sin_ak_hw,
+    aes(longitud, latitud, size = n, color = n),
+    alpha = 0.6
+  ) +
   scale_color_viridis_c(option = "A") +
   scale_size_continuous(trans = "sqrt", range = c(1, 4)) +
-  theme_void()
-
+  theme_void() +
+  coord_map()
 
 
 # 3 -----------------------------------------------------------------------
