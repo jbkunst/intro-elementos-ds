@@ -5,10 +5,12 @@
   background-size: cover;
 }
 
-.title-slide > h1 {
+.title-slide > h1,
+.title-slide > .title > h1 {
   font-family: 'Datalegreya', sans-serif;
-  font-weight: 400;
   font-size: 6em;
+  font-weight: 400;
+  
 }
 
 .title-slide > h1,

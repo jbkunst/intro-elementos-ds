@@ -404,7 +404,8 @@ mostrado en https://github.com/schochastics/edgebundle.
 1. Estudie los datos (como hoy es 4 de mayo) `starwars` del paquete `dplyr`. 
 Haga un gráfico de estatura peso utilizando puntos y graficando un posible 
 modelo con `geom_smooth()`. _Póngale color_, de verdad, utilice el
-paquete `showtext` para tematizar el gráfico.
+paquete `showtext` para tematizar el gráfico. [Link](https://isabella-b.com/blog/ggplot2-theme-elements-reference/) de interés.
+Inspiración adicional por parte de [Cédric Scherer](https://twitter.com/CedScherer).
 
 ---
 
