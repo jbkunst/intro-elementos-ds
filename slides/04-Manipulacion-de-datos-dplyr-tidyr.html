@@ -4,7 +4,7 @@
     <title>04-Manipulación-de-datos-tidyr</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Joshua Kunst @jbkunst" />
-    <meta name="date" content="2022-05-04" />
+    <meta name="date" content="2022-05-11" />
     <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
@@ -23,7 +23,7 @@ class: left, middle, title-slide
 ### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
 ]
 .date[
-### 2022-05-04
+### 2022-05-11
 ]
 
 ---
@@ -766,6 +766,386 @@ Las relaciones siempre se definen sobre un par de tablas. Todas las otras relaci
 
 Lo anterior viene de [datos relacionales](https://es.r4ds.hadley.nz/datos-relacionales.html) de
 R4DS.
+
+---
+
+## Tipos de opearciones entre 2 tablas
+
+Existen distintas formas de operar con 2 data frames:
+
+- **Uniones de transformación** (del inglés _mutating joins_), que agregan nuevas variables a un data frame a partir de las observaciones coincidentes en otra tabla.
+
+- **Uniones de filtro** (del inglés _filtering joins_), que filtran observaciones en un data frame con base en si coinciden o no con una observación de otra tabla.
+
+- **Operaciones de conjuntos** (del inglés _set operations_), que tratan las observaciones como elementos de un conjunto.
+
+
+Los _mutating joins_ (en adelante _joins_) serán los más usuales
+y los que estudiaremos con más detalle.
+
+
+---
+
+## De forma visual
+
+&lt;img src="images/dplyr/joins2.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Un poco más ejemplificado
+
+&lt;img src="images/dplyr/all-dplyr-joins.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## El famoso `left_join`
+
+Este es el _join_ más usual dado que **fija** la tabla de la izquierda (**left**) y agrega la información de la tabla derecha.
+
+De **forma general** para realizar un _join_ necesitaremos:
+
+- Dos tablas. Parámetros `x` e `y`.
+- Definir que columnas serán las utilizadas para realizar el _match_.
+En la mayoría de casos es una columna en cada tabla, pero no siempre es así, por ejemplo en ciertos casos se requiere juntar información por _rut_ y _fecha_. Parámetro `by`.
+
+(El 2do en popularidad en mi opinión es el `full_join`)
+
+
+---
+
+count: false
+ 
+## Ejemplo &lt;code&gt;left_join&lt;/code&gt;
+.panel1-left_join-auto[
+
+```r
+*library(tidyverse)
+```
+]
+ 
+.panel2-left_join-auto[
+
+]
+
+---
+count: false
+ 
+## Ejemplo &lt;code&gt;left_join&lt;/code&gt;
+.panel1-left_join-auto[
+
+```r
+library(tidyverse)
+
+*band_members
+```
+]
+ 
+.panel2-left_join-auto[
+
+```
+## # A tibble: 3 × 2
+##   name  band   
+##   &lt;chr&gt; &lt;chr&gt;  
+## 1 Mick  Stones 
+## 2 John  Beatles
+## 3 Paul  Beatles
+```
+]
+
+---
+count: false
+ 
+## Ejemplo &lt;code&gt;left_join&lt;/code&gt;
+.panel1-left_join-auto[
+
+```r
+library(tidyverse)
+
+band_members
+
+*band_instruments
+```
+]
+ 
+.panel2-left_join-auto[
+
+```
+## # A tibble: 3 × 2
+##   name  band   
+##   &lt;chr&gt; &lt;chr&gt;  
+## 1 Mick  Stones 
+## 2 John  Beatles
+## 3 Paul  Beatles
+```
+
+```
+## # A tibble: 3 × 2
+##   name  plays 
+##   &lt;chr&gt; &lt;chr&gt; 
+## 1 John  guitar
+## 2 Paul  bass  
+## 3 Keith guitar
+```
+]
+
+---
+count: false
+ 
+## Ejemplo &lt;code&gt;left_join&lt;/code&gt;
+.panel1-left_join-auto[
+
+```r
+library(tidyverse)
+
+band_members
+
+band_instruments
+
+*left_join(
+* band_members,
+* band_instruments,
+* by = "name"
+* )
+```
+]
+ 
+.panel2-left_join-auto[
+
+```
+## # A tibble: 3 × 2
+##   name  band   
+##   &lt;chr&gt; &lt;chr&gt;  
+## 1 Mick  Stones 
+## 2 John  Beatles
+## 3 Paul  Beatles
+```
+
+```
+## # A tibble: 3 × 2
+##   name  plays 
+##   &lt;chr&gt; &lt;chr&gt; 
+## 1 John  guitar
+## 2 Paul  bass  
+## 3 Keith guitar
+```
+
+```
+## # A tibble: 3 × 3
+##   name  band    plays 
+##   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+## 1 Mick  Stones  &lt;NA&gt;  
+## 2 John  Beatles guitar
+## 3 Paul  Beatles bass
+```
+]
+
+&lt;style&gt;
+.panel1-left_join-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-left_join-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-left_join-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+count: false
+ 
+## Ejemplo &lt;code&gt;left_join&lt;/code&gt;
+.panel1-full_join-auto[
+
+```r
+*library(tidyverse)
+```
+]
+ 
+.panel2-full_join-auto[
+
+]
+
+---
+count: false
+ 
+## Ejemplo &lt;code&gt;left_join&lt;/code&gt;
+.panel1-full_join-auto[
+
+```r
+library(tidyverse)
+
+*band_members
+```
+]
+ 
+.panel2-full_join-auto[
+
+```
+## # A tibble: 3 × 2
+##   name  band   
+##   &lt;chr&gt; &lt;chr&gt;  
+## 1 Mick  Stones 
+## 2 John  Beatles
+## 3 Paul  Beatles
+```
+]
+
+---
+count: false
+ 
+## Ejemplo &lt;code&gt;left_join&lt;/code&gt;
+.panel1-full_join-auto[
+
+```r
+library(tidyverse)
+
+band_members
+
+*band_instruments
+```
+]
+ 
+.panel2-full_join-auto[
+
+```
+## # A tibble: 3 × 2
+##   name  band   
+##   &lt;chr&gt; &lt;chr&gt;  
+## 1 Mick  Stones 
+## 2 John  Beatles
+## 3 Paul  Beatles
+```
+
+```
+## # A tibble: 3 × 2
+##   name  plays 
+##   &lt;chr&gt; &lt;chr&gt; 
+## 1 John  guitar
+## 2 Paul  bass  
+## 3 Keith guitar
+```
+]
+
+---
+count: false
+ 
+## Ejemplo &lt;code&gt;left_join&lt;/code&gt;
+.panel1-full_join-auto[
+
+```r
+library(tidyverse)
+
+band_members
+
+band_instruments
+
+*full_join(
+* band_members,
+* band_instruments,
+* by = "name"
+* )
+```
+]
+ 
+.panel2-full_join-auto[
+
+```
+## # A tibble: 3 × 2
+##   name  band   
+##   &lt;chr&gt; &lt;chr&gt;  
+## 1 Mick  Stones 
+## 2 John  Beatles
+## 3 Paul  Beatles
+```
+
+```
+## # A tibble: 3 × 2
+##   name  plays 
+##   &lt;chr&gt; &lt;chr&gt; 
+## 1 John  guitar
+## 2 Paul  bass  
+## 3 Keith guitar
+```
+
+```
+## # A tibble: 4 × 3
+##   name  band    plays 
+##   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; 
+## 1 Mick  Stones  &lt;NA&gt;  
+## 2 John  Beatles guitar
+## 3 Paul  Beatles bass  
+## 4 Keith &lt;NA&gt;    guitar
+```
+]
+
+&lt;style&gt;
+.panel1-full_join-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-full_join-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-full_join-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+
+## Ejercicios
+
+1. Considere las tablas `band_members`, `band_instruments` y `band_instruments2`.
+
+  - Realice un `left_join` entre `band_members`, `band_instruments`.
+  - Realice un `left_join` entre `band_members`, `band_instruments2`.
+  - ¿Cuál es la diferencia?
+  
+1. Vuelva a los datos de `vuelos` y `aeropuertos` y grafique 
+en el mapa los segmentos que corresponden a los viajes entre un
+areopuerto y el otro.
+
 
 
     </textarea>
