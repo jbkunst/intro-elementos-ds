@@ -337,7 +337,7 @@ left_join(
 
 ---
 
-`r flipbookr::chunk_reveal("full_join", title = "## Ejemplo <code>left_join</code>", widths = c(1, 1))`
+`r flipbookr::chunk_reveal("full_join", title = "## Ejemplo <code>full_join</code>", widths = c(1, 1))`
 
 ```{r full_join, include = FALSE}
 library(tidyverse)
