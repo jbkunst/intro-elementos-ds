@@ -1,0 +1,113 @@
+---
+title: "{ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2  d|2s|2{202201}[26°c[10°c]"
+pagetitle: "05-Lectura-de-datos-readr-readxl-httr-rvest"
+subtitle: "05 Lectura de datos <code><small>readr readxl httr rvest</small></code>"
+author: "<br>Joshua Kunst<br>@jbkunst"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    self_contained: no
+    css: ["css/xaringan-themer.css", "css/styles.css"]
+    lib_dir: libs    
+    nature:
+      titleSlideClass: ["left", "middle"]
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+source(here::here("R/00-xaringan-knitr-setup.R"))
+```
+
+class: inverse center middle
+
+# Ingesta de datos
+
+---
+
+## Orígenes de información
+
+Los datos puden venir de muchas fuentes:
+
+- Archivo de texto.
+  https://raw.githubusercontent.com/jbkunst/usach-ingemat-intro-elementos-ds-202201/main/data/pollution.csv
+- Planillas, archivos excel.
+- SPSS (?).
+- Bases de Datos. Esto es todo un mundo, existen muchos motores de bases de datos.
+- Desde una página web: https://www.reclamos.cl/empresa/uber-eats
+- Una API: https://climatologia.meteochile.gob.cl/application/productos/datosRecientesEma/330020/2022/05
+  
+---
+  
+## `paquete::funcion` para cada tipo de origen
+
+Origen  | `paquete::funcion`
+--------|---------
+`xlsx`  |  `readxl::read_excel`
+`txt`   |  `readr::read_delim` / `data.table::fread`
+`csv`   |  `readr::read_csv` / `data.table::fread`
+Bases de datos   | Paquete `dbplyr`
+Archivo SPSS`sav`|  `haven::read_sav`
+API              |  `httr::GET`
+Página web       |  `rvest::read_html`
+
+En general Bases de datos es más general dado que existen distintos motores de bases
+de datos. Más info en https://dbplyr.tidyverse.org/articles/dbplyr.html
+
+---
+
+`r flipbookr::chunk_reveal("read_excel", title = "## <code>readxl::read_excel</code>", widths = c(1, 1))`
+
+```{r read_excel, include = FALSE}
+library(readxl)
+
+read_excel("data/muestrame_los_numeros.xlsx")
+```
+
+---
+
+`r flipbookr::chunk_reveal("read_csv", title = "## <code>readr::read_csv</code>", widths = c(1, 1))`
+
+```{r read_csv, include = FALSE}
+library(readr)
+
+read_csv("data/pollution.csv")
+```
+
+---
+
+`r flipbookr::chunk_reveal("GET", title = "## <code>httr::GET</code>", widths = c(1, 1))`
+
+```{r GET, include = FALSE}
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(chilemapas)
+
+url <- "https://api.gael.cloud/general/public/sismos"
+
+httr::GET(url) |> 
+  content() |> 
+  purrr::map_df(tibble::as_tibble) |> 
+  mutate(across(everything(), readr::parse_guess)) |> 
+  mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml"))) |> 
+  ggplot() +
+  geom_sf(
+    data = chilemapas::mapa_comunas, aes(geometry = geometry),
+    alpha = 0.5
+    ) +
+  geom_point(
+    aes(x = Longitud, y = Latitud, size = Magnitud),
+    shape = 21, fill = "gray80", color = "gray60",
+    ) +
+  coord_sf(xlim = c(-80, NA)) +
+  theme_minimal()
+```
+
+

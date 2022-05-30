@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>05-Lectura-de-datos-readr-readxl-httr-rvest</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Joshua Kunst @jbkunst" />
+    <meta name="date" content="2022-05-30" />
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: left, middle, title-slide
+
+.title[
+# {ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2 d|2s|2{202201}[26°c[10°c]
+]
+.subtitle[
+## 05 Lectura de datos <code><small>readr readxl httr rvest</small></code>
+]
+.author[
+### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
+]
+.date[
+### 2022-05-30
+]
+
+---
+
+
+
+
+
+class: inverse center middle
+
+# Ingesta de datos
+
+---
+
+## Orígenes de información
+
+Los datos puden venir de muchas fuentes:
+
+- Archivo de texto.
+  https://raw.githubusercontent.com/jbkunst/usach-ingemat-intro-elementos-ds-202201/main/data/pollution.csv
+- Planillas, archivos excel.
+- SPSS (?).
+- Bases de Datos. Esto es todo un mundo, existen muchos motores de bases de datos.
+- Desde una página web: https://www.reclamos.cl/empresa/uber-eats
+- Una API: https://climatologia.meteochile.gob.cl/application/productos/datosRecientesEma/330020/2022/05
+  
+---
+  
+## `paquete::funcion` para cada tipo de origen
+
+Origen  | `paquete::funcion`
+--------|---------
+`xlsx`  |  `readxl::read_excel`
+`txt`   |  `readr::read_delim` / `data.table::fread`
+`csv`   |  `readr::read_csv` / `data.table::fread`
+Bases de datos   | Paquete `dbplyr`
+Archivo SPSS`sav`|  `haven::read_sav`
+API              |  `httr::GET`
+Página web       |  `rvest::read_html`
+
+En general Bases de datos es más general dado que existen distintos motores de bases
+de datos. Más info en https://dbplyr.tidyverse.org/articles/dbplyr.html
+
+---
+
+count: false
+ 
+## &lt;code&gt;readxl::read_excel&lt;/code&gt;
+.panel1-read_excel-auto[
+
+```r
+*library(readxl)
+```
+]
+ 
+.panel2-read_excel-auto[
+
+]
+
+---
+count: false
+ 
+## &lt;code&gt;readxl::read_excel&lt;/code&gt;
+.panel1-read_excel-auto[
+
+```r
+library(readxl)
+
+*read_excel("data/muestrame_los_numeros.xlsx")
+```
+]
+ 
+.panel2-read_excel-auto[
+
+```
+## # A tibble: 16 × 3
+##    region cuarto valor
+##    &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt;
+##  1 sur    Q1       100
+##  2 sur    Q2       150
+##  3 sur    Q3       225
+##  4 sur    Q4       290
+##  5 norte  Q1       150
+##  6 norte  Q2       160
+##  7 norte  Q3       180
+##  8 norte  Q4       300
+##  9 este   Q1       180
+## 10 este   Q2       200
+## 11 este   Q3       200
+## 12 este   Q4       240
+## 13 oeste  Q1       250
+## 14 oeste  Q2       250
+## 15 oeste  Q3       300
+## 16 oeste  Q4       170
+```
+]
+
+&lt;style&gt;
+.panel1-read_excel-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-read_excel-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-read_excel-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+count: false
+ 
+## &lt;code&gt;readr::read_csv&lt;/code&gt;
+.panel1-read_csv-auto[
+
+```r
+*library(readr)
+```
+]
+ 
+.panel2-read_csv-auto[
+
+]
+
+---
+count: false
+ 
+## &lt;code&gt;readr::read_csv&lt;/code&gt;
+.panel1-read_csv-auto[
+
+```r
+library(readr)
+
+*read_csv("data/pollution.csv")
+```
+]
+ 
+.panel2-read_csv-auto[
+
+```
+## # A tibble: 6 × 3
+##   city     size  amount
+##   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
+## 1 New York large     23
+## 2 New York small     14
+## 3 London   large     22
+## 4 London   small     16
+## 5 Beijing  large    121
+## 6 Beijing  small     56
+```
+]
+
+&lt;style&gt;
+.panel1-read_csv-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-read_csv-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-read_csv-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+*library(httr)
+```
+]
+ 
+.panel2-GET-auto[
+
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+*library(dplyr)
+```
+]
+ 
+.panel2-GET-auto[
+
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+*library(ggplot2)
+```
+]
+ 
+.panel2-GET-auto[
+
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+library(ggplot2)
+*library(chilemapas)
+```
+]
+ 
+.panel2-GET-auto[
+
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(chilemapas)
+
+*url &lt;- "https://api.gael.cloud/general/public/sismos"
+```
+]
+ 
+.panel2-GET-auto[
+
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(chilemapas)
+
+url &lt;- "https://api.gael.cloud/general/public/sismos"
+
+*httr::GET(url)
+```
+]
+ 
+.panel2-GET-auto[
+
+```
+## Response [https://api.gael.cloud/general/public/sismos]
+##   Date: 2022-05-30 04:22
+##   Status: 200
+##   Content-Type: application/json; charset=utf-8
+##   Size: 4.01 kB
+## [
+##   {
+##     "Fecha": "2022-04-28 12:40:01",
+##     "Latitud": "-30.143",
+##     "Longitud": "-72.206",
+##     "Profundidad": "31.8",
+##     "Magnitud": "3.1 Ml",
+##     "Agencia": "GUC",
+##     "RefGeografica": "70 km al O de Tongoy",
+##     "FechaUpdate": "2022-04-28T13:05:00.580Z"
+## ...
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(chilemapas)
+
+url &lt;- "https://api.gael.cloud/general/public/sismos"
+
+httr::GET(url) |&gt;
+* content()
+```
+]
+ 
+.panel2-GET-auto[
+
+```
+## [[1]]
+## [[1]]$Fecha
+## [1] "2022-04-28 12:40:01"
+## 
+## [[1]]$Latitud
+## [1] "-30.143"
+## 
+## [[1]]$Longitud
+## [1] "-72.206"
+## 
+## [[1]]$Profundidad
+## [1] "31.8"
+## 
+## [[1]]$Magnitud
+## [1] "3.1 Ml"
+## 
+## [[1]]$Agencia
+## [1] "GUC"
+## 
+## [[1]]$RefGeografica
+## [1] "70 km al O de Tongoy"
+## 
+## [[1]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.580Z"
+## 
+## 
+## [[2]]
+## [[2]]$Fecha
+## [1] "2022-04-28 12:18:44"
+## 
+## [[2]]$Latitud
+## [1] "-21.232"
+## 
+## [[2]]$Longitud
+## [1] "-67.597"
+## 
+## [[2]]$Profundidad
+## [1] "211.8"
+## 
+## [[2]]$Magnitud
+## [1] "4.2 Ml"
+## 
+## [[2]]$Agencia
+## [1] "GUC"
+## 
+## [[2]]$RefGeografica
+## [1] "68 km al E de Ollagüe"
+## 
+## [[2]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.580Z"
+## 
+## 
+## [[3]]
+## [[3]]$Fecha
+## [1] "2022-04-28 12:00:40"
+## 
+## [[3]]$Latitud
+## [1] "-21.920"
+## 
+## [[3]]$Longitud
+## [1] "-68.730"
+## 
+## [[3]]$Profundidad
+## [1] "117.6"
+## 
+## [[3]]$Magnitud
+## [1] "3.0 Ml"
+## 
+## [[3]]$Agencia
+## [1] "GUC"
+## 
+## [[3]]$RefGeografica
+## [1] "65 km al N de Calama"
+## 
+## [[3]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.583Z"
+## 
+## 
+## [[4]]
+## [[4]]$Fecha
+## [1] "2022-04-28 07:39:12"
+## 
+## [[4]]$Latitud
+## [1] "-23.884"
+## 
+## [[4]]$Longitud
+## [1] "-67.036"
+## 
+## [[4]]$Profundidad
+## [1] "229.2"
+## 
+## [[4]]$Magnitud
+## [1] "3.5 Ml"
+## 
+## [[4]]$Agencia
+## [1] "GUC"
+## 
+## [[4]]$RefGeografica
+## [1] "93 km al E de Socaire"
+## 
+## [[4]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.583Z"
+## 
+## 
+## [[5]]
+## [[5]]$Fecha
+## [1] "2022-04-28 07:21:26"
+## 
+## [[5]]$Latitud
+## [1] "-30.293"
+## 
+## [[5]]$Longitud
+## [1] "-71.255"
+## 
+## [[5]]$Profundidad
+## [1] "50.9"
+## 
+## [[5]]$Magnitud
+## [1] "2.9 Ml"
+## 
+## [[5]]$Agencia
+## [1] "GUC"
+## 
+## [[5]]$RefGeografica
+## [1] "18 km al O de Andacollo"
+## 
+## [[5]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.583Z"
+## 
+## 
+## [[6]]
+## [[6]]$Fecha
+## [1] "2022-04-28 06:46:46"
+## 
+## [[6]]$Latitud
+## [1] "-21.466"
+## 
+## [[6]]$Longitud
+## [1] "-68.518"
+## 
+## [[6]]$Profundidad
+## [1] "133.0"
+## 
+## [[6]]$Magnitud
+## [1] "2.9 Ml"
+## 
+## [[6]]$Agencia
+## [1] "GUC"
+## 
+## [[6]]$RefGeografica
+## [1] "38 km al SO de Ollagüe"
+## 
+## [[6]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.583Z"
+## 
+## 
+## [[7]]
+## [[7]]$Fecha
+## [1] "2022-04-28 05:07:25"
+## 
+## [[7]]$Latitud
+## [1] "-23.925"
+## 
+## [[7]]$Longitud
+## [1] "-67.634"
+## 
+## [[7]]$Profundidad
+## [1] "268.5"
+## 
+## [[7]]$Magnitud
+## [1] "2.7 Ml"
+## 
+## [[7]]$Agencia
+## [1] "GUC"
+## 
+## [[7]]$RefGeografica
+## [1] "45 km al SE de Socaire"
+## 
+## [[7]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.587Z"
+## 
+## 
+## [[8]]
+## [[8]]$Fecha
+## [1] "2022-04-28 01:14:06"
+## 
+## [[8]]$Latitud
+## [1] "-20.789"
+## 
+## [[8]]$Longitud
+## [1] "-68.875"
+## 
+## [[8]]$Profundidad
+## [1] "99.2"
+## 
+## [[8]]$Magnitud
+## [1] "4.0 Ml"
+## 
+## [[8]]$Agencia
+## [1] "GUC"
+## 
+## [[8]]$RefGeografica
+## [1] "23 km al O de Mina Collahuasi"
+## 
+## [[8]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.587Z"
+## 
+## 
+## [[9]]
+## [[9]]$Fecha
+## [1] "2022-04-28 00:34:37"
+## 
+## [[9]]$Latitud
+## [1] "-20.772"
+## 
+## [[9]]$Longitud
+## [1] "-70.783"
+## 
+## [[9]]$Profundidad
+## [1] "22.8"
+## 
+## [[9]]$Magnitud
+## [1] "3.0 Ml"
+## 
+## [[9]]$Agencia
+## [1] "GUC"
+## 
+## [[9]]$RefGeografica
+## [1] "90 km al SO de Iquique"
+## 
+## [[9]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.587Z"
+## 
+## 
+## [[10]]
+## [[10]]$Fecha
+## [1] "2022-04-27 23:00:21"
+## 
+## [[10]]$Latitud
+## [1] "-18.314"
+## 
+## [[10]]$Longitud
+## [1] "-69.828"
+## 
+## [[10]]$Profundidad
+## [1] "87.1"
+## 
+## [[10]]$Magnitud
+## [1] "2.8 Ml"
+## 
+## [[10]]$Agencia
+## [1] "GUC"
+## 
+## [[10]]$RefGeografica
+## [1] "31 km al SO de Putre"
+## 
+## [[10]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.587Z"
+## 
+## 
+## [[11]]
+## [[11]]$Fecha
+## [1] "2022-04-27 22:30:48"
+## 
+## [[11]]$Latitud
+## [1] "-29.597"
+## 
+## [[11]]$Longitud
+## [1] "-71.454"
+## 
+## [[11]]$Profundidad
+## [1] "69.9"
+## 
+## [[11]]$Magnitud
+## [1] "3.7 Ml"
+## 
+## [[11]]$Agencia
+## [1] "GUC"
+## 
+## [[11]]$RefGeografica
+## [1] "26 km al O de La Higuera"
+## 
+## [[11]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.587Z"
+## 
+## 
+## [[12]]
+## [[12]]$Fecha
+## [1] "2022-04-27 21:44:52"
+## 
+## [[12]]$Latitud
+## [1] "-20.187"
+## 
+## [[12]]$Longitud
+## [1] "-69.015"
+## 
+## [[12]]$Profundidad
+## [1] "105.4"
+## 
+## [[12]]$Magnitud
+## [1] "3.4 Ml"
+## 
+## [[12]]$Agencia
+## [1] "GUC"
+## 
+## [[12]]$RefGeografica
+## [1] "47 km al NE de Pica"
+## 
+## [[12]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.590Z"
+## 
+## 
+## [[13]]
+## [[13]]$Fecha
+## [1] "2022-04-27 20:02:13"
+## 
+## [[13]]$Latitud
+## [1] "-32.612"
+## 
+## [[13]]$Longitud
+## [1] "-71.733"
+## 
+## [[13]]$Profundidad
+## [1] "31.4"
+## 
+## [[13]]$Magnitud
+## [1] "3.2 Ml"
+## 
+## [[13]]$Agencia
+## [1] "GUC"
+## 
+## [[13]]$RefGeografica
+## [1] "50 km al N de Valparaíso"
+## 
+## [[13]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.590Z"
+## 
+## 
+## [[14]]
+## [[14]]$Fecha
+## [1] "2022-04-27 18:18:28"
+## 
+## [[14]]$Latitud
+## [1] "-21.154"
+## 
+## [[14]]$Longitud
+## [1] "-68.871"
+## 
+## [[14]]$Profundidad
+## [1] "112.6"
+## 
+## [[14]]$Magnitud
+## [1] "2.9 Ml"
+## 
+## [[14]]$Agencia
+## [1] "GUC"
+## 
+## [[14]]$RefGeografica
+## [1] "43 km al SO de Mina Collahuasi"
+## 
+## [[14]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.590Z"
+## 
+## 
+## [[15]]
+## [[15]]$Fecha
+## [1] "2022-04-27 17:04:25"
+## 
+## [[15]]$Latitud
+## [1] "-21.233"
+## 
+## [[15]]$Longitud
+## [1] "-68.521"
+## 
+## [[15]]$Profundidad
+## [1] "130.4"
+## 
+## [[15]]$Magnitud
+## [1] "2.7 Ml"
+## 
+## [[15]]$Agencia
+## [1] "GUC"
+## 
+## [[15]]$RefGeografica
+## [1] "28 km al O de Ollagüe"
+## 
+## [[15]]$FechaUpdate
+## [1] "2022-04-28T13:05:00.590Z"
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(chilemapas)
+
+url &lt;- "https://api.gael.cloud/general/public/sismos"
+
+httr::GET(url) |&gt;
+  content() |&gt;
+* purrr::map_df(tibble::as_tibble)
+```
+]
+ 
+.panel2-GET-auto[
+
+```
+## # A tibble: 15 × 8
+##    Fecha Latitud Longitud Profundidad Magnitud Agencia RefGeografica FechaUpdate
+##    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;      
+##  1 2022… -30.143 -72.206  31.8        3.1 Ml   GUC     70 km al O d… 2022-04-28…
+##  2 2022… -21.232 -67.597  211.8       4.2 Ml   GUC     68 km al E d… 2022-04-28…
+##  3 2022… -21.920 -68.730  117.6       3.0 Ml   GUC     65 km al N d… 2022-04-28…
+##  4 2022… -23.884 -67.036  229.2       3.5 Ml   GUC     93 km al E d… 2022-04-28…
+##  5 2022… -30.293 -71.255  50.9        2.9 Ml   GUC     18 km al O d… 2022-04-28…
+##  6 2022… -21.466 -68.518  133.0       2.9 Ml   GUC     38 km al SO … 2022-04-28…
+##  7 2022… -23.925 -67.634  268.5       2.7 Ml   GUC     45 km al SE … 2022-04-28…
+##  8 2022… -20.789 -68.875  99.2        4.0 Ml   GUC     23 km al O d… 2022-04-28…
+##  9 2022… -20.772 -70.783  22.8        3.0 Ml   GUC     90 km al SO … 2022-04-28…
+## 10 2022… -18.314 -69.828  87.1        2.8 Ml   GUC     31 km al SO … 2022-04-28…
+## 11 2022… -29.597 -71.454  69.9        3.7 Ml   GUC     26 km al O d… 2022-04-28…
+## 12 2022… -20.187 -69.015  105.4       3.4 Ml   GUC     47 km al NE … 2022-04-28…
+## 13 2022… -32.612 -71.733  31.4        3.2 Ml   GUC     50 km al N d… 2022-04-28…
+## 14 2022… -21.154 -68.871  112.6       2.9 Ml   GUC     43 km al SO … 2022-04-28…
+## 15 2022… -21.233 -68.521  130.4       2.7 Ml   GUC     28 km al O d… 2022-04-28…
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(chilemapas)
+
+url &lt;- "https://api.gael.cloud/general/public/sismos"
+
+httr::GET(url) |&gt;
+  content() |&gt;
+  purrr::map_df(tibble::as_tibble) |&gt;
+* mutate(across(everything(), readr::parse_guess))
+```
+]
+ 
+.panel2-GET-auto[
+
+```
+## # A tibble: 15 × 8
+##    Fecha               Latitud Longitud Profundidad Magnitud Agencia
+##    &lt;dttm&gt;                &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;  
+##  1 2022-04-28 12:40:01   -30.1    -72.2        31.8 3.1 Ml   GUC    
+##  2 2022-04-28 12:18:44   -21.2    -67.6       212.  4.2 Ml   GUC    
+##  3 2022-04-28 12:00:40   -21.9    -68.7       118.  3.0 Ml   GUC    
+##  4 2022-04-28 07:39:12   -23.9    -67.0       229.  3.5 Ml   GUC    
+##  5 2022-04-28 07:21:26   -30.3    -71.3        50.9 2.9 Ml   GUC    
+##  6 2022-04-28 06:46:46   -21.5    -68.5       133   2.9 Ml   GUC    
+##  7 2022-04-28 05:07:25   -23.9    -67.6       268.  2.7 Ml   GUC    
+##  8 2022-04-28 01:14:06   -20.8    -68.9        99.2 4.0 Ml   GUC    
+##  9 2022-04-28 00:34:37   -20.8    -70.8        22.8 3.0 Ml   GUC    
+## 10 2022-04-27 23:00:21   -18.3    -69.8        87.1 2.8 Ml   GUC    
+## 11 2022-04-27 22:30:48   -29.6    -71.5        69.9 3.7 Ml   GUC    
+## 12 2022-04-27 21:44:52   -20.2    -69.0       105.  3.4 Ml   GUC    
+## 13 2022-04-27 20:02:13   -32.6    -71.7        31.4 3.2 Ml   GUC    
+## 14 2022-04-27 18:18:28   -21.2    -68.9       113.  2.9 Ml   GUC    
+## 15 2022-04-27 17:04:25   -21.2    -68.5       130.  2.7 Ml   GUC    
+## # … with 2 more variables: RefGeografica &lt;chr&gt;, FechaUpdate &lt;dttm&gt;
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(chilemapas)
+
+url &lt;- "https://api.gael.cloud/general/public/sismos"
+
+httr::GET(url) |&gt;
+  content() |&gt;
+  purrr::map_df(tibble::as_tibble) |&gt;
+  mutate(across(everything(), readr::parse_guess)) |&gt;
+* mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml")))
+```
+]
+ 
+.panel2-GET-auto[
+
+```
+## # A tibble: 15 × 8
+##    Fecha               Latitud Longitud Profundidad Magnitud Agencia
+##    &lt;dttm&gt;                &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  
+##  1 2022-04-28 12:40:01   -30.1    -72.2        31.8      3.1 GUC    
+##  2 2022-04-28 12:18:44   -21.2    -67.6       212.       4.2 GUC    
+##  3 2022-04-28 12:00:40   -21.9    -68.7       118.       3   GUC    
+##  4 2022-04-28 07:39:12   -23.9    -67.0       229.       3.5 GUC    
+##  5 2022-04-28 07:21:26   -30.3    -71.3        50.9      2.9 GUC    
+##  6 2022-04-28 06:46:46   -21.5    -68.5       133        2.9 GUC    
+##  7 2022-04-28 05:07:25   -23.9    -67.6       268.       2.7 GUC    
+##  8 2022-04-28 01:14:06   -20.8    -68.9        99.2      4   GUC    
+##  9 2022-04-28 00:34:37   -20.8    -70.8        22.8      3   GUC    
+## 10 2022-04-27 23:00:21   -18.3    -69.8        87.1      2.8 GUC    
+## 11 2022-04-27 22:30:48   -29.6    -71.5        69.9      3.7 GUC    
+## 12 2022-04-27 21:44:52   -20.2    -69.0       105.       3.4 GUC    
+## 13 2022-04-27 20:02:13   -32.6    -71.7        31.4      3.2 GUC    
+## 14 2022-04-27 18:18:28   -21.2    -68.9       113.       2.9 GUC    
+## 15 2022-04-27 17:04:25   -21.2    -68.5       130.       2.7 GUC    
+## # … with 2 more variables: RefGeografica &lt;chr&gt;, FechaUpdate &lt;dttm&gt;
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(chilemapas)
+
+url &lt;- "https://api.gael.cloud/general/public/sismos"
+
+httr::GET(url) |&gt;
+  content() |&gt;
+  purrr::map_df(tibble::as_tibble) |&gt;
+  mutate(across(everything(), readr::parse_guess)) |&gt;
+  mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml"))) |&gt;
+* ggplot()
+```
+]
+ 
+.panel2-GET-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_11_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(chilemapas)
+
+url &lt;- "https://api.gael.cloud/general/public/sismos"
+
+httr::GET(url) |&gt;
+  content() |&gt;
+  purrr::map_df(tibble::as_tibble) |&gt;
+  mutate(across(everything(), readr::parse_guess)) |&gt;
+  mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml"))) |&gt;
+  ggplot() +
+* geom_sf(
+*   data = chilemapas::mapa_comunas, aes(geometry = geometry),
+*   alpha = 0.5
+*   )
+```
+]
+ 
+.panel2-GET-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_12_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(chilemapas)
+
+url &lt;- "https://api.gael.cloud/general/public/sismos"
+
+httr::GET(url) |&gt;
+  content() |&gt;
+  purrr::map_df(tibble::as_tibble) |&gt;
+  mutate(across(everything(), readr::parse_guess)) |&gt;
+  mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml"))) |&gt;
+  ggplot() +
+  geom_sf(
+    data = chilemapas::mapa_comunas, aes(geometry = geometry),
+    alpha = 0.5
+    ) +
+* geom_point(
+*   aes(x = Longitud, y = Latitud, size = Magnitud),
+*   shape = 21, fill = "gray80", color = "gray60",
+*   )
+```
+]
+ 
+.panel2-GET-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_13_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(chilemapas)
+
+url &lt;- "https://api.gael.cloud/general/public/sismos"
+
+httr::GET(url) |&gt;
+  content() |&gt;
+  purrr::map_df(tibble::as_tibble) |&gt;
+  mutate(across(everything(), readr::parse_guess)) |&gt;
+  mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml"))) |&gt;
+  ggplot() +
+  geom_sf(
+    data = chilemapas::mapa_comunas, aes(geometry = geometry),
+    alpha = 0.5
+    ) +
+  geom_point(
+    aes(x = Longitud, y = Latitud, size = Magnitud),
+    shape = 21, fill = "gray80", color = "gray60",
+    ) +
+* coord_sf(xlim = c(-80, NA))
+```
+]
+ 
+.panel2-GET-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_14_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## &lt;code&gt;httr::GET&lt;/code&gt;
+.panel1-GET-auto[
+
+```r
+library(httr)
+library(dplyr)
+library(ggplot2)
+library(chilemapas)
+
+url &lt;- "https://api.gael.cloud/general/public/sismos"
+
+httr::GET(url) |&gt;
+  content() |&gt;
+  purrr::map_df(tibble::as_tibble) |&gt;
+  mutate(across(everything(), readr::parse_guess)) |&gt;
+  mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml"))) |&gt;
+  ggplot() +
+  geom_sf(
+    data = chilemapas::mapa_comunas, aes(geometry = geometry),
+    alpha = 0.5
+    ) +
+  geom_point(
+    aes(x = Longitud, y = Latitud, size = Magnitud),
+    shape = 21, fill = "gray80", color = "gray60",
+    ) +
+  coord_sf(xlim = c(-80, NA)) +
+* theme_minimal()
+```
+]
+ 
+.panel2-GET-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_15_output-1.svg" width="100%" /&gt;
+]
+
+&lt;style&gt;
+.panel1-GET-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-GET-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-GET-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
