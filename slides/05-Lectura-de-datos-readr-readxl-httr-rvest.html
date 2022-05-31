@@ -69,6 +69,21 @@ de datos. Más info en https://dbplyr.tidyverse.org/articles/dbplyr.html
 
 ---
 
+## `read_csv` / `read_delim`
+
+&lt;img src="images/readr/readr.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## `read_csv` / `read_delim` parámetros
+
+&lt;br/&gt;
+
+&lt;img src="images/readr/readr-pars.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
 count: false
  
 ## &lt;code&gt;readxl::read_excel&lt;/code&gt;
@@ -92,11 +107,58 @@ count: false
 ```r
 library(readxl)
 
-*read_excel("data/muestrame_los_numeros.xlsx")
+*ruta &lt;- here::here("data/muestrame_los_numeros.xlsx")
 ```
 ]
  
 .panel2-read_excel-auto[
+
+]
+
+---
+count: false
+ 
+## &lt;code&gt;readxl::read_excel&lt;/code&gt;
+.panel1-read_excel-auto[
+
+```r
+library(readxl)
+
+ruta &lt;- here::here("data/muestrame_los_numeros.xlsx")
+
+*ruta
+```
+]
+ 
+.panel2-read_excel-auto[
+
+```
+## [1] "C:/Repos/usach-ingemat-intro-elementos-ds-202201/data/muestrame_los_numeros.xlsx"
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;readxl::read_excel&lt;/code&gt;
+.panel1-read_excel-auto[
+
+```r
+library(readxl)
+
+ruta &lt;- here::here("data/muestrame_los_numeros.xlsx")
+
+ruta
+
+*read_excel(ruta)
+```
+]
+ 
+.panel2-read_excel-auto[
+
+```
+## [1] "C:/Repos/usach-ingemat-intro-elementos-ds-202201/data/muestrame_los_numeros.xlsx"
+```
 
 ```
 ## # A tibble: 16 × 3
@@ -177,11 +239,58 @@ count: false
 ```r
 library(readr)
 
-*read_csv("data/pollution.csv")
+*ruta &lt;- here::here("data/pollution.csv")
 ```
 ]
  
 .panel2-read_csv-auto[
+
+]
+
+---
+count: false
+ 
+## &lt;code&gt;readr::read_csv&lt;/code&gt;
+.panel1-read_csv-auto[
+
+```r
+library(readr)
+
+ruta &lt;- here::here("data/pollution.csv")
+
+*ruta
+```
+]
+ 
+.panel2-read_csv-auto[
+
+```
+## [1] "C:/Repos/usach-ingemat-intro-elementos-ds-202201/data/pollution.csv"
+```
+]
+
+---
+count: false
+ 
+## &lt;code&gt;readr::read_csv&lt;/code&gt;
+.panel1-read_csv-auto[
+
+```r
+library(readr)
+
+ruta &lt;- here::here("data/pollution.csv")
+
+ruta
+
+*read_csv(ruta)
+```
+]
+ 
+.panel2-read_csv-auto[
+
+```
+## [1] "C:/Repos/usach-ingemat-intro-elementos-ds-202201/data/pollution.csv"
+```
 
 ```
 ## # A tibble: 6 × 3
@@ -251,7 +360,7 @@ count: false
 
 ```r
 library(httr)
-*library(dplyr)
+*library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
 ```
 ]
  
@@ -267,8 +376,8 @@ count: false
 
 ```r
 library(httr)
-library(dplyr)
-*library(ggplot2)
+library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
+*library(chilemapas)  # gracias Pachá!
 ```
 ]
  
@@ -284,27 +393,8 @@ count: false
 
 ```r
 library(httr)
-library(dplyr)
-library(ggplot2)
-*library(chilemapas)
-```
-]
- 
-.panel2-GET-auto[
-
-]
-
----
-count: false
- 
-## &lt;code&gt;httr::GET&lt;/code&gt;
-.panel1-GET-auto[
-
-```r
-library(httr)
-library(dplyr)
-library(ggplot2)
-library(chilemapas)
+library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
+library(chilemapas)  # gracias Pachá!
 
 *url &lt;- "https://api.gael.cloud/general/public/sismos"
 ```
@@ -322,9 +412,8 @@ count: false
 
 ```r
 library(httr)
-library(dplyr)
-library(ggplot2)
-library(chilemapas)
+library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
+library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
@@ -336,7 +425,7 @@ url &lt;- "https://api.gael.cloud/general/public/sismos"
 
 ```
 ## Response [https://api.gael.cloud/general/public/sismos]
-##   Date: 2022-05-30 04:22
+##   Date: 2022-05-31 03:15
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 4.01 kB
@@ -362,9 +451,8 @@ count: false
 
 ```r
 library(httr)
-library(dplyr)
-library(ggplot2)
-library(chilemapas)
+library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
+library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
@@ -775,9 +863,8 @@ count: false
 
 ```r
 library(httr)
-library(dplyr)
-library(ggplot2)
-library(chilemapas)
+library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
+library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
@@ -819,9 +906,8 @@ count: false
 
 ```r
 library(httr)
-library(dplyr)
-library(ggplot2)
-library(chilemapas)
+library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
+library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
@@ -865,9 +951,8 @@ count: false
 
 ```r
 library(httr)
-library(dplyr)
-library(ggplot2)
-library(chilemapas)
+library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
+library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
@@ -912,9 +997,8 @@ count: false
 
 ```r
 library(httr)
-library(dplyr)
-library(ggplot2)
-library(chilemapas)
+library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
+library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
@@ -928,7 +1012,7 @@ httr::GET(url) |&gt;
 ]
  
 .panel2-GET-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_11_output-1.svg" width="100%" /&gt;
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_10_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -939,9 +1023,8 @@ count: false
 
 ```r
 library(httr)
-library(dplyr)
-library(ggplot2)
-library(chilemapas)
+library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
+library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
@@ -959,7 +1042,7 @@ httr::GET(url) |&gt;
 ]
  
 .panel2-GET-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_12_output-1.svg" width="100%" /&gt;
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_11_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -970,9 +1053,8 @@ count: false
 
 ```r
 library(httr)
-library(dplyr)
-library(ggplot2)
-library(chilemapas)
+library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
+library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
@@ -994,7 +1076,7 @@ httr::GET(url) |&gt;
 ]
  
 .panel2-GET-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_13_output-1.svg" width="100%" /&gt;
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_12_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -1005,9 +1087,8 @@ count: false
 
 ```r
 library(httr)
-library(dplyr)
-library(ggplot2)
-library(chilemapas)
+library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
+library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
@@ -1030,7 +1111,7 @@ httr::GET(url) |&gt;
 ]
  
 .panel2-GET-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_14_output-1.svg" width="100%" /&gt;
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_13_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -1041,9 +1122,8 @@ count: false
 
 ```r
 library(httr)
-library(dplyr)
-library(ggplot2)
-library(chilemapas)
+library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
+library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
@@ -1067,7 +1147,7 @@ httr::GET(url) |&gt;
 ]
  
 .panel2-GET-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_15_output-1.svg" width="100%" /&gt;
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_14_output-1.svg" width="100%" /&gt;
 ]
 
 &lt;style&gt;
@@ -1088,6 +1168,1283 @@ httr::GET(url) |&gt;
   font-size: 80%
 }
 .panel3-GET-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt;
+.panel1-dbplyr-auto[
+
+```r
+*library(dplyr)
+```
+]
+ 
+.panel2-dbplyr-auto[
+
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt;
+.panel1-dbplyr-auto[
+
+```r
+library(dplyr)
+*library(dbplyr)
+```
+]
+ 
+.panel2-dbplyr-auto[
+
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt;
+.panel1-dbplyr-auto[
+
+```r
+library(dplyr)
+library(dbplyr)
+*library(DBI)
+```
+]
+ 
+.panel2-dbplyr-auto[
+
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt;
+.panel1-dbplyr-auto[
+
+```r
+library(dplyr)
+library(dbplyr)
+library(DBI)
+*library(RMariaDB)
+```
+]
+ 
+.panel2-dbplyr-auto[
+
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt;
+.panel1-dbplyr-auto[
+
+```r
+library(dplyr)
+library(dbplyr)
+library(DBI)
+library(RMariaDB)
+
+*con &lt;-  dbConnect(
+* RMariaDB::MariaDB(),
+* host = "mysql-rfam-public.ebi.ac.uk",
+* db = "Rfam",
+* user = "rfamro",
+* port = 4497
+* )
+```
+]
+ 
+.panel2-dbplyr-auto[
+
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt;
+.panel1-dbplyr-auto[
+
+```r
+library(dplyr)
+library(dbplyr)
+library(DBI)
+library(RMariaDB)
+
+con &lt;-  dbConnect(
+  RMariaDB::MariaDB(),
+  host = "mysql-rfam-public.ebi.ac.uk",
+  db = "Rfam",
+  user = "rfamro",
+  port = 4497
+  )
+
+*tbl(con, "taxonomy")
+```
+]
+ 
+.panel2-dbplyr-auto[
+
+```
+## # Source:   table&lt;taxonomy&gt; [?? x 5]
+## # Database: mysql [rfamro@mysql-rfam-public.ebi.ac.uk:NA/Rfam]
+##    ncbi_id species                  tax_string tree_display_na… align_display_n…
+##      &lt;int&gt; &lt;chr&gt;                    &lt;chr&gt;      &lt;chr&gt;            &lt;chr&gt;           
+##  1       7 Azorhizobium caulinodans Bacteria;… Azorhizobium_ca… Azorhizobium_ca…
+##  2       9 Buchnera aphidicola      Bacteria;… Buchnera_aphidi… Buchnera_aphidi…
+##  3      11 [Cellvibrio] gilvus      Bacteria;… [Cellvibrio]_gi… [Cellvibrio]_gi…
+##  4      14 Dictyoglomus thermophil… Bacteria;… Dictyoglomus_th… Dictyoglomus_th…
+##  5      17 Methylophilus methylotr… Bacteria;… Methylophilus_m… Methylophilus_m…
+##  6      19 Pelobacter carbinolicus  Bacteria;… Pelobacter_carb… Pelobacter_carb…
+##  7      21 Phenylobacterium immobi… Bacteria;… Phenylobacteriu… Phenylobacteriu…
+##  8      23 Shewanella colwelliana   Bacteria;… Shewanella_colw… Shewanella_colw…
+##  9      24 Shewanella putrefaciens  Bacteria;… Shewanella_putr… Shewanella_putr…
+## 10      25 Shewanella hanedai       Bacteria;… Shewanella_hane… Shewanella_hane…
+## # … with more rows
+```
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt;
+.panel1-dbplyr-auto[
+
+```r
+library(dplyr)
+library(dbplyr)
+library(DBI)
+library(RMariaDB)
+
+con &lt;-  dbConnect(
+  RMariaDB::MariaDB(),
+  host = "mysql-rfam-public.ebi.ac.uk",
+  db = "Rfam",
+  user = "rfamro",
+  port = 4497
+  )
+
+tbl(con, "taxonomy") |&gt;
+* select(ncbi_id, species, tax_string)
+```
+]
+ 
+.panel2-dbplyr-auto[
+
+```
+## # Source:   lazy query [?? x 3]
+## # Database: mysql [rfamro@mysql-rfam-public.ebi.ac.uk:NA/Rfam]
+##    ncbi_id species                      tax_string                              
+##      &lt;int&gt; &lt;chr&gt;                        &lt;chr&gt;                                   
+##  1       7 Azorhizobium caulinodans     Bacteria; Proteobacteria; Alphaproteoba…
+##  2       9 Buchnera aphidicola          Bacteria; Proteobacteria; Gammaproteoba…
+##  3      11 [Cellvibrio] gilvus          Bacteria; Actinobacteria; Actinobacteri…
+##  4      14 Dictyoglomus thermophilum    Bacteria; Dictyoglomi; Dictyoglomales; …
+##  5      17 Methylophilus methylotrophus Bacteria; Proteobacteria; Betaproteobac…
+##  6      19 Pelobacter carbinolicus      Bacteria; Proteobacteria; Deltaproteoba…
+##  7      21 Phenylobacterium immobile    Bacteria; Proteobacteria; Alphaproteoba…
+##  8      23 Shewanella colwelliana       Bacteria; Proteobacteria; Gammaproteoba…
+##  9      24 Shewanella putrefaciens      Bacteria; Proteobacteria; Gammaproteoba…
+## 10      25 Shewanella hanedai           Bacteria; Proteobacteria; Gammaproteoba…
+## # … with more rows
+```
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt;
+.panel1-dbplyr-auto[
+
+```r
+library(dplyr)
+library(dbplyr)
+library(DBI)
+library(RMariaDB)
+
+con &lt;-  dbConnect(
+  RMariaDB::MariaDB(),
+  host = "mysql-rfam-public.ebi.ac.uk",
+  db = "Rfam",
+  user = "rfamro",
+  port = 4497
+  )
+
+tbl(con, "taxonomy") |&gt;
+  select(ncbi_id, species, tax_string) |&gt;
+* filter(ncbi_id == 10116)
+```
+]
+ 
+.panel2-dbplyr-auto[
+
+```
+## # Source:   lazy query [?? x 3]
+## # Database: mysql [rfamro@mysql-rfam-public.ebi.ac.uk:NA/Rfam]
+##   ncbi_id species                        tax_string                             
+##     &lt;int&gt; &lt;chr&gt;                          &lt;chr&gt;                                  
+## 1   10116 Rattus norvegicus (Norway rat) Eukaryota; Metazoa; Chordata; Craniata…
+```
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt;
+.panel1-dbplyr-auto[
+
+```r
+library(dplyr)
+library(dbplyr)
+library(DBI)
+library(RMariaDB)
+
+con &lt;-  dbConnect(
+  RMariaDB::MariaDB(),
+  host = "mysql-rfam-public.ebi.ac.uk",
+  db = "Rfam",
+  user = "rfamro",
+  port = 4497
+  )
+
+tbl(con, "taxonomy") |&gt;
+  select(ncbi_id, species, tax_string) |&gt;
+  filter(ncbi_id == 10116) |&gt;
+* show_query()
+```
+]
+ 
+.panel2-dbplyr-auto[
+
+```
+## &lt;SQL&gt;
+## SELECT *
+## FROM (SELECT `ncbi_id`, `species`, `tax_string`
+## FROM `taxonomy`) `q01`
+## WHERE (`ncbi_id` = 10116.0)
+```
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt;
+.panel1-dbplyr-auto[
+
+```r
+library(dplyr)
+library(dbplyr)
+library(DBI)
+library(RMariaDB)
+
+con &lt;-  dbConnect(
+  RMariaDB::MariaDB(),
+  host = "mysql-rfam-public.ebi.ac.uk",
+  db = "Rfam",
+  user = "rfamro",
+  port = 4497
+  )
+
+tbl(con, "taxonomy") |&gt;
+  select(ncbi_id, species, tax_string) |&gt;
+  filter(ncbi_id == 10116) |&gt;
+  show_query() |&gt;
+* collect()
+```
+]
+ 
+.panel2-dbplyr-auto[
+
+```
+## &lt;SQL&gt;
+## SELECT *
+## FROM (SELECT `ncbi_id`, `species`, `tax_string`
+## FROM `taxonomy`) `q01`
+## WHERE (`ncbi_id` = 10116.0)
+```
+
+```
+## # A tibble: 1 × 3
+##   ncbi_id species                        tax_string                             
+##     &lt;int&gt; &lt;chr&gt;                          &lt;chr&gt;                                  
+## 1   10116 Rattus norvegicus (Norway rat) Eukaryota; Metazoa; Chordata; Craniata…
+```
+]
+
+&lt;style&gt;
+.panel1-dbplyr-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-dbplyr-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-dbplyr-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr2-auto[
+
+```r
+*library(tidyverse)
+```
+]
+ 
+.panel2-dbplyr2-auto[
+
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr2-auto[
+
+```r
+library(tidyverse)
+# Postres SQL es otro motor de bbdd
+*library(RPostgres)
+```
+]
+ 
+.panel2-dbplyr2-auto[
+
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr2-auto[
+
+```r
+library(tidyverse)
+# Postres SQL es otro motor de bbdd
+library(RPostgres)
+
+# gracias Pachá nuevamente!
+*user &lt;- "student"
+```
+]
+ 
+.panel2-dbplyr2-auto[
+
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr2-auto[
+
+```r
+library(tidyverse)
+# Postres SQL es otro motor de bbdd
+library(RPostgres)
+
+# gracias Pachá nuevamente!
+user &lt;- "student"
+*pass &lt;- "uQCy30sNP5arqMBGHVLZ"
+```
+]
+ 
+.panel2-dbplyr2-auto[
+
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr2-auto[
+
+```r
+library(tidyverse)
+# Postres SQL es otro motor de bbdd
+library(RPostgres)
+
+# gracias Pachá nuevamente!
+user &lt;- "student"
+pass &lt;- "uQCy30sNP5arqMBGHVLZ"
+
+*con &lt;- dbConnect(
+* Postgres(),
+* user = user,
+* password = pass,
+* dbname = "financial",
+* host = "databases.pacha.dev"
+*) 
+```
+]
+ 
+.panel2-dbplyr2-auto[
+
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr2-auto[
+
+```r
+library(tidyverse)
+# Postres SQL es otro motor de bbdd
+library(RPostgres)
+
+# gracias Pachá nuevamente!
+user &lt;- "student"
+pass &lt;- "uQCy30sNP5arqMBGHVLZ"
+
+con &lt;- dbConnect(
+  Postgres(),
+  user = user,
+  password = pass,
+  dbname = "financial",
+  host = "databases.pacha.dev"
+)
+
+*dbListTables(con)
+```
+]
+ 
+.panel2-dbplyr2-auto[
+
+```
+## [1] "disps"     "cards"     "clients"   "loans"     "orders"    "trans"    
+## [7] "tkeys"     "districts" "accounts"
+```
+]
+
+&lt;style&gt;
+.panel1-dbplyr2-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-dbplyr2-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-dbplyr2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+
+## Más detalles de la BBDD
+
+https://relational.fit.cvut.cz/dataset/Financial
+
+&lt;img src="images/bbdd-financial.svg" width="27%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr3-auto[
+
+```r
+*tbl(con, "loans")
+```
+]
+ 
+.panel2-dbplyr3-auto[
+
+```
+## # Source:   table&lt;loans&gt; [?? x 7]
+## # Database: postgres [student@databases.pacha.dev:5432/financial]
+##         id account_id date       amount duration payments status      
+##    &lt;int64&gt;    &lt;int64&gt; &lt;date&gt;      &lt;dbl&gt;  &lt;int64&gt;    &lt;dbl&gt; &lt;chr&gt;       
+##  1    4959          2 1994-01-05  80952       24     3373 "A         "
+##  2    4961         19 1996-04-29  30276       12     2523 "B         "
+##  3    4962         25 1997-12-08  30276       12     2523 "A         "
+##  4    4967         37 1998-10-14 318480       60     5308 "D         "
+##  5    4968         38 1998-04-19 110736       48     2307 "C         "
+##  6    4973         67 1996-05-02 165960       24     6915 "A         "
+##  7    4986         97 1997-08-10 102876       12     8573 "A         "
+##  8    4988        103 1997-12-06 265320       36     7370 "D         "
+##  9    4989        105 1998-12-05 352704       48     7348 "C         "
+## 10    4990        110 1997-09-08 162576       36     4516 "C         "
+## # … with more rows
+```
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr3-auto[
+
+```r
+tbl(con, "loans") |&gt;
+* group_by(duration)
+```
+]
+ 
+.panel2-dbplyr3-auto[
+
+```
+## # Source:   table&lt;loans&gt; [?? x 7]
+## # Database: postgres [student@databases.pacha.dev:5432/financial]
+## # Groups:   duration
+##         id account_id date       amount duration payments status      
+##    &lt;int64&gt;    &lt;int64&gt; &lt;date&gt;      &lt;dbl&gt;  &lt;int64&gt;    &lt;dbl&gt; &lt;chr&gt;       
+##  1    4959          2 1994-01-05  80952       24     3373 "A         "
+##  2    4961         19 1996-04-29  30276       12     2523 "B         "
+##  3    4962         25 1997-12-08  30276       12     2523 "A         "
+##  4    4967         37 1998-10-14 318480       60     5308 "D         "
+##  5    4968         38 1998-04-19 110736       48     2307 "C         "
+##  6    4973         67 1996-05-02 165960       24     6915 "A         "
+##  7    4986         97 1997-08-10 102876       12     8573 "A         "
+##  8    4988        103 1997-12-06 265320       36     7370 "D         "
+##  9    4989        105 1998-12-05 352704       48     7348 "C         "
+## 10    4990        110 1997-09-08 162576       36     4516 "C         "
+## # … with more rows
+```
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr3-auto[
+
+```r
+tbl(con, "loans") |&gt;
+  group_by(duration) |&gt;
+* summarise(
+*   promedio_monto = mean(amount),
+*   cantidad_de_operacion = n()
+* )
+```
+]
+ 
+.panel2-dbplyr3-auto[
+
+```
+## # Source:   lazy query [?? x 3]
+## # Database: postgres [student@databases.pacha.dev:5432/financial]
+##   duration promedio_monto cantidad_de_operacion
+##    &lt;int64&gt;          &lt;dbl&gt;               &lt;int64&gt;
+## 1       24         99218.                   138
+## 2       60        244451.                   145
+## 3       48        205593.                   138
+## 4       12         53636.                   131
+## 5       36        144048.                   130
+```
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr3-auto[
+
+```r
+tbl(con, "loans") |&gt;
+  group_by(duration) |&gt;
+  summarise(
+    promedio_monto = mean(amount),
+    cantidad_de_operacion = n()
+  ) |&gt;
+* arrange(duration)
+```
+]
+ 
+.panel2-dbplyr3-auto[
+
+```
+## # Source:     lazy query [?? x 3]
+## # Database:   postgres [student@databases.pacha.dev:5432/financial]
+## # Ordered by: duration
+##   duration promedio_monto cantidad_de_operacion
+##    &lt;int64&gt;          &lt;dbl&gt;               &lt;int64&gt;
+## 1       12         53636.                   131
+## 2       24         99218.                   138
+## 3       36        144048.                   130
+## 4       48        205593.                   138
+## 5       60        244451.                   145
+```
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr3-auto[
+
+```r
+tbl(con, "loans") |&gt;
+  group_by(duration) |&gt;
+  summarise(
+    promedio_monto = mean(amount),
+    cantidad_de_operacion = n()
+  ) |&gt;
+  arrange(duration) |&gt;
+* collect()
+```
+]
+ 
+.panel2-dbplyr3-auto[
+
+```
+## # A tibble: 5 × 3
+##   duration promedio_monto cantidad_de_operacion
+##    &lt;int64&gt;          &lt;dbl&gt;               &lt;int64&gt;
+## 1       12         53636.                   131
+## 2       24         99218.                   138
+## 3       36        144048.                   130
+## 4       48        205593.                   138
+## 5       60        244451.                   145
+```
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr3-auto[
+
+```r
+tbl(con, "loans") |&gt;
+  group_by(duration) |&gt;
+  summarise(
+    promedio_monto = mean(amount),
+    cantidad_de_operacion = n()
+  ) |&gt;
+  arrange(duration) |&gt;
+  collect() |&gt;
+* mutate(across(everything(), as.numeric))
+```
+]
+ 
+.panel2-dbplyr3-auto[
+
+```
+## # A tibble: 5 × 3
+##   duration promedio_monto cantidad_de_operacion
+##      &lt;dbl&gt;          &lt;dbl&gt;                 &lt;dbl&gt;
+## 1       12         53636.                   131
+## 2       24         99218.                   138
+## 3       36        144048.                   130
+## 4       48        205593.                   138
+## 5       60        244451.                   145
+```
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr3-auto[
+
+```r
+tbl(con, "loans") |&gt;
+  group_by(duration) |&gt;
+  summarise(
+    promedio_monto = mean(amount),
+    cantidad_de_operacion = n()
+  ) |&gt;
+  arrange(duration) |&gt;
+  collect() |&gt;
+  mutate(across(everything(), as.numeric)) |&gt;
+* ggplot()
+```
+]
+ 
+.panel2-dbplyr3-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-dbplyr3_auto_07_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## Bases de datos &lt;code&gt;dbplyr&lt;/code&gt; ejemplo 2
+.panel1-dbplyr3-auto[
+
+```r
+tbl(con, "loans") |&gt;
+  group_by(duration) |&gt;
+  summarise(
+    promedio_monto = mean(amount),
+    cantidad_de_operacion = n()
+  ) |&gt;
+  arrange(duration) |&gt;
+  collect() |&gt;
+  mutate(across(everything(), as.numeric)) |&gt;
+  ggplot() +
+* geom_col(
+*   aes(
+*     x = factor(duration),
+*     y = cantidad_de_operacion)
+*   )
+```
+]
+ 
+.panel2-dbplyr3-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-dbplyr3_auto_08_output-1.svg" width="100%" /&gt;
+]
+
+&lt;style&gt;
+.panel1-dbplyr3-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-dbplyr3-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-dbplyr3-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+
+
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+*library(rvest)
+```
+]
+ 
+.panel2-rvest-auto[
+
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+*library(lubridate)
+```
+]
+ 
+.panel2-rvest-auto[
+
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+*url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+```
+]
+ 
+.panel2-rvest-auto[
+
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+
+*read_html(url)
+```
+]
+ 
+.panel2-rvest-auto[
+
+```
+## {html_document}
+## &lt;html lang="es"&gt;
+## [1] &lt;head&gt;\n&lt;meta charset="utf-8"&gt;\n&lt;meta name="viewport" content="width=devi ...
+## [2] &lt;body&gt;\n\n&lt;noscript&gt;&lt;iframe src="https://www.googletagmanager.com/ns.html ...
+```
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+
+read_html(url) |&gt;
+* html_table()
+```
+]
+ 
+.panel2-rvest-auto[
+
+```
+## [[1]]
+## # A tibble: 46 × 3
+##    Fecha    `Empresa y razón de reclamo`                                      ``
+##    &lt;chr&gt;    &lt;chr&gt;                                                          &lt;int&gt;
+##  1 17-03-22 Universidad de Santiago USACH - Dejaron a decenas sin trabajo…    69
+##  2 14-03-22 Universidad de Santiago USACH - Profesor con pistola en clases    84
+##  3 08-03-22 Usach - Guía para reclamar y demandar a la USACH                  75
+##  4 09-07-21 Usach - Diplomados                                               160
+##  5 12-04-21 Usach - No cumplen con las clases lnline                         280
+##  6 25-09-20 Usach - mala experiencia reclamo                                 426
+##  7 15-09-20 Usach - No se hacen clases ni las recuperan y te cobran todo …   315
+##  8 27-07-20 Usach - Demanda colectiva por NO PRESTACION DE SERVICIOS         344
+##  9 15-01-20 No Resuelto Usach - Leyes que aportan a la segregación social    473
+## 10 30-08-19 Usach - Depto. de ingeniería industrial No apoya al emprendim…   462
+## # … with 36 more rows
+```
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+
+read_html(url) |&gt;
+  html_table() |&gt;
+* first()
+```
+]
+ 
+.panel2-rvest-auto[
+
+```
+## # A tibble: 46 × 3
+##    Fecha    `Empresa y razón de reclamo`                                      ``
+##    &lt;chr&gt;    &lt;chr&gt;                                                          &lt;int&gt;
+##  1 17-03-22 Universidad de Santiago USACH - Dejaron a decenas sin trabajo…    69
+##  2 14-03-22 Universidad de Santiago USACH - Profesor con pistola en clases    84
+##  3 08-03-22 Usach - Guía para reclamar y demandar a la USACH                  75
+##  4 09-07-21 Usach - Diplomados                                               160
+##  5 12-04-21 Usach - No cumplen con las clases lnline                         280
+##  6 25-09-20 Usach - mala experiencia reclamo                                 426
+##  7 15-09-20 Usach - No se hacen clases ni las recuperan y te cobran todo …   315
+##  8 27-07-20 Usach - Demanda colectiva por NO PRESTACION DE SERVICIOS         344
+##  9 15-01-20 No Resuelto Usach - Leyes que aportan a la segregación social    473
+## 10 30-08-19 Usach - Depto. de ingeniería industrial No apoya al emprendim…   462
+## # … with 36 more rows
+```
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+
+read_html(url) |&gt;
+  html_table() |&gt;
+  first() |&gt;
+* set_names(c("fecha", "reclamo", "cantidad"))
+```
+]
+ 
+.panel2-rvest-auto[
+
+```
+## # A tibble: 46 × 3
+##    fecha    reclamo                                                     cantidad
+##    &lt;chr&gt;    &lt;chr&gt;                                                          &lt;int&gt;
+##  1 17-03-22 Universidad de Santiago USACH - Dejaron a decenas sin trab…       69
+##  2 14-03-22 Universidad de Santiago USACH - Profesor con pistola en cl…       84
+##  3 08-03-22 Usach - Guía para reclamar y demandar a la USACH                  75
+##  4 09-07-21 Usach - Diplomados                                               160
+##  5 12-04-21 Usach - No cumplen con las clases lnline                         280
+##  6 25-09-20 Usach - mala experiencia reclamo                                 426
+##  7 15-09-20 Usach - No se hacen clases ni las recuperan y te cobran to…      315
+##  8 27-07-20 Usach - Demanda colectiva por NO PRESTACION DE SERVICIOS         344
+##  9 15-01-20 No Resuelto Usach - Leyes que aportan a la segregación soc…      473
+## 10 30-08-19 Usach - Depto. de ingeniería industrial No apoya al empren…      462
+## # … with 36 more rows
+```
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+
+read_html(url) |&gt;
+  html_table() |&gt;
+  first() |&gt;
+  set_names(c("fecha", "reclamo", "cantidad")) |&gt;
+* mutate(fecha = dmy(fecha))
+```
+]
+ 
+.panel2-rvest-auto[
+
+```
+## # A tibble: 46 × 3
+##    fecha      reclamo                                                   cantidad
+##    &lt;date&gt;     &lt;chr&gt;                                                        &lt;int&gt;
+##  1 2022-03-17 Universidad de Santiago USACH - Dejaron a decenas sin tr…       69
+##  2 2022-03-14 Universidad de Santiago USACH - Profesor con pistola en …       84
+##  3 2022-03-08 Usach - Guía para reclamar y demandar a la USACH                75
+##  4 2021-07-09 Usach - Diplomados                                             160
+##  5 2021-04-12 Usach - No cumplen con las clases lnline                       280
+##  6 2020-09-25 Usach - mala experiencia reclamo                               426
+##  7 2020-09-15 Usach - No se hacen clases ni las recuperan y te cobran …      315
+##  8 2020-07-27 Usach - Demanda colectiva por NO PRESTACION DE SERVICIOS       344
+##  9 2020-01-15 No Resuelto Usach - Leyes que aportan a la segregación s…      473
+## 10 2019-08-30 Usach - Depto. de ingeniería industrial No apoya al empr…      462
+## # … with 36 more rows
+```
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+
+read_html(url) |&gt;
+  html_table() |&gt;
+  first() |&gt;
+  set_names(c("fecha", "reclamo", "cantidad")) |&gt;
+  mutate(fecha = dmy(fecha)) |&gt;
+* arrange(fecha, cantidad)
+```
+]
+ 
+.panel2-rvest-auto[
+
+```
+## # A tibble: 46 × 3
+##    fecha      reclamo                                                   cantidad
+##    &lt;date&gt;     &lt;chr&gt;                                                        &lt;int&gt;
+##  1 2012-06-24 "Usach - Dicom"                                               2218
+##  2 2012-08-29 "Usach - Estafa De Grado Academico A C. Civil"                2564
+##  3 2012-10-30 "Usach - Robo Pase Escolar"                                   2106
+##  4 2012-11-09 "Universidad De Santiago De Chile - Cambio De Tv.lcd.32\…     1568
+##  5 2013-01-20 "Usach - Su política de no dar soluciones"                    2919
+##  6 2013-02-28 "Usach - Loa.usach.cl"                                        5876
+##  7 2013-03-04 "Universidad de Santiago USACH - Censura en la Radio"         1759
+##  8 2013-06-28 "Universidad de Santiago USACH - Las Cuotas Del Credito …     1398
+##  9 2013-07-23 "Universidad de Santiago USACH - Burocracia para renunci…     5860
+## 10 2013-08-20 "universidad de santiago USACH - Falta De Oportunidades.…     2707
+## # … with 36 more rows
+```
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+
+read_html(url) |&gt;
+  html_table() |&gt;
+  first() |&gt;
+  set_names(c("fecha", "reclamo", "cantidad")) |&gt;
+  mutate(fecha = dmy(fecha)) |&gt;
+  arrange(fecha, cantidad) |&gt;
+* ggplot(aes(fecha, cantidad))
+```
+]
+ 
+.panel2-rvest-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-rvest_auto_10_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+
+read_html(url) |&gt;
+  html_table() |&gt;
+  first() |&gt;
+  set_names(c("fecha", "reclamo", "cantidad")) |&gt;
+  mutate(fecha = dmy(fecha)) |&gt;
+  arrange(fecha, cantidad) |&gt;
+  ggplot(aes(fecha, cantidad)) +
+* geom_line(color = "gray80", size = 1.2)
+```
+]
+ 
+.panel2-rvest-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-rvest_auto_11_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+
+read_html(url) |&gt;
+  html_table() |&gt;
+  first() |&gt;
+  set_names(c("fecha", "reclamo", "cantidad")) |&gt;
+  mutate(fecha = dmy(fecha)) |&gt;
+  arrange(fecha, cantidad) |&gt;
+  ggplot(aes(fecha, cantidad)) +
+  geom_line(color = "gray80", size = 1.2) +
+* geom_smooth(alpha = 0.25, size = 1.2)
+```
+]
+ 
+.panel2-rvest-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-rvest_auto_12_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+
+read_html(url) |&gt;
+  html_table() |&gt;
+  first() |&gt;
+  set_names(c("fecha", "reclamo", "cantidad")) |&gt;
+  mutate(fecha = dmy(fecha)) |&gt;
+  arrange(fecha, cantidad) |&gt;
+  ggplot(aes(fecha, cantidad)) +
+  geom_line(color = "gray80", size = 1.2) +
+  geom_smooth(alpha = 0.25, size = 1.2) +
+* geom_vline(xintercept = ymd(20160401), color = "darkred", size = 1.2)
+```
+]
+ 
+.panel2-rvest-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-rvest_auto_13_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+
+read_html(url) |&gt;
+  html_table() |&gt;
+  first() |&gt;
+  set_names(c("fecha", "reclamo", "cantidad")) |&gt;
+  mutate(fecha = dmy(fecha)) |&gt;
+  arrange(fecha, cantidad) |&gt;
+  ggplot(aes(fecha, cantidad)) +
+  geom_line(color = "gray80", size = 1.2) +
+  geom_smooth(alpha = 0.25, size = 1.2) +
+  geom_vline(xintercept = ymd(20160401), color = "darkred", size = 1.2) +
+* geom_text(
+*   x = ymd(20170401), y = 4000, hjust = -.05,
+*   label = "Primer curso\nIntro DS &lt;3"
+*   )
+```
+]
+ 
+.panel2-rvest-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-rvest_auto_14_output-1.svg" width="100%" /&gt;
+]
+
+---
+count: false
+ 
+## HTML &lt;code&gt;rvest::read_html&lt;/code&gt;
+.panel1-rvest-auto[
+
+```r
+library(rvest)
+library(lubridate)
+
+url &lt;- "https://www.reclamos.cl/empresa/universidad_de_santiago_usach"
+
+read_html(url) |&gt;
+  html_table() |&gt;
+  first() |&gt;
+  set_names(c("fecha", "reclamo", "cantidad")) |&gt;
+  mutate(fecha = dmy(fecha)) |&gt;
+  arrange(fecha, cantidad) |&gt;
+  ggplot(aes(fecha, cantidad)) +
+  geom_line(color = "gray80", size = 1.2) +
+  geom_smooth(alpha = 0.25, size = 1.2) +
+  geom_vline(xintercept = ymd(20160401), color = "darkred", size = 1.2) +
+  geom_text(
+    x = ymd(20170401), y = 4000, hjust = -.05,
+    label = "Primer curso\nIntro DS &lt;3"
+    ) +
+* coord_cartesian(ylim = c(0, NA))
+```
+]
+ 
+.panel2-rvest-auto[
+&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-rvest_auto_15_output-1.svg" width="100%" /&gt;
+]
+
+&lt;style&gt;
+.panel1-rvest-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-rvest-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-rvest-auto {
   color: black;
   width: NA%;
   hight: 33%;
