@@ -76,6 +76,8 @@ Introducción a los elementos del DS
     <code><small>dplyr</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/03-AED-Transformacion-de-datos-dplyr-tidyr.html)
 4.  [Manipulación de datos <code><small>dplyr
     tidyr</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/04-Manipulacion-de-datos-dplyr-tidyr.html)
+5.  [Lectura de datos <code><small>readr readxl httr rvest
+    dbply</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/05-Lectura-de-datos-readr-readxl-httr-rvest.html)
 
 ## Bibliografía
 
