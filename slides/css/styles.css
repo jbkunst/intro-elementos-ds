@@ -7,10 +7,12 @@
 
 .title-slide > h1,
 .title-slide > .title > h1 {
-  font-family: 'Datalegreya', sans-serif;
+/*  font-family: 'Datalegreya', sans-serif; *
   font-size: 6em;
+  font-weight: 400; */
+  font-family: 'Alegreya Sans SC';
+  font-size: 3.5em;
   font-weight: 400;
-  
 }
 
 .title-slide > h1,

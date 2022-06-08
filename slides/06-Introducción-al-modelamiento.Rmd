@@ -1,0 +1,58 @@
+---
+# title: "{ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2  d|2s|2{202201}[26°c[10°c]"
+title: "Elementos DS"
+pagetitle: "06-Introducción-al-modelamiento"
+subtitle: "06 Introducción al modelamiento<code><small></small></code>"
+author: "<br>Joshua Kunst<br>@jbkunst"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    self_contained: no
+    css: ["css/xaringan-themer.css", "css/styles.css"]
+    lib_dir: libs    
+    nature:
+      titleSlideClass: ["left", "middle"]
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+source(here::here("R/00-xaringan-knitr-setup.R"))
+
+library(klassets)
+library(tidyverse)
+
+df <- klassets::sim_xy(
+  n = 500,
+  x_dist = purrr::partial(runif, min = 0, max = 100),
+  error_dist = purrr::partial(rnorm, sd = 5)
+) |> 
+  mutate(y = y + 5 * sin(x / 5) + 20 * sin(x / 20))
+
+plot(df)
+
+
+df2 <- klassets::sim_xy(
+  n = 100,
+  x_dist = purrr::partial(runif, min = 0, max = 100),
+  error_dist = purrr::partial(rnorm, sd = 5)
+) 
+
+plot(df2)
+```
+
+## Modelamiento
+
+En un principio pensaremos como el modelamiento a la _simplificación_ de un fenómeno.
+
+La idea es representar 
+representar
+
+
+

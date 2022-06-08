@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>05-Lectura-de-datos-readr-readxl-httr-rvest</title>
+    <title>05-Lectura-de-datos-readr-readxl-httr-rvest-dbplyr</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Joshua Kunst @jbkunst" />
-    <meta name="date" content="2022-05-30" />
+    <meta name="date" content="2022-06-01" />
     <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
@@ -14,16 +14,16 @@
 class: left, middle, title-slide
 
 .title[
-# {ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2 d|2s|2{202201}[26°c[10°c]
+# Elementos DS
 ]
 .subtitle[
-## 05 Lectura de datos <code><small>readr readxl httr rvest</small></code>
+## 05 Lectura de datos <code><small>readr readxl httr rvest dbplyr</small></code>
 ]
 .author[
 ### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
 ]
 .date[
-### 2022-05-30
+### 2022-06-01
 ]
 
 ---
@@ -417,47 +417,7 @@ library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
-*httr::GET(url)
-```
-]
- 
-.panel2-GET-auto[
-
-```
-## Response [https://api.gael.cloud/general/public/sismos]
-##   Date: 2022-05-31 03:15
-##   Status: 200
-##   Content-Type: application/json; charset=utf-8
-##   Size: 4.01 kB
-## [
-##   {
-##     "Fecha": "2022-04-28 12:40:01",
-##     "Latitud": "-30.143",
-##     "Longitud": "-72.206",
-##     "Profundidad": "31.8",
-##     "Magnitud": "3.1 Ml",
-##     "Agencia": "GUC",
-##     "RefGeografica": "70 km al O de Tongoy",
-##     "FechaUpdate": "2022-04-28T13:05:00.580Z"
-## ...
-```
-]
-
----
-count: false
- 
-## &lt;code&gt;httr::GET&lt;/code&gt;
-.panel1-GET-auto[
-
-```r
-library(httr)
-library(tidyverse) # dplyr + ggplot + etc  # dplyr + ggplot + etc
-library(chilemapas)  # gracias Pachá!
-
-url &lt;- "https://api.gael.cloud/general/public/sismos"
-
-httr::GET(url) |&gt;
-* content()
+*content(httr::GET(url))
 ```
 ]
  
@@ -868,8 +828,7 @@ library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
-httr::GET(url) |&gt;
-  content() |&gt;
+content(httr::GET(url)) |&gt;
 * purrr::map_df(tibble::as_tibble)
 ```
 ]
@@ -911,8 +870,7 @@ library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
-httr::GET(url) |&gt;
-  content() |&gt;
+content(httr::GET(url)) |&gt;
   purrr::map_df(tibble::as_tibble) |&gt;
 * mutate(across(everything(), readr::parse_guess))
 ```
@@ -956,8 +914,7 @@ library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
-httr::GET(url) |&gt;
-  content() |&gt;
+content(httr::GET(url)) |&gt;
   purrr::map_df(tibble::as_tibble) |&gt;
   mutate(across(everything(), readr::parse_guess)) |&gt;
 * mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml")))
@@ -1002,8 +959,7 @@ library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
-httr::GET(url) |&gt;
-  content() |&gt;
+content(httr::GET(url)) |&gt;
   purrr::map_df(tibble::as_tibble) |&gt;
   mutate(across(everything(), readr::parse_guess)) |&gt;
   mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml"))) |&gt;
@@ -1012,7 +968,7 @@ httr::GET(url) |&gt;
 ]
  
 .panel2-GET-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_10_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/GET_auto_09_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -1028,21 +984,20 @@ library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
-httr::GET(url) |&gt;
-  content() |&gt;
+content(httr::GET(url)) |&gt;
   purrr::map_df(tibble::as_tibble) |&gt;
   mutate(across(everything(), readr::parse_guess)) |&gt;
   mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml"))) |&gt;
   ggplot() +
 * geom_sf(
 *   data = chilemapas::mapa_comunas, aes(geometry = geometry),
-*   alpha = 0.5
+*   alpha = 0.5, size = 0.3
 *   )
 ```
 ]
  
 .panel2-GET-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_11_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/GET_auto_10_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -1058,15 +1013,14 @@ library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
-httr::GET(url) |&gt;
-  content() |&gt;
+content(httr::GET(url)) |&gt;
   purrr::map_df(tibble::as_tibble) |&gt;
   mutate(across(everything(), readr::parse_guess)) |&gt;
   mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml"))) |&gt;
   ggplot() +
   geom_sf(
     data = chilemapas::mapa_comunas, aes(geometry = geometry),
-    alpha = 0.5
+    alpha = 0.5, size = 0.3
     ) +
 * geom_point(
 *   aes(x = Longitud, y = Latitud, size = Magnitud),
@@ -1076,7 +1030,7 @@ httr::GET(url) |&gt;
 ]
  
 .panel2-GET-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_12_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/GET_auto_11_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -1092,15 +1046,14 @@ library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
-httr::GET(url) |&gt;
-  content() |&gt;
+content(httr::GET(url)) |&gt;
   purrr::map_df(tibble::as_tibble) |&gt;
   mutate(across(everything(), readr::parse_guess)) |&gt;
   mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml"))) |&gt;
   ggplot() +
   geom_sf(
     data = chilemapas::mapa_comunas, aes(geometry = geometry),
-    alpha = 0.5
+    alpha = 0.5, size = 0.3
     ) +
   geom_point(
     aes(x = Longitud, y = Latitud, size = Magnitud),
@@ -1111,7 +1064,7 @@ httr::GET(url) |&gt;
 ]
  
 .panel2-GET-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_13_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/GET_auto_12_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -1127,27 +1080,26 @@ library(chilemapas)  # gracias Pachá!
 
 url &lt;- "https://api.gael.cloud/general/public/sismos"
 
-httr::GET(url) |&gt;
-  content() |&gt;
+content(httr::GET(url)) |&gt;
   purrr::map_df(tibble::as_tibble) |&gt;
   mutate(across(everything(), readr::parse_guess)) |&gt;
   mutate(Magnitud = as.numeric(stringr::str_remove(Magnitud, "Ml"))) |&gt;
   ggplot() +
   geom_sf(
     data = chilemapas::mapa_comunas, aes(geometry = geometry),
-    alpha = 0.5
+    alpha = 0.5, size = 0.3
     ) +
   geom_point(
     aes(x = Longitud, y = Latitud, size = Magnitud),
     shape = 21, fill = "gray80", color = "gray60",
     ) +
   coord_sf(xlim = c(-80, NA)) +
-* theme_minimal()
+* theme_void()
 ```
 ]
  
 .panel2-GET-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-GET_auto_14_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/GET_auto_13_output-1.svg" width="100%" /&gt;
 ]
 
 &lt;style&gt;
@@ -1913,7 +1865,7 @@ tbl(con, "loans") |&gt;
 ]
  
 .panel2-dbplyr3-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-dbplyr3_auto_07_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/dbplyr3_auto_07_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -1942,7 +1894,7 @@ tbl(con, "loans") |&gt;
 ]
  
 .panel2-dbplyr3-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-dbplyr3_auto_08_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/dbplyr3_auto_08_output-1.svg" width="100%" /&gt;
 ]
 
 &lt;style&gt;
@@ -2078,8 +2030,8 @@ read_html(url) |&gt;
 ## # A tibble: 46 × 3
 ##    Fecha    `Empresa y razón de reclamo`                                      ``
 ##    &lt;chr&gt;    &lt;chr&gt;                                                          &lt;int&gt;
-##  1 17-03-22 Universidad de Santiago USACH - Dejaron a decenas sin trabajo…    69
-##  2 14-03-22 Universidad de Santiago USACH - Profesor con pistola en clases    84
+##  1 17-03-22 Universidad de Santiago USACH - Dejaron a decenas sin trabajo…    70
+##  2 14-03-22 Universidad de Santiago USACH - Profesor con pistola en clases    85
 ##  3 08-03-22 Usach - Guía para reclamar y demandar a la USACH                  75
 ##  4 09-07-21 Usach - Diplomados                                               160
 ##  5 12-04-21 Usach - No cumplen con las clases lnline                         280
@@ -2087,7 +2039,7 @@ read_html(url) |&gt;
 ##  7 15-09-20 Usach - No se hacen clases ni las recuperan y te cobran todo …   315
 ##  8 27-07-20 Usach - Demanda colectiva por NO PRESTACION DE SERVICIOS         344
 ##  9 15-01-20 No Resuelto Usach - Leyes que aportan a la segregación social    473
-## 10 30-08-19 Usach - Depto. de ingeniería industrial No apoya al emprendim…   462
+## 10 30-08-19 Usach - Depto. de ingeniería industrial No apoya al emprendim…   464
 ## # … with 36 more rows
 ```
 ]
@@ -2116,8 +2068,8 @@ read_html(url) |&gt;
 ## # A tibble: 46 × 3
 ##    Fecha    `Empresa y razón de reclamo`                                      ``
 ##    &lt;chr&gt;    &lt;chr&gt;                                                          &lt;int&gt;
-##  1 17-03-22 Universidad de Santiago USACH - Dejaron a decenas sin trabajo…    69
-##  2 14-03-22 Universidad de Santiago USACH - Profesor con pistola en clases    84
+##  1 17-03-22 Universidad de Santiago USACH - Dejaron a decenas sin trabajo…    70
+##  2 14-03-22 Universidad de Santiago USACH - Profesor con pistola en clases    85
 ##  3 08-03-22 Usach - Guía para reclamar y demandar a la USACH                  75
 ##  4 09-07-21 Usach - Diplomados                                               160
 ##  5 12-04-21 Usach - No cumplen con las clases lnline                         280
@@ -2125,7 +2077,7 @@ read_html(url) |&gt;
 ##  7 15-09-20 Usach - No se hacen clases ni las recuperan y te cobran todo …   315
 ##  8 27-07-20 Usach - Demanda colectiva por NO PRESTACION DE SERVICIOS         344
 ##  9 15-01-20 No Resuelto Usach - Leyes que aportan a la segregación social    473
-## 10 30-08-19 Usach - Depto. de ingeniería industrial No apoya al emprendim…   462
+## 10 30-08-19 Usach - Depto. de ingeniería industrial No apoya al emprendim…   464
 ## # … with 36 more rows
 ```
 ]
@@ -2155,8 +2107,8 @@ read_html(url) |&gt;
 ## # A tibble: 46 × 3
 ##    fecha    reclamo                                                     cantidad
 ##    &lt;chr&gt;    &lt;chr&gt;                                                          &lt;int&gt;
-##  1 17-03-22 Universidad de Santiago USACH - Dejaron a decenas sin trab…       69
-##  2 14-03-22 Universidad de Santiago USACH - Profesor con pistola en cl…       84
+##  1 17-03-22 Universidad de Santiago USACH - Dejaron a decenas sin trab…       70
+##  2 14-03-22 Universidad de Santiago USACH - Profesor con pistola en cl…       85
 ##  3 08-03-22 Usach - Guía para reclamar y demandar a la USACH                  75
 ##  4 09-07-21 Usach - Diplomados                                               160
 ##  5 12-04-21 Usach - No cumplen con las clases lnline                         280
@@ -2164,7 +2116,7 @@ read_html(url) |&gt;
 ##  7 15-09-20 Usach - No se hacen clases ni las recuperan y te cobran to…      315
 ##  8 27-07-20 Usach - Demanda colectiva por NO PRESTACION DE SERVICIOS         344
 ##  9 15-01-20 No Resuelto Usach - Leyes que aportan a la segregación soc…      473
-## 10 30-08-19 Usach - Depto. de ingeniería industrial No apoya al empren…      462
+## 10 30-08-19 Usach - Depto. de ingeniería industrial No apoya al empren…      464
 ## # … with 36 more rows
 ```
 ]
@@ -2195,8 +2147,8 @@ read_html(url) |&gt;
 ## # A tibble: 46 × 3
 ##    fecha      reclamo                                                   cantidad
 ##    &lt;date&gt;     &lt;chr&gt;                                                        &lt;int&gt;
-##  1 2022-03-17 Universidad de Santiago USACH - Dejaron a decenas sin tr…       69
-##  2 2022-03-14 Universidad de Santiago USACH - Profesor con pistola en …       84
+##  1 2022-03-17 Universidad de Santiago USACH - Dejaron a decenas sin tr…       70
+##  2 2022-03-14 Universidad de Santiago USACH - Profesor con pistola en …       85
 ##  3 2022-03-08 Usach - Guía para reclamar y demandar a la USACH                75
 ##  4 2021-07-09 Usach - Diplomados                                             160
 ##  5 2021-04-12 Usach - No cumplen con las clases lnline                       280
@@ -2204,7 +2156,7 @@ read_html(url) |&gt;
 ##  7 2020-09-15 Usach - No se hacen clases ni las recuperan y te cobran …      315
 ##  8 2020-07-27 Usach - Demanda colectiva por NO PRESTACION DE SERVICIOS       344
 ##  9 2020-01-15 No Resuelto Usach - Leyes que aportan a la segregación s…      473
-## 10 2019-08-30 Usach - Depto. de ingeniería industrial No apoya al empr…      462
+## 10 2019-08-30 Usach - Depto. de ingeniería industrial No apoya al empr…      464
 ## # … with 36 more rows
 ```
 ]
@@ -2236,7 +2188,7 @@ read_html(url) |&gt;
 ## # A tibble: 46 × 3
 ##    fecha      reclamo                                                   cantidad
 ##    &lt;date&gt;     &lt;chr&gt;                                                        &lt;int&gt;
-##  1 2012-06-24 "Usach - Dicom"                                               2218
+##  1 2012-06-24 "Usach - Dicom"                                               2219
 ##  2 2012-08-29 "Usach - Estafa De Grado Academico A C. Civil"                2564
 ##  3 2012-10-30 "Usach - Robo Pase Escolar"                                   2106
 ##  4 2012-11-09 "Universidad De Santiago De Chile - Cambio De Tv.lcd.32\…     1568
@@ -2273,7 +2225,7 @@ read_html(url) |&gt;
 ]
  
 .panel2-rvest-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-rvest_auto_10_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/rvest_auto_10_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -2300,7 +2252,7 @@ read_html(url) |&gt;
 ]
  
 .panel2-rvest-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-rvest_auto_11_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/rvest_auto_11_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -2328,7 +2280,7 @@ read_html(url) |&gt;
 ]
  
 .panel2-rvest-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-rvest_auto_12_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/rvest_auto_12_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -2357,7 +2309,7 @@ read_html(url) |&gt;
 ]
  
 .panel2-rvest-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-rvest_auto_13_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/rvest_auto_13_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -2390,7 +2342,7 @@ read_html(url) |&gt;
 ]
  
 .panel2-rvest-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-rvest_auto_14_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/rvest_auto_14_output-1.svg" width="100%" /&gt;
 ]
 
 ---
@@ -2424,7 +2376,7 @@ read_html(url) |&gt;
 ]
  
 .panel2-rvest-auto[
-&lt;img src="images/05-lectura-de-datos-readr-readxl-httr-rvest/knitr-img-rvest_auto_15_output-1.svg" width="100%" /&gt;
+&lt;img src="05-Lectura-de-datos-readr-readxl-httr-rvest_files/figure-html/rvest_auto_15_output-1.svg" width="100%" /&gt;
 ]
 
 &lt;style&gt;

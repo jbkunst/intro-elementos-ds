@@ -4,8 +4,8 @@
     <title>01-Bienvenida-R-Rstudio-copy-paste</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Joshua Kunst @jbkunst" />
-    <meta name="date" content="2022-04-20" />
-    <script src="libs/header-attrs-2.13/header-attrs.js"></script>
+    <meta name="date" content="2022-05-31" />
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
   </head>
@@ -13,10 +13,18 @@
     <textarea id="source">
 class: left, middle, title-slide
 
-# {ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2 d|2s|2{202201}[26°c[10°c]
+.title[
+# Elementos DS
+]
+.subtitle[
 ## 01 Bienvenida R Rstudio Copy Paste
+]
+.author[
 ### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
-### 2022-04-20
+]
+.date[
+### 2022-05-31
+]
 
 ---
 
@@ -118,6 +126,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

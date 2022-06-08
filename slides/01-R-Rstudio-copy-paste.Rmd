@@ -1,5 +1,6 @@
 ---
-title: "{ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2  d|2s|2{202201}[26°c[10°c]"
+# title: "{ingemat}§2e|0l|2e|2m|2e|1n|0[-]t|1o|3[++]s|2  d|2s|2{202201}[26°c[10°c]"
+title: "Elementos DS"
 pagetitle: "01-Bienvenida-R-Rstudio-copy-paste"
 subtitle: "01 Bienvenida R Rstudio Copy Paste"
 author: "<br>Joshua Kunst<br>@jbkunst"
