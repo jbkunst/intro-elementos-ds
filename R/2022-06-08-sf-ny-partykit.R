@@ -110,8 +110,6 @@ predict(arbol, newdata = dnuevos, type = "prob")[, 2]
 
 predict(arbol, newdata = dnuevos, type = "node")
 
-
-
 dnuevos <- dnuevos |> 
   mutate(
     prediccion_in_sf = predict(arbol, newdata = dnuevos),
@@ -119,10 +117,86 @@ dnuevos <- dnuevos |>
     prediccion_in_sf_prob = predict(arbol, newdata = dnuevos, type = "prob")[, 2]
     )
 
-
 dnuevos
 
+glimpse(dnuevos)
 
 
+# modelamiento: mas cercano a la realidad ---------------------------------
+# 1. Tener datos, y definir la variable a predecir/modelar
+data
+
+# 2. Separa los datos en desarrollo/validación
+# train/test
+# decidir en cuanto separar, 80/20 o 70/30 o 50/50 o
+# (folds, 10 partciones, modela con 9 y valida en 1)
+
+round(.7 * nrow(data))
+
+hist(runif(10000))
+
+data <- data |> 
+  mutate(
+    sample = ifelse(runif(nrow(data)) < .7, "train", "test")
+  )
+
+data |> 
+  count(sample) |> 
+  mutate(p = n/sum(n))
+
+
+dtrain <- data |> 
+  filter(sample == "train") |> 
+  select(-sample)
+
+dtest <- data |> 
+  filter(sample == "test")|> 
+  select(-sample)
+
+# 3. Ajustar modelo en muestra de desarrollo
+arbol <- ctree(in_sf ~ ., data = dtrain)
+
+plot(arbol)
+
+# 4. Validar nuestro modelo sobre los datos test
+dtest |> 
+  # validar test
+  count(in_sf)
+
+dtest <- dtest |> 
+  mutate(pred = predict(arbol, newdata = dtest))
+
+
+dtest |> 
+  count(in_sf, pred) |>
+  pivot_wider(names_from = pred, values_from = n)
+
+dtest |> 
+  count(in_sf, pred) |>
+  mutate(n = n/sum(n)) |> 
+  pivot_wider(names_from = pred, values_from = n)
+
+# 4.1 Si el modelo es clasificar una categoria
+# La tasa correcta de clasificación: accuracy
+
+dtest |> 
+  count(in_sf, pred) |>
+  mutate(n = n/sum(n)) |> 
+  group_by(in_sf == pred) |> 
+  summarise(n = sum(n))
+  
+
+# 1 enferma
+# 99 bien de salud
+# 
+# 
+# regla si es perona,es bien saldu
+# 
+# 99%
+
+# 4.2:
+# Sensitibidad
+# Sensiblidad
+# F1: 
 
 
