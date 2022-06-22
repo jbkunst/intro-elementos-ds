@@ -4,7 +4,7 @@
     <title>06-Introducción-al-modelamiento</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Joshua Kunst @jbkunst" />
-    <meta name="date" content="2022-06-01" />
+    <meta name="date" content="2022-06-19" />
     <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
@@ -23,7 +23,7 @@ class: left, middle, title-slide
 ### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
 ]
 .date[
-### 2022-06-01
+### 2022-06-19
 ]
 
 ---
@@ -34,13 +34,75 @@ class: left, middle, title-slide
 
 ## Modelamiento
 
-El **Análisis Exploratorio de Datos** se refiere a un ciclo iterativo en el que:
+En un principio pensaremos como el modelamiento a la _simplificación_ de un fenómeno.
 
-- Generas preguntas acerca de tus datos.
-- Buscas respuestas visualizando, transformando y modelando tus datos.
-- Usas lo que has aprendido para refinar tus preguntas y/o generar nuevas interrogantes.
+Supongamos un fenómeno/evento observable y registramos dos medidas `\((x, y)\)`, y supongamos además
+que observamos esto `\(n\)` veces teniendo dicha cantidad de pares `\((x_i, y_i)\)`.
 
-Lo anterior es un _copy &amp; paste_ desde [R4DS](https://es.r4ds.hadley.nz/an%C3%A1lisis-exploratorio-de-datos-eda.html#an%C3%A1lisis-exploratorio-de-datos-eda).
+La idea es representar dicho fenómeno, o relación entre las variables `\(x\)` e `\(y\)` a través de
+una función o regla más sencilla.
+
+Esta representación no servirá para:
+
+- Entender como se relacionan estas variables, es decir, como varia una variable
+a medida que la otra cambia.
+
+- Realizar predicciones en caso que el costo de observar un `\(y_j\)` dado un `\(x_j\)` sea alto,
+o demore cierto tiempo en observar. Ejemplo seria que             
+
+---
+
+## Fenómeno
+
+
+
+
+&lt;img src="06-Introducción-al-modelamiento_files/figure-html/unnamed-chunk-2-1.svg" width="100%" /&gt;
+
+Supongamos este fenómeno, en donde `\(x\)` puede ser _cantidad de cafeína ingerida_ e `\(y\)`
+_tiempo en horas de aceleramiento cardiaco_ en ciertos pacientes.
+
+---
+
+## Primer modelo
+
+&lt;img src="06-Introducción-al-modelamiento_files/figure-html/unnamed-chunk-3-1.svg" width="100%" /&gt;
+
+En este caso particular, una idea primera interpretación sería postular que `\(\operatorname{y} = \alpha + \beta_{1}\operatorname{x} + \epsilon\)`.
+
+
+---
+
+## Primer modelo: uso I
+
+&lt;img src="06-Introducción-al-modelamiento_files/figure-html/unnamed-chunk-4-1.svg" width="100%" /&gt;
+
+Una posible _modelo_ es `\(\operatorname{\widehat{y}} = 2.22 + 0.02\operatorname{x}\)`. De esta forma, a través de _esta_ representacón podemos mencionar que por cada `\(1\)` unidad de `\(x\)`, `\(y\)` aumenta en `\(0.02\)`. 
+
+---
+
+## Primer modelo: uso II
+
+&lt;img src="06-Introducción-al-modelamiento_files/figure-html/unnamed-chunk-5-1.svg" width="100%" /&gt;
+
+De la misma forma podemos predecir que un paciente al cual se le da `\(75\)` unidades, sufrirá
+`\(3.49\)` horas de _aceleramiento cardiaco_.
+
+
+---
+
+## ¿Cuál/Qué es el mejor modelo?
+
+&lt;img src="06-Introducción-al-modelamiento_files/figure-html/unnamed-chunk-6-1.svg" width="100%" /&gt;
+
+Hay 20 modelos en el gráfico (algunos malos!!). Necesitamos encontrar el mejor modelo especificando nuestra intuición que un buen modelo está _cerca de los datos_. Necesitamos una manera de **cuantificar** la distancia entre los datos y un modelo.
+
+---
+
+## Métrica de _buen modelo_
+
+&lt;img src="06-Introducción-al-modelamiento_files/figure-html/unnamed-chunk-7-1.svg" width="100%" /&gt;
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

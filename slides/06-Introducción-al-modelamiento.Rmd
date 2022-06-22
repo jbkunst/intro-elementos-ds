@@ -27,32 +27,151 @@ source(here::here("R/00-xaringan-knitr-setup.R"))
 
 library(klassets)
 library(tidyverse)
+library(equatiomatic)
+
+set.seed(123)
 
 df <- klassets::sim_xy(
-  n = 500,
+  n = 250,
+  beta0 = 3,
+  beta1 = 0.5,
   x_dist = purrr::partial(runif, min = 0, max = 100),
   error_dist = purrr::partial(rnorm, sd = 5)
 ) |> 
-  mutate(y = y + 5 * sin(x / 5) + 20 * sin(x / 20))
+  mutate(
+    y = y +
+      (4 * sin(x /  5)) * ifelse(x > 50, 0, 1) +
+      (4 * sin(x / 20)) * ifelse(x > 75, 0, 1),
+    y = y - min(y) + 1,
+    y = y**(1/3)
+    )
 
 plot(df)
-
-
-df2 <- klassets::sim_xy(
-  n = 100,
-  x_dist = purrr::partial(runif, min = 0, max = 100),
-  error_dist = purrr::partial(rnorm, sd = 5)
-) 
-
-plot(df2)
 ```
 
 ## Modelamiento
 
 En un principio pensaremos como el modelamiento a la _simplificación_ de un fenómeno.
 
-La idea es representar 
-representar
+Supongamos un fenómeno/evento observable y registramos dos medidas $(x, y)$, y supongamos además
+que observamos esto $n$ veces teniendo dicha cantidad de pares $(x_i, y_i)$.
+
+La idea es representar dicho fenómeno, o relación entre las variables $x$ e $y$ a través de
+una función o regla más sencilla.
+
+Esta representación no servirá para:
+
+- Entender como se relacionan estas variables, es decir, como varia una variable
+a medida que la otra cambia.
+
+- Realizar predicciones en caso que el costo de observar un $y_j$ dado un $x_j$ sea alto,
+o demore cierto tiempo en observar. Ejemplo seria que             
+
+---
+
+## Fenómeno
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  fig.height = 3,
+  fig.width  = 9,
+  # out.width = "80%",
+  # fig.align = " center",
+  echo = FALSE
+)
+```
 
 
+```{r}
+plot(df)
+```
+
+Supongamos este fenómeno, en donde $x$ puede ser _cantidad de cafeína ingerida_ e $y$
+_tiempo en horas de aceleramiento cardiaco_ en ciertos pacientes.
+
+---
+
+## Primer modelo
+
+```{r}
+fit_lm <- fit_linear_model(df)
+
+lm_mod <- attr(fit_lm, "model")
+
+mod_eq      <- equatiomatic::extract_eq(lm_mod)
+mod_eq_coef <- equatiomatic::extract_eq(lm_mod, use_coefs = TRUE)
+
+mod_eq      <- str_c("$", str_remove_all(mod_eq, "$$|\\(|\\)"), "$")
+mod_eq_coef <- str_c("$", str_remove_all(mod_eq_coef, "$$|\\(|\\)"), "$")
+
+plot(fit_lm, alpha = 1)
+```
+
+En este caso particular, una idea primera interpretación sería postular que `r mod_eq`.
+
+
+---
+
+## Primer modelo: uso I
+
+```{r}
+plot(fit_lm, alpha = 1)
+```
+
+Una posible _modelo_ es `r mod_eq_coef`. De esta forma, a través de _esta_ representacón podemos mencionar que por cada $1$ unidad de $x$, $y$ aumenta en $`r as.vector(round(coef(lm_mod)[2], 2))`$. 
+
+---
+
+## Primer modelo: uso II
+
+```{r}
+dnew <- tibble(x = 75)
+dnew <- mutate(dnew, y = predict(lm_mod, newdata = dnew))
+
+plot(fit_lm, alpha = 1) +
+  geom_point(aes(x, y), data = dnew, size = 8, color = "darkred") +
+  geom_point(aes(x, y), data = dnew, size = 5, color = "white") 
+```
+
+De la misma forma podemos predecir que un paciente al cual se le da $`r dnew$x`$ unidades, sufrirá
+$`r round(dnew$y, 2)`$ horas de _aceleramiento cardiaco_.
+
+
+---
+
+## ¿Cuál/Qué es el mejor modelo?
+
+```{r}
+n_models <- 20
+
+models   <- tibble(
+  alpha = rnorm(n = n_models, mean = coef(lm_mod)[1], sd = 0.1),
+  beta  = rnorm(n = n_models, mean = coef(lm_mod)[2], sd = 0.01)
+)
+
+plot(df) +
+  geom_abline(
+    aes(slope = beta, intercept = alpha), data = models,
+    color = scales::muted("blue"), 
+    alpha = 0.2,
+    size = 0.8
+    )
+```
+
+Hay `r n_models` modelos en el gráfico (algunos malos!!). Necesitamos encontrar el mejor modelo especificando nuestra intuición que un buen modelo está _cerca de los datos_. Necesitamos una manera de **cuantificar** la distancia entre los datos y un modelo.
+
+---
+
+## Métrica de _buen modelo_
+
+```{r}
+plot(fit_lm, alpha = 1) +
+  geom_linerange(
+    data = fit_lm,
+    aes(x = x, ymin = y, ymax = prediction),
+    color = scales::muted("blue"), 
+    alpha = 0.2,
+    size = 0.8
+  )
+```
 
