@@ -37,14 +37,14 @@ Los datos están en la siguiente url:
 
 Dentro de los datos se encuentra la columna `estado`, la cual indica si en el futuro el cliente dejó de pagar su deuda: `bueno` para los clientes que pagaron la deuda sin entrar en morosidad o `malo` para quienes quedaron morosos en algún momento.
 
-De forma particular la cantidad de clientes `buenos` y `malos` considerando todos los registros disponibls se puede obtenercon:
+De forma particular la cantidad de clientes `buenos` y `malos` considerando todos los registros disponibls se puede obtener con:
 
 ```{r, message=FALSE}
 datos |> 
   count(estado)
 ```
 
-Se define la _tasa de clientes malos_ como la cantidad de clientes malos sobre todos los clientes.
+Se define la _tasa de clientes malos_ como la cantidad de clientes malos sobre el conjunto de clientes considerados.
 
 ## Instrucciones/Preguntas
 
