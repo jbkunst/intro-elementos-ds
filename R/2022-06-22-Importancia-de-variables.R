@@ -32,9 +32,9 @@ plot(mod_randomforest)
 # nnet --------------------------------------------------------------------
 library(nnet)
 
-mod_retneural <- nnet(millas ~ ., data = mtautos, size = 20)
+mod_redneuronal <-nnet(millas ~ ., data = mtautos, size = 10, linout = TRUE, skip = TRUE, MaxNWts = 10000, maxit = 1000)
 
-plot(mod_retneural)
+plot(mod_redneuronal)
 
 # modelo lineal -----------------------------------------------------------
 mod_reglin <- lm(millas ~ ., data = mtautos)
@@ -59,7 +59,7 @@ predict(mod_arbol, newdata = mtautos_min)
 
 predict(mod_randomforest, newdata = mtautos_min)
 
-# predict(mod_retneural, newdata = mtautos_min)
+predict(mod_redneuronal, newdata = mtautos_min)
 
 predict(mod_reglin, newdata = mtautos_min)
 
@@ -67,6 +67,7 @@ mtautos <- mtautos |>
   mutate(
     pred_arbol = predict(mod_arbol, newdata = mtautos),
     pred_randomforest = predict(mod_randomforest, newdata = mtautos),
+    pred_redneuronal = predict(mod_redneuronal, newdata = mtautos),
     pred_reglin = predict(mod_reglin, newdata = mtautos)
   )
 
@@ -86,11 +87,13 @@ mtautos |>
   mutate(
     error_arbol = millas - pred_arbol,
     error_randomforest = millas - pred_randomforest,
+    error_redneuronal = millas - pred_redneuronal,
     error_reglin = millas - pred_reglin
     ) |> 
   summarise(
     rmse_arbol = sqrt(mean(error_arbol^2)),
     rmse_randomforest = sqrt(mean(error_randomforest^2)),
+    rmse_redneuronal = sqrt(mean(error_redneuronal^2)),
     rmse_reglin = sqrt(mean(error_reglin^2))
   )
 
@@ -118,7 +121,7 @@ mod_randomforest
 vi_rl <- variable_importance(
   mod_reglin, 
   data = mtautos,
-  variables = c("peso", "velocidad", "transmision",  "caballos"),
+  variables = c("peso", "velocidad", "transmision"),
   iterations = 10
   )
 
@@ -126,14 +129,20 @@ plot(vi_rl) +
   scale_y_continuous(name = "RMSE", limits = c(0, NA))
 
 
+vi_nnet <-  variable_importance(
+  mod_redneuronal, 
+  data = mtautos,
+  iterations = 10
+)
+
+plot(vi_nnet)
+
 vi_arbol <- variable_importance(
   mod_arbol, 
   data = mtautos,
-  variables = c("peso", "cilindrada"),
   iterations = 10,
   predict_function = partykit::predict.party
 )
-
 
 plot(vi_arbol) +
   scale_y_continuous(name = "RMSE", limits = c(0, NA))
@@ -151,7 +160,7 @@ plot(vi_rf) +
   scale_y_continuous(name = "RMSE", limits = c(0, NA))
 
 
-plot(vi_rl, vi_arbol, vi_rf) +
+plot(vi_rl, vi_arbol, vi_rf, vi_nnet) +
   scale_y_continuous(name = "RMSE", limits = c(0, NA))
 
 mtautos  |> select(1:6) |> head(5)
