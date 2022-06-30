@@ -28,6 +28,7 @@ source(here::here("R/00-xaringan-knitr-setup.R"))
 library(klassets)
 library(tidyverse)
 library(equatiomatic)
+library(patchwork)
 
 set.seed(123)
 
@@ -61,10 +62,10 @@ una función o regla más sencilla.
 
 Esta representación no servirá para:
 
-- Entender como se relacionan estas variables, es decir, como varia una variable
+- **Entender** como se relacionan estas variables, es decir, como varia una variable
 a medida que la otra cambia.
 
-- Realizar predicciones en caso que el costo de observar un $y_j$ dado un $x_j$ sea alto,
+- Realizar **predicciones** en caso que el costo de observar un $y_j$ dado un $x_j$ sea alto,
 o demore cierto tiempo en observar. Ejemplo seria que             
 
 ---
@@ -87,7 +88,7 @@ plot(df)
 ```
 
 Supongamos este fenómeno, en donde $x$ puede ser _cantidad de cafeína ingerida_ e $y$
-_tiempo en horas de aceleramiento cardiaco_ en ciertos pacientes.
+_tiempo en horas de aceleramiento cardiaco_ en ciertos pacientes/ratones.
 
 ---
 
@@ -118,7 +119,7 @@ En este caso particular, una idea primera interpretación sería postular que `r
 plot(fit_lm, alpha = 1)
 ```
 
-Una posible _modelo_ es `r mod_eq_coef`. De esta forma, a través de _esta_ representacón podemos mencionar que por cada $1$ unidad de $x$, $y$ aumenta en $`r as.vector(round(coef(lm_mod)[2], 2))`$. 
+Una posible _modelo_ es `r mod_eq_coef`. De esta forma, a través de _esta_ representacón podemos mencionar que por cada $1$ unidad de $x$, la de $y$ aumenta en $`r as.vector(round(coef(lm_mod)[2], 2))`$. 
 
 ---
 
@@ -162,7 +163,7 @@ Hay `r n_models` modelos en el gráfico (algunos malos!!). Necesitamos encontrar
 
 ---
 
-## Métrica de _buen modelo_
+## Métrica de un modelo
 
 ```{r}
 plot(fit_lm, alpha = 1) +
@@ -175,3 +176,235 @@ plot(fit_lm, alpha = 1) +
   )
 ```
 
+Podemos definir un buen modelo cuando las distancias $\hat{e}_i$ (lineas azules) en promedio son
+pequeñas. El modelo mostrado es el "mejor" modelo en términos de minimizar $\sum \hat{e}^2_i$ y dentro 
+de la _familia de modelos_ `r mod_eq`.
+
+
+---
+
+## Falencias de un _modelo_
+
+
+```{r}
+dproblemas_1 <- fit_lm |> 
+  arrange(x) |> 
+  mutate(id = row_number()) |> 
+  filter(between(x, 25, 50), y > prediction) |> 
+  mutate(lbl = "Subestimaciones")
+
+dproblemas_2 <-  fit_lm |> 
+  arrange(x) |> 
+  mutate(id = row_number()) |> 
+  filter(between(id, 0, 10), y < prediction) |> 
+  mutate(lbl = "Problemas de ajuste")
+
+dproblemas <- bind_rows(dproblemas_1, dproblemas_2)
+
+plot(fit_lm, alpha = 1) +
+  geom_linerange(
+    data = fit_lm,
+    aes(x = x, ymin = y, ymax = prediction),
+    color = scales::muted("blue"), 
+    alpha = 0.1,
+    size = 0.5
+  ) +
+  ggforce::geom_mark_ellipse(
+    data = dproblemas,
+    aes(x = x, y = y, label = lbl, group = lbl),
+    alpha = 0.1, fill = "gray80",
+    label.fontface = c("plain"),
+    color = scales::muted("red"), 
+    size = 1.5,
+    label.fill = "transparent",
+    label.fontsize = 10,
+  )
+```
+
+Si bien el modelo presentado simple, fácil de explicar y entender, esta _familia de modelos_ 
+no es suficientemente flexible para _pasar cerca_ de todos los puntos.
+
+
+---
+
+## Modelo con mayor <small><small>sobre</small></small>ajuste
+
+```{r}
+fit_overfit <- fit_loess(df, span = 0.01)
+# fit_overfit <- fit_regression_random_forest(df, ntree = 10000)
+# fit_overfit <- fit_linear_model_tree(df, maxdepth = Inf, alpha = 1)
+
+plot(fit_overfit, alpha = 1)
+```
+
+Eventualmente se puede tener un modelo que pase por todos los puntos, sin embargo
+estos modelos _sobre ajustan_, en lugar de aprender las tendencias implicitas, memorizan
+el ruido y no pueden generalizar datos más allá de los de entrenamiento.
+
+
+---
+
+## Otras familias de modelos
+
+
+```{r, fig.height = 4.5, fig.width  = 9}
+p1 <- plot(fit_regression_tree(df)) + labs(subtitle = "Árbol de regresión")
+p2 <- plot(fit_linear_model_tree(df)) + labs(subtitle = "Árboles lineales")
+p3 <- plot(fit_loess(df), span = 0.01) + labs(subtitle = "Regresion polinomial local")
+p4 <- plot(fit_mars(df)) + labs(subtitle = "Multivariate Adaptive Regression Splines")
+p5 <- plot(fit_linear_model(df, order = 10, stepwise = TRUE), alpha = 1) + labs(subtitle = "Regresion lineal polinomial")
+p6 <- plot(fit_regression_random_forest(df, ntree = 50, maxdepth = 3), alpha = 1) + labs(subtitle = "Random Forest")
+
+p1 + p2 + p3 + p4 + p5 + p6 + plot_layout(nrow = 2) & labs(x = NULL, y = NULL) 
+```
+
+---
+
+## Ajustar (FIT) Modelos
+
+
+Para ajustar un modelo se debe tener claro:
+
+- La familia de modelos a ajustar: Regresion lineal, Random Forest, Arbol de Regresión, etc.
+- La variable respuesta, la que se quiere modelar o predecir.
+- Los datos a los cuales se le aplica el algoritmo o modelo.
+- Parámetros adicionales del modelo.
+
+<br/>
+
+Veremos algunos ejemplos utilizando los siguientes datos
+
+```{r}
+dplyr::glimpse(df)
+```
+
+
+---
+
+## Ajustar (FIT) Modelos en R
+
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+De forma general la sintaxis es como sigue:
+
+`funcion_ajuste(formula, datos, parámetros)`
+
+Por ejemplo:
+
+```{r, eval=FALSE}
+lm(y ~ x, data = datos)
+
+ranger(y ~ ., data = datos, num.trees = 500, max.depth = 10)
+
+ctree(y ~ ., data = datos, control = ctree_control(maxdepth = 3))
+```
+
+De forma general la formula `y ~ .` significa, modelar $y$ en función
+de todas las columnas en `data`.
+
+
+---
+
+`r flipbookr::chunk_reveal("fit_lm", title = "## Ajustar Modelo lineal", widths = c(1, 1))`
+
+```{r fit_lm, include = FALSE}
+
+
+mod_lm <- lm(y ~ x, data = df)
+
+mod_lm
+```
+
+
+---
+
+`r flipbookr::chunk_reveal("fit_rf", title = "## Ajustar Random Forest", widths = c(1, 1))`
+
+```{r fit_rf, include = FALSE}
+library(ranger)
+
+mod_rf <- ranger(y ~ x,
+                 data = df,
+                 num.trees = 500,
+                 max.depth = 10)
+
+mod_rf
+```
+
+---
+
+`r flipbookr::chunk_reveal("fit_ar", title = "## Ajustar Arbol de Regresión", widths = c(1, 1))`
+
+```{r fit_ar, include = FALSE}
+library(partykit)
+
+mod_ar <- ctree(y ~ x,
+                data = df, 
+                control = ctree_control(maxdepth = 3))
+
+mod_ar
+```
+
+---
+
+## Realizar Predicciones
+
+Para realizar predicciones se debe poseer:
+
+- El modelo ajustado ya con datos.
+- Nuevo datos con las variables utilizadas para su ajuste.
+- A veces se requiere de un parámetro adicional, por ejemplo en el caso de los 
+Random Forest se puede realizar la predicción utilizando solo los primeros $n$ árboles,
+o a veces uno puede obtener la clase estimada en un ejercicio de clasificación o la
+probabilidad de la pertenencia a una clase.
+
+---
+
+## Realizar Predicciones en R
+
+De forma general es:
+
+`predict(modelo, nuevosdatos, parámetros_adicionales)`
+
+Por ejemplo:
+
+```{r, eval=FALSE}
+nuevos_datos <- df[c(1, 20, 30, 50), ]
+
+mod <- lm(y ~ x, data = df)
+
+predict(mod, nuevos_datos)
+```
+
+
+---
+
+`r flipbookr::chunk_reveal("perdict_in_r", title = "## Ejemplo en R", widths = c(1, 1))`
+
+```{r perdict_in_r, include = FALSE}
+set.seed(123)
+
+nuevos_datos <- sample_n(df, 5)
+
+mod_lm <- lm(y ~ x, data = df)
+
+predict(mod_lm, nuevos_datos)
+
+# otro modelo, mismos datos
+library(partykit)
+
+mod_ar <- ctree(
+  y ~ x,
+  data = df, 
+  control = ctree_control(maxdepth = 3)
+  )
+
+predict(mod_ar, nuevos_datos)
+```
+
+---
+
+## Ajustar (FIT) Modelos en R
