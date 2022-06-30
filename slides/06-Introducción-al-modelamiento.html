@@ -4,7 +4,7 @@
     <title>06-Introducción-al-modelamiento</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Joshua Kunst @jbkunst" />
-    <meta name="date" content="2022-06-29" />
+    <meta name="date" content="2022-06-30" />
     <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
@@ -23,7 +23,7 @@ class: left, middle, title-slide
 ### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
 ]
 .date[
-### 2022-06-29
+### 2022-06-30
 ]
 
 ---
@@ -104,7 +104,7 @@ Hay 20 modelos en el gráfico (algunos malos!!). Necesitamos encontrar el mejor 
 &lt;img src="06-Introducción-al-modelamiento_files/figure-html/unnamed-chunk-7-1.svg" width="100%" /&gt;
 
 Podemos definir un buen modelo cuando las distancias `\(\hat{e}_i\)` (lineas azules) en promedio son
-pequeñas. El modelo mostrado es el "mejor" modelo en términos de minimizar `\(\sum \hat{e}^2_i\)` y dentro 
+pequeñas. El modelo mostrado es el "mejor" modelo en términos de minimizar `\(\sum \hat{e}^2_i/n\)` y dentro 
 de la _familia de modelos_ `\(\operatorname{y} = \alpha + \beta_{1}\operatorname{x} + \epsilon\)`.
 
 
@@ -724,7 +724,198 @@ mod_ar &lt;- ctree(
 
 ---
 
-## Ajustar (FIT) Modelos en R
+## Métricas de Evaluación
+
+Las metricas de evaluación, nos ayudan a resumir que tan bien se ajusta o predice un modelo.
+
+Consideremos los siguientes datos en una tarea de _regresión_, es decir, predecir
+una variable continua `\(y\)`.
+
+
+```
+## # A tibble: 5 × 3
+##       x     y prediction
+##   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+## 1  66.2  3.60       3.34
+## 2  23.3  2.28       2.62
+## 3  46.6  3.37       3.01
+## 4  21.7  2.31       2.59
+## 5  91.3  3.69       3.77
+```
+
+El error de predicción se define como `\(e_i = y_i - prediction_i\)` y existen diferentes
+métricas para este conjunto de valores `\(e_i\)` para resumir que tan grandes son, y poder así
+comparar con otros modelos o en otros datos.
+
+---
+
+## Métricas de Evaluación: Regresión
+
+En el caso de regresión, las metricas se basan en resumir (promedio, mediana, etc)
+los errores de predicción `\(e_i\)`
+
+&lt;br/&gt;
+
+$$\text{Mean squared error: MSE} = {mean(e^2_i)} = {\sum{e^2_i/n}} $$
+
+$$\text{Root mean squared error: RMSE} = \sqrt{mean(e^2_i)} = \sqrt{\sum{e^2_i/n}} $$
+
+`$$\text{Mean absolute percentage error: MAPE} = mean(|p_i|) = \sqrt{\sum{|p_i|/n}} = \sqrt{\sum{|(e_i/y_i)|/n}}$$`
+
+
+---
+
+count: false
+ 
+## Métricas de Evaluación: Regresión (en R)
+.panel1-metrics_regression-auto[
+
+```r
+*df_metrix_example
+```
+]
+ 
+.panel2-metrics_regression-auto[
+
+```
+## # A tibble: 5 × 3
+##       x     y prediction
+##   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+## 1  66.2  3.60       3.34
+## 2  23.3  2.28       2.62
+## 3  46.6  3.37       3.01
+## 4  21.7  2.31       2.59
+## 5  91.3  3.69       3.77
+```
+]
+
+---
+count: false
+ 
+## Métricas de Evaluación: Regresión (en R)
+.panel1-metrics_regression-auto[
+
+```r
+df_metrix_example |&gt;
+* mutate(
+*   error = y - prediction,
+*   percentage_error = error/y
+*   )
+```
+]
+ 
+.panel2-metrics_regression-auto[
+
+```
+## # A tibble: 5 × 5
+##       x     y prediction   error percentage_error
+##   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;            &lt;dbl&gt;
+## 1  66.2  3.60       3.34  0.256            0.0711
+## 2  23.3  2.28       2.62 -0.341           -0.150 
+## 3  46.6  3.37       3.01  0.359            0.106 
+## 4  21.7  2.31       2.59 -0.275           -0.119 
+## 5  91.3  3.69       3.77 -0.0732          -0.0198
+```
+]
+
+---
+count: false
+ 
+## Métricas de Evaluación: Regresión (en R)
+.panel1-metrics_regression-auto[
+
+```r
+df_metrix_example |&gt;
+  mutate(
+    error = y - prediction,
+    percentage_error = error/y
+    ) |&gt;
+* summarise(
+*   mse = mean(error^2),
+*   rmse = sqrt(mse),
+*   mape = mean(abs(percentage_error))
+* )
+```
+]
+ 
+.panel2-metrics_regression-auto[
+
+```
+## # A tibble: 1 × 3
+##      mse  rmse   mape
+##    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 0.0783 0.280 0.0932
+```
+]
+
+&lt;style&gt;
+.panel1-metrics_regression-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-metrics_regression-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-metrics_regression-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+
+## Ejercicio
+
+Considere los datos `data_xy_fit_pred.csv` en la carpeta `data\` del repositorio
+del curso.
+
+1. Conozca los datos. Grafíquelos. 
+1. Separe los datos en 2 `data.frame`s, `dtrain` y `dtest` utilizando la columna
+`muestra` en los datos de su agrado.
+1. Con `dtrain` ajuste al menos 2 modelos.
+1. En `dtrain` agregue las columnas de valores predichos asociadas a cada uno
+de los modelos. Vuelva a graficar incluyendo los resultados de los modelos.
+1. Obtenga el error cuadrático medio de ambos modelos en la muestra de entrenamiento. 
+¿Cuál es mejor?
+1. Repita los dos puntos anteriores con la muestra de desarrollo.
+
+---
+
+## Ejercicio &lt;small&gt;(cont)&lt;/small&gt;
+
+Modifique la columna `muestra` tal que los valores de `x` menores a 750 sean
+de entrenamiento y el resto sean para validación. Repita todo ejercicio anterior 
+con esta nueva marca. No olvide graficar.
+
+&lt;img src="06-Introducción-al-modelamiento_files/figure-html/unnamed-chunk-16-1.svg" width="100%" /&gt;
+
+
+---
+
+## Métricas de Evaluación: Classificación
+
+
+
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

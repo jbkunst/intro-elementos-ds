@@ -177,7 +177,7 @@ plot(fit_lm, alpha = 1) +
 ```
 
 Podemos definir un buen modelo cuando las distancias $\hat{e}_i$ (lineas azules) en promedio son
-pequeñas. El modelo mostrado es el "mejor" modelo en términos de minimizar $\sum \hat{e}^2_i$ y dentro 
+pequeñas. El modelo mostrado es el "mejor" modelo en términos de minimizar $\sum \hat{e}^2_i/n$ y dentro 
 de la _familia de modelos_ `r mod_eq`.
 
 
@@ -407,4 +407,106 @@ predict(mod_ar, nuevos_datos)
 
 ---
 
-## Ajustar (FIT) Modelos en R
+## Métricas de Evaluación
+
+Las metricas de evaluación, nos ayudan a resumir que tan bien se ajusta o predice un modelo.
+
+Consideremos los siguientes datos en una tarea de _regresión_, es decir, predecir
+una variable continua $y$.
+
+```{r, echo=FALSE}
+df_metrix_example <- sample_n(fit_lm, 5)
+df_metrix_example
+```
+
+El error de predicción se define como $e_i = y_i - prediction_i$ y existen diferentes
+métricas para este conjunto de valores $e_i$ para resumir que tan grandes son, y poder así
+comparar con otros modelos o en otros datos.
+
+---
+
+## Métricas de Evaluación: Regresión
+
+En el caso de regresión, las metricas se basan en resumir (promedio, mediana, etc)
+los errores de predicción $e_i$
+
+<br/>
+
+$$\text{Mean squared error: MSE} = {mean(e^2_i)} = {\sum{e^2_i/n}} $$
+
+$$\text{Root mean squared error: RMSE} = \sqrt{mean(e^2_i)} = \sqrt{\sum{e^2_i/n}} $$
+
+$$\text{Mean absolute percentage error: MAPE} = mean(|p_i|) = \sqrt{\sum{|p_i|/n}} = \sqrt{\sum{|(e_i/y_i)|/n}}$$
+
+
+---
+
+`r flipbookr::chunk_reveal("metrics_regression", title = "## Métricas de Evaluación: Regresión (en R)", widths = c(1, 1))`
+
+```{r metrics_regression, include = FALSE}
+df_metrix_example |> 
+  mutate(
+    error = y - prediction,
+    percentage_error = error/y
+    ) |> 
+  summarise(
+    mse = mean(error^2),
+    rmse = sqrt(mse),
+    mape = mean(abs(percentage_error))
+  )
+```
+
+
+---
+
+## Ejercicio
+
+Considere los datos `data_xy_fit_pred.csv` en la carpeta `data\` del repositorio
+del curso.
+
+1. Conozca los datos. Grafíquelos. 
+1. Separe los datos en 2 `data.frame`s, `dtrain` y `dtest` utilizando la columna
+`muestra` en los datos de su agrado.
+1. Con `dtrain` ajuste al menos 2 modelos.
+1. En `dtrain` agregue las columnas de valores predichos asociadas a cada uno
+de los modelos. Vuelva a graficar incluyendo los resultados de los modelos.
+1. Obtenga el error cuadrático medio de ambos modelos en la muestra de entrenamiento. 
+¿Cuál es mejor?
+1. Repita los dos puntos anteriores con la muestra de desarrollo.
+
+---
+
+## Ejercicio <small>(cont)</small>
+
+Modifique la columna `muestra` tal que los valores de `x` menores a 750 sean
+de entrenamiento y el resto sean para validación. Repita todo ejercicio anterior 
+con esta nueva marca. No olvide graficar.
+
+```{r, echo=FALSE}
+set.seed(123)
+
+N <- 1000
+
+dfex <- sim_xy(n = N, x_dist = runif) |> 
+  dplyr::mutate(y = y + 2*sin(5 * x) + sin(10 * x)) |> 
+  mutate(
+    x = row_number(), 
+    muestra = ifelse(runif(N) < .7, "train", "test")
+    )
+
+f <- here::here("data/data_xy_fit_pred.csv")
+if(!file.exists(f)) readr::write_delim(dfex, f)
+
+ggplot(dfex) + geom_point(aes(x, y, color = muestra)) +
+  scale_color_viridis_d(begin = 0.2, end = 0.8, option = "A")
+```
+
+
+---
+
+## Métricas de Evaluación: Classificación
+
+
+
+
+
