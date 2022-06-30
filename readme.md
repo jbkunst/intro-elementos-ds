@@ -77,7 +77,9 @@ Introducción a los elementos del DS
 4.  [Manipulación de datos <code><small>dplyr
     tidyr</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/04-Manipulacion-de-datos-dplyr-tidyr.html)
 5.  [Lectura de datos <code><small>readr readxl httr rvest
-    dbply</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/05-Lectura-de-datos-readr-readxl-httr-rvest.html)
+    dbplyr</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/05-Lectura-de-datos-readr-readxl-httr-rvest.html)
+6.  [Introducción al modelamiento <code><small>ranger partykit
+    yardstick</small></code>](https://jbkunst.github.io/usach-ingemat-intro-elementos-ds-202201/slides/06-Introducción-al-modelamiento.html)
 
 ## Bibliografía
 
