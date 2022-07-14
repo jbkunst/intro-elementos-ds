@@ -4,7 +4,7 @@
     <title>06-Introducción-al-modelamiento</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Joshua Kunst @jbkunst" />
-    <meta name="date" content="2022-06-30" />
+    <meta name="date" content="2022-07-14" />
     <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
@@ -23,7 +23,7 @@ class: left, middle, title-slide
 ### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
 ]
 .date[
-### 2022-06-30
+### 2022-07-14
 ]
 
 ---
@@ -912,6 +912,30 @@ con esta nueva marca. No olvide graficar.
 
 ## Métricas de Evaluación: Classificación
 
+
+
+- ROC
+
+- Accuracy
+
+- Matriz de Confusión
+
+
+---
+
+## Ejercicio
+
+Considere los datos `datos_creditos.csv` en la carpeta `data\` del repositorio
+del curso (los de la tarea I).
+
+1. Separe los datos en 2 `data.frame`s, `dtrain` y `dtest` utilizando los primeros
+3000 registros para entrenamiento, y el resto para test.
+1. Con `dtrain` ajuste un modelo de random forest para predecir el valor 
+de la variable `estado` utilizando el paquete/función `randomForest`.
+1. En `dtrain` agregue la columnas de valores predichos asociadas al modelo.
+1. Obtenga al tasa de correcta clasificación en la muestra de entrenamiento. 
+¿Cuál es mejor?
+1. Repita los dos puntos anteriores con la muestra de desarrollo y compare.
 
 
 

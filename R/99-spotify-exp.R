@@ -1,7 +1,7 @@
 # packages ----------------------------------------------------------------
 library(tidyverse)
 library(spotifyr)
-
+library(umap)
 
 # data --------------------------------------------------------------------
 # http://meetingwords.com/GV7CCr7oKR
@@ -114,18 +114,19 @@ count(datos, usuario)
 datos %>% 
   select(where(is.numeric))
 
-
 # umap --------------------------------------------------------------------
 datosnum <- datos %>% 
   select(where(is.numeric))
 
-library(umap)
+custom.config = umap.defaults
+custom.config$random_state = 123
 
-dumap <- umap(datosnum)
+dumap <- umap(datosnum, config = custom.config, preserve.seed = TRUE)
 
 dumapdf <- dumap$layout %>% 
   as.data.frame()
 
+datos <- datos |> select(-V1, -V2)
 datos <- bind_cols(datos, dumapdf)
 
 glimpse(datos)
@@ -136,7 +137,6 @@ ggplot(datos) +
   geom_point(aes(V1, V2, color = usuario)) +
   scale_color_viridis_d()
 
-
 ggplot(datos) +
   geom_point(aes(V1, V2), color = "gray90", data = dumapdf) +
   geom_point(aes(V1, V2, color = tempo)) +
@@ -145,3 +145,69 @@ ggplot(datos) +
   theme_minimal()
 
 
+# lo mismo pero con 2 mejoras ---------------------------------------------
+set.seed(123)
+
+datos2 <- datos |> 
+  select(-V1, -V2) |> 
+  filter(usuario != "Astorgato") |> 
+  group_by(usuario) |> 
+  sample_n(13) |> 
+  ungroup()
+
+glimpse(datos2)
+
+datosnum2 <- datos2 %>% 
+  select(where(is.numeric))
+
+glimpse(datosnum2)
+
+# escalamiento opcion 1
+scale(datosnum2)
+
+# escalamiento opcion 2
+datosnum2 <- datosnum2 |> 
+  mutate(across(everything(), ~ as.vector(scale(.x))))
+
+datosnum2
+
+ggplot(datos2) +
+  geom_histogram(aes(anio))
+
+ggplot(datosnum2) +
+  geom_histogram(aes(anio))
+
+dumap <- umap(datosnum2)
+
+dumapdf <- dumap$layout %>% 
+  as.data.frame()
+
+datos2 <- datos2 |> select(-V1, -V2)
+datos2 <- bind_cols(datos2, dumapdf)
+
+glimpse(datos2)
+
+datos2 %>% count(usuario)
+
+ggplot(datos2) +
+  geom_point(aes(V1, V2, color = usuario), size = 2.5)
+
+ggplot(datos2) +
+  geom_point(aes(V1, V2), size = 2.5)
+
+ggplot(datos2) +
+  geom_point(aes(V1, V2), color = "gray90", data = dumapdf) +
+  geom_point(aes(V1, V2, color = usuario), size = 2.5) +
+  facet_wrap(vars(usuario)) +
+  # scale_color_viridis_d() +
+  theme_minimal()
+
+
+datosnum2
+
+ggplot(datos2) +
+  geom_point(aes(V1, V2), color = "gray90", data = dumapdf) +
+  geom_point(aes(V1, V2, color = tempo), size = 2) +
+  facet_wrap(vars(usuario)) +
+  scale_color_viridis_c() +
+  theme_minimal()
