@@ -501,6 +501,90 @@ ggplot(dfex) + geom_point(aes(x, y, color = muestra)) +
   scale_color_viridis_d(begin = 0.2, end = 0.8, option = "A")
 ```
 
+---
+
+## Ejemplor RUT vs año de nacimiento
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  fig.height = 4.5,
+  fig.width  = 9,
+  # out.width = "80%",
+  # fig.align = " center",
+  echo = FALSE
+)
+```
+
+```{r, echo = FALSE}
+data(idyob10k)
+
+plot(idyob10k) +
+  labs(y = "Año de nacimiento", x = "RUT", title = "10.000 registros") +
+  scale_x_continuous(labels = scales::comma)
+```
+
+---
+
+## Ejemplo: RUT vs año de nacimiento - Modelos
+
+```{r, echo = FALSE}
+df <- idyob10k
+
+m <- list(
+  "Árbol de regresión"          = fit_regression_tree(df, maxdepth = 4),
+  "Árboles lineales"            = fit_linear_model_tree(df),
+  "Regresion polinomial local"  = fit_loess(df),
+  "Multivariate Adaptive Regression Splines" = fit_mars(df),
+  "Regresion lineal polinomial" = fit_linear_model(df, order = 5, stepwise = TRUE),
+  "Random Forest"               = fit_regression_random_forest(df, ntree = 100, maxdepth = 5)
+)
+
+nms <- names(m)
+
+plots <- map2(m, nms, function(mod, nm){
+  
+  plot(mod) + labs(subtitle = nm)
+  
+})
+
+plots |> 
+  reduce(`+`) + plot_layout(nrow = 2) & 
+  labs(x = NULL, y = NULL) &
+  scale_y_continuous(limits = c(1930, 2000)) &
+  scale_x_continuous(labels = NULL)
+```
+
+---
+
+## Ejemplo: RUT vs año de nacimiento - Métricas
+
+```{r, echo = FALSE}
+dfm <- bind_rows(m, .id = "modelo") |> 
+  mutate(
+    modelo = fct_inorder(modelo),
+    error = y - prediction
+    )
+
+dfm |> 
+  group_by(modelo) |> 
+  summarise(
+    RMSE = Metrics::rmse(y, prediction),
+    MAPE = Metrics::mape(y, prediction)
+  ) |> 
+  arrange(RMSE)
+```
+
+---
+
+## Ejemplo: RUT vs año de nacimiento - Residuos
+
+```{r, echo = FALSE}
+ggplot(dfm, aes(x, error)) +
+  geom_point(alpha = 0.01, color = "gray60") +
+  geom_smooth(color = "darkred") +
+  facet_wrap(vars(modelo)) +
+  scale_x_continuous(labels = scales::comma, breaks = scales::pretty_breaks(2))
+```
 
 ---
 

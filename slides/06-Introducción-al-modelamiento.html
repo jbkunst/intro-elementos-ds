@@ -4,7 +4,7 @@
     <title>06-Introducción-al-modelamiento</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Joshua Kunst @jbkunst" />
-    <meta name="date" content="2022-07-14" />
+    <meta name="date" content="2022-07-23" />
     <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
@@ -23,7 +23,7 @@ class: left, middle, title-slide
 ### <br>Joshua Kunst<br><span class="citation">@jbkunst</span>
 ]
 .date[
-### 2022-07-14
+### 2022-07-23
 ]
 
 ---
@@ -907,6 +907,42 @@ con esta nueva marca. No olvide graficar.
 
 &lt;img src="06-Introducción-al-modelamiento_files/figure-html/unnamed-chunk-16-1.svg" width="100%" /&gt;
 
+---
+
+## Ejemplor RUT vs año de nacimiento
+
+
+
+&lt;img src="06-Introducción-al-modelamiento_files/figure-html/unnamed-chunk-18-1.svg" width="100%" /&gt;
+
+---
+
+## Ejemplo: RUT vs año de nacimiento - Modelos
+
+&lt;img src="06-Introducción-al-modelamiento_files/figure-html/unnamed-chunk-19-1.svg" width="100%" /&gt;
+
+---
+
+## Ejemplo: RUT vs año de nacimiento - Métricas
+
+
+```
+## # A tibble: 6 × 3
+##   modelo                                    RMSE    MAPE
+##   &lt;fct&gt;                                    &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Árboles lineales                          3.60 0.00122
+## 2 Random Forest                             3.60 0.00123
+## 3 Multivariate Adaptive Regression Splines  3.85 0.00130
+## 4 Árbol de regresión                        3.91 0.00138
+## 5 Regresion polinomial local                4.03 0.00138
+## 6 Regresion lineal polinomial               4.06 0.00135
+```
+
+---
+
+## Ejemplo: RUT vs año de nacimiento - Residuos
+
+&lt;img src="06-Introducción-al-modelamiento_files/figure-html/unnamed-chunk-21-1.svg" width="100%" /&gt;
 
 ---
 

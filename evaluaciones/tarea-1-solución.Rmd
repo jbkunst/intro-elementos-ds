@@ -1,0 +1,139 @@
+---
+title: "IntroDS - Tarea 1"
+output: 
+  cleanrmd::html_document_clean:
+    theme: new.css
+editor_options: 
+  chunk_output_type: console
+---
+
+<link rel="stylesheet" href="https://latex.now.sh/style.css">
+
+## Consideraciones en la entrega 
+
+```{r, include=FALSE}
+library(tidyverse)
+library(scales)
+
+# datos:::translate("credit_data.yml") |> 
+#   tibble::tibble() |> 
+#   dplyr::rename_with(stringr::str_to_lower) |> 
+#   dplyr::glimpse() |> 
+#   readr::write_csv("data/datos_creditos.csv")
+
+
+url <- "https://github.com/jbkunst/usach-ingemat-intro-elementos-ds-202201/raw/main/data/datos_creditos.csv"
+datos <- read_csv(url)
+```
+
+- La tarea debe ser enviada en forma de script, por ejemplo `mi_archivo.R`.
+- Al comienzo del script deben identificarse los integrandes del grupo, máximo 3.
+- El script debe generar, en orden, los resultados solicitados. Agregando en forma 
+de comentarios (`# los comentarios parten con #`) cualquier respuesta o información
+adicional que se requiera. 
+- El script debe ser reproducible. El archivo .R debe poder ejecutarse sin problemas por cualquier persona con el programa, siguiendo el orden lógico requerido para ello.
+- La fecha de entrega es domingo 3 julio 2022. Por día se baja un punto.
+
+## Datos a utilizar
+
+Los datos con los cuales trabajaremos corresponden a  `r comma(nrow(datos))` ventas de productos financieros. Para cada operacion se tienen distintas variables medidas/observadas al momento del otorgamiento.
+
+Los datos están en la siguiente url:
+
+`r url`
+
+Dentro de los datos se encuentra la columna `estado`, la cual indica si en el futuro el cliente dejó de pagar su deuda: `bueno` para los clientes que pagaron la deuda sin entrar en morosidad o `malo` para quienes quedaron morosos en algún momento.
+
+De forma particular la cantidad de clientes `buenos` y `malos` considerando todos los registros disponibls se puede obtener con:
+
+```{r, message=FALSE}
+datos |> 
+  count(estado)
+```
+
+Se define la _tasa de clientes malos_ como la cantidad de clientes malos sobre el conjunto de clientes considerados.
+
+## Instrucciones/Preguntas
+
+1. ¿Cuál es la tasa de clientes malos al considerar todos los registros?
+
+```{r}
+library(tidyverse)
+
+url <- "https://github.com/jbkunst/usach-ingemat-intro-elementos-ds-202201/raw/main/data/datos_creditos.csv"
+datos <- read_csv(url)
+
+glimpse(datos)
+
+summarise(datos, mean(estado == "malo"))
+```
+
+1. ¿Cuántos clientes poseen un trabajo freelance y estado civil divorciado?
+
+```{r}
+datos |> 
+  filter(trabajo == "freelance", estadocivil == "divorciado") |> 
+  nrow()
+```
+
+1. ¿Cual es la tasa de clientes malos en el subconjunto de clientes anterior?
+
+```{r}
+datos |> 
+  filter(trabajo == "freelance", estadocivil == "divorciado") |> 
+  summarise(mean(estado == "malo"))
+```
+
+1. De acuerdo a los datos, que porcentaje de cliente posee más gastos que ingresos.
+
+```{r}
+datos |> 
+  filter(gastos > ingresos) |> 
+  nrow()
+
+datos |> 
+  group_by(gastos > ingresos) |> 
+  summarise(n = n()) |> 
+  mutate(p = 100 * n/sum(n))
+```
+
+1. Genere un gráfico de dispersión entre edad y antiguedad ¿Qué se observa?
+
+```{r}
+ggplot(datos) +
+  geom_point(aes(edad, antiguedad))
+```
+
+1. Genere un gráfico que muestre de mejor manera la relación entre edad y antiguedad.
+
+```{r}
+ggplot(datos) +
+  geom_density_2d(aes(edad, antiguedad))
+
+ggplot(datos) +
+  geom_point(aes(edad, antiguedad), alpha = 0.1, position = position_jitter())
+```
+
+1. Obtenga la tasa de clientes malos de acuerdo a las categorías de la columna tipo de trabajo (`trabajo`). Argumente por que este resultado es esperable en el contexto bancario.
+
+```{r}
+datos |> 
+  group_by(trabajo) |> 
+  summarise(mean(estado == "malo"))
+```
+
+1. Genere un boxplot (https://tinyurl.com/ycxh2wnj) de edad según la variable estado. Explique que observa en le contexto de los datos utilizados.
+
+```{r}
+ggplot(datos) +
+  geom_boxplot(aes(estado, edad))
+```
+
+1. Genere un gráfico de dispersión entre edad versus el monto del crédito solicitado (`cantidad`); agregue además una capa de suavizamiento con `geom_smooth`. Comente lo que observa y como ayuda la línea generada para entender como se relacionan los datos.
+
+```{r}
+ggplot(datos) +
+  geom_point(aes(edad, cantidad)) +
+  geom_smooth(aes(edad, cantidad))
+```
+
