@@ -187,6 +187,16 @@ ggplot(vuelos2, aes(distancia, tiempo_vuelo)) +
 
 ---
 
+.center[
+```{r, echo=FALSE, out.width="90%"}
+knitr::include_graphics("images/ggplot_elements2.png")
+```
+]
+
+https://bookdown.org/alapo/learnr/data-visualisation.html
+
+---
+
 ## Más información sobre visualización
 
 - [Visualización de datos](https://es.r4ds.hadley.nz/visualizaci%C3%B3n-de-datos.html#introducci%C3%B3n-1) en R4DS.
