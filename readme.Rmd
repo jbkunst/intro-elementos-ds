@@ -13,13 +13,6 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Programa
 
-1.  Hola!
-
-    - Lo que sabemos hasta ahora
-    - Lo que aprenderemos
-    - Lo que podemos llegar a realizar
-    - Nuestra dinámica
-
 1.  Introducción a la programación con R.
 
     - Ambiente de programación Rstudio.
@@ -47,19 +40,7 @@ knitr::opts_chunk$set(echo = FALSE)
     - Árboles de decisión.
     - Random Forests. Ideas tras Bagging y Boosting.
     - Importancia de variables.
-    - Modelos de Series de Tiempo.
     - Métodos no supervisados, métodos de clustering.
-    
-1.  Elementos de la programación.
-
-    - Estructura de código. Pipes, pasos intermedios, sobrescribir, composición funciones. 
-    - Funciones, argumentos, condicionales, estilo de código.
-    - Iteraciones. Bucles for, funcionales, map.    
-
-1.  Comunicación de resultados.
-
-    - Reportería automática con Rmarkdown y HTMLWidgets.
-    - Desarrollo aplicaciones web con shiny.
 
 
 ## Slides
@@ -71,7 +52,7 @@ slides_files <- dir("slides", full.names = TRUE)  |>
 
 slides_url <- file.path(
   "https://jbkunst.github.io",
-  "usach-ingemat-intro-elementos-ds-202201",
+  "intro-elementos-ds",
   slides_files
   )
 
