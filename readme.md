@@ -4,8 +4,9 @@ Introducción a los elementos del DS
 -   <a href="#programa" id="toc-programa">Programa</a>
 -   <a href="#slides" id="toc-slides">Slides</a>
 -   <a href="#bibliografía" id="toc-bibliografía">Bibliografía</a>
--   <a href="#dinámicas-de-clase" id="toc-dinámicas-de-clase">Dinámicas de
-    clase</a>
+-   <a href="#dinámicas-de-clase-segundo-semestre-2022"
+    id="toc-dinámicas-de-clase-segundo-semestre-2022">Dinámicas de clase
+    (Segundo semestre 2022)</a>
     -   <a href="#online" id="toc-online">Online</a>
     -   <a href="#presencial" id="toc-presencial">Presencial</a>
 
@@ -67,18 +68,18 @@ Introducción a los elementos del DS
 -   [R para Ciencia de Datos](https://es.r4ds.hadley.nz/).
 -   [R for Data Science](https://r4ds.hadley.nz/).
 
-## Dinámicas de clase
+## Dinámicas de clase (Segundo semestre 2022)
 
 ### Online
 
 -   Objetivo principal: Mostrar contenidos, ejemplos y fuentes de
     información. Programar en conjunto (pair programming).
--   Horario: Miércoles 18.45-20.10
+-   Horario: Lunes 16:45-18.10
 -   Lugar: Via google meet <https://meet.google.com/upx-rxan-vwt>
 
 ### Presencial
 
 -   Objetivo principal: Realizar ejercicios, responder dudas y repasar
     contenidos previos.
--   Horario: Jueves 17:10-18:40.
+-   Horario: Miércoles 17:10-18:40.
 -   Lugar: Laboratorio 208.
