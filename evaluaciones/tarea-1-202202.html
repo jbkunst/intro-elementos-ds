@@ -322,6 +322,8 @@ acceder a ellos de la siguiente forma:</p>
 <pre class="r"><code>library(tidyverse)
 library(datos)
 
+salarios &lt;- as_tibble(salarios)
+
 glimpse(salarios)</code></pre>
 <pre><code>## Rows: 26,428
 ## Columns: 5
@@ -330,9 +332,7 @@ glimpse(salarios)</code></pre>
 ## $ id_liga    &lt;fct&gt; NL, NL, NL, NL, NL, NL, NL, NL, NL, NL, NL, NL, NL, NL, NL,…
 ## $ id_jugador &lt;chr&gt; &quot;barkele01&quot;, &quot;bedrost01&quot;, &quot;benedbr01&quot;, &quot;campri01&quot;, &quot;ceronri…
 ## $ salario    &lt;int&gt; 870000, 550000, 545000, 633333, 625000, 800000, 150000, 483…</code></pre>
-<pre class="r"><code>salarios &lt;- as_tibble(salarios)
-
-salarios</code></pre>
+<pre class="r"><code>salarios</code></pre>
 <pre><code>## # A tibble: 26,428 × 5
 ##     anio id_equipo id_liga id_jugador salario
 ##    &lt;int&gt; &lt;fct&gt;     &lt;fct&gt;   &lt;chr&gt;        &lt;int&gt;
@@ -367,11 +367,8 @@ esto.</li>
 obtenido en <em>4.</em> calcule para cada registro en
 <code>salarios</code> la desviación porcentual del salario respecto al
 promedio del salario anual que corresponda. La desviación porcentual la
-definimos como:</li>
-</ol>
-<p><span class="math display">\[desviacionPorcentual =
-salarioJugador/salarioPromedioAnual\]</span></p>
-<ol style="list-style-type: decimal">
+definimos como: <span class="math display">\[desviacionPorcentual =
+salarioJugador/salarioPromedioAnual\]</span></li>
 <li>(2 puntos) De la tabla anterior obtenga el registro/salario que
 posea la mayor desviación porcentual en cada uno de los años.</li>
 </ol>
