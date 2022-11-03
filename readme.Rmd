@@ -71,6 +71,11 @@ slides_nms <- slides_files |>
 purrr::walk2(slides_nms, slides_url, ~ {cat(stringr::str_glue("1. [{ n }]({ u })", n = .x, u = .y)); cat("\n")})
 ```
 
+## Repositorio
+
+Repositorio del curso en github https://github.com/jbkunst/intro-elementos-ds. Acá podrás
+encontrar datos, código fuente de las slides, evaluaciones, etc.
+
 ## Bibliografía
 
 - [R para Ciencia de Datos](https://es.r4ds.hadley.nz/).
