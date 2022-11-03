@@ -33,9 +33,9 @@ Los datos están en el paquete [datos](https://cienciadedatos.github.io/datos/) 
 library(tidyverse)
 library(datos)
 
-glimpse(salarios)
-
 salarios <- as_tibble(salarios)
+
+glimpse(salarios)
 
 salarios
 ```
@@ -53,9 +53,7 @@ Todas las preguntas valen 1 punto exceptuando los casos en que se indique lo con
 1. ¿Cuál(es) son los salarios más altos registrados en los datos?
 1. (2 puntos) ¿Existen jugadores que aparecen más de una vez *por año*? En caso de que existan obténgalos, e indique por que sucede esto.
 1. (2 puntos) Utilizando la tabla `salarios` y el resultado obtenido en *4.* calcule para cada registro en `salarios` la desviación porcentual del salario respecto al promedio del salario anual que corresponda. La desviación porcentual la definimos como: 
-
 $$desviacionPorcentual = salarioJugador/salarioPromedioAnual$$
-
 1. (2 puntos) De la tabla anterior obtenga el registro/salario que posea la mayor desviación porcentual en cada uno de los años.
 
 
