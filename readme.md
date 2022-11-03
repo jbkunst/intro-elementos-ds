@@ -3,6 +3,7 @@ Introducción a los elementos del DS
 
 -   <a href="#programa" id="toc-programa">Programa</a>
 -   <a href="#slides" id="toc-slides">Slides</a>
+-   <a href="#repositorio" id="toc-repositorio">Repositorio</a>
 -   <a href="#bibliografía" id="toc-bibliografía">Bibliografía</a>
 -   <a href="#dinámicas-de-clase-segundo-semestre-2022"
     id="toc-dinámicas-de-clase-segundo-semestre-2022">Dinámicas de clase
@@ -62,6 +63,12 @@ Introducción a los elementos del DS
     dbplyr</small></code>](https://jbkunst.github.io/intro-elementos-ds/slides/05-Lectura-de-datos-readr-readxl-httr-rvest.html)
 6.  [Introducción al modelamiento <code><small>ranger partykit
     yardstick</small></code>](https://jbkunst.github.io/intro-elementos-ds/slides/06-Introducción-al-modelamiento.html)
+
+## Repositorio
+
+Repositorio del curso en github
+<https://github.com/jbkunst/intro-elementos-ds>. Acá podrás encontrar
+datos, código fuente de las slides, evaluaciones, etc.
 
 ## Bibliografía
 
