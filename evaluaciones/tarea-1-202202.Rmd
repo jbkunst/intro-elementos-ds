@@ -1,0 +1,62 @@
+---
+title: "Tarea 1 - 2022 2do Semestre"
+subtitle: "Introducción a los elementos del Data Science" 
+output: 
+  tufte::tufte_html: default
+editor_options: 
+  chunk_output_type: console
+---
+
+## Consideraciones en la entrega 
+
+```{r, include=FALSE}
+library(tidyverse)
+```
+
+- La tarea debe ser enviada en forma de script, por ejemplo `mi_archivo.R`.
+- Al comienzo del script deben identificarse los integrandes del grupo, máximo 3.
+- El script debe generar, en orden, los resultados solicitados. Agregando en forma 
+de comentarios (`# los comentarios parten con #`) cualquier respuesta o información
+adicional que se requiera. 
+- El script debe ser reproducible. El archivo .R debe poder ejecutarse sin problemas por cualquier persona con el programa, siguiendo el orden lógico requerido para ello.
+- La fecha de entrega es domingo 13 noviembre 2022. Por día se baja un punto.
+
+## Datos a utilizar
+
+Los datos con los cuales trabajaremos corresponden a salarios históricos de 
+jugadores de baseball conteniendo el año de la información, el equipo, liga y 
+el id del jugador.
+
+Los datos están en el paquete [datos](https://cienciadedatos.github.io/datos/) y se puede acceder a ellos de la siguiente forma:
+
+```{r}
+library(tidyverse)
+library(datos)
+
+glimpse(salarios)
+
+salarios <- as_tibble(salarios)
+
+salarios
+```
+
+
+## Preguntas
+
+Todas las preguntas valen 1 punto exceptuando los casos en que se indique lo contrario.
+
+1. ¿Cuantos registros poseen los datos?
+1. ¿Cuántos años de información contiene la tabla `salarios`?
+1. ¿Cuántos jugadores únicos existen en la tabla?
+1. Con los datos, obtenga el promedio de salario por año.
+1. Calcule la cantidad de registros por año.
+1. ¿Cuál(es) son los salarios más altos registrados en los datos?
+1. (2 puntos) ¿Existen jugadores que aparecen más de una vez *por año*? En caso de que existan obténgalos, e indique por que sucede esto.
+1. (2 puntos) Utilizando la tabla `salarios` y el resultado obtenido en *4.* calcule para cada registro en `salarios` la desviación porcentual del salario respecto al promedio del salario anual que corresponda. La desviación porcentual la definimos como: 
+
+$$desviacionPorcentual = salarioJugador/salarioPromedioAnual$$
+
+1. (2 puntos) De la tabla anterior obtenga el registro/salario que posea la mayor desviación porcentual en cada uno de los años.
+
+
+
